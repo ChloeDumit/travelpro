@@ -1,0 +1,155 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Enums
+enum UserRole {
+  admin
+  sales
+  finance
+}
+
+enum SaleType {
+  individual
+  corporate
+  sports
+  group
+}
+
+enum Region {
+  national
+  international
+  regional
+}
+
+enum ServiceType {
+  flight
+  hotel
+  package
+  transfer
+  excursion
+  insurance
+  other
+}
+
+enum SaleStatus {
+  draft
+  confirmed
+  completed
+  cancelled
+}
+
+enum Currency {
+  USD
+  EUR
+  local
+}
+
+enum ItemStatus {
+  pending
+  confirmed
+  cancelled
+}
+
+enum PaymentMethod {
+  creditCard
+  cash
+  transfer
+}
+
+// Models
+model User {
+  id        String   @id @default(uuid())
+  username  String   @unique
+  email     String   @unique
+  password  String
+  role      UserRole
+  createdAt DateTime @default(now())
+  sales     Sale[]   // Relation to sales where user is the seller
+}
+
+model Sale {
+  id             String       @id @default(uuid())
+  passengerName  String
+  clientId       String
+  creationDate   DateTime     @default(now())
+  travelDate     DateTime
+  saleType       SaleType
+  region         Region
+  serviceType    ServiceType
+  status         SaleStatus   @default(draft)
+  currency       Currency
+  seller         User         @relation(fields: [sellerId], references: [id])
+  sellerId       String
+  passengerCount Int
+  items          SaleItem[]
+  totalCost      Float
+  invoices       Invoice[]
+  payments       Payment[]
+  supplierPayments SupplierPayment[]
+}
+
+model SaleItem {
+  id              String      @id @default(uuid())
+  classification  String
+  provider        String
+  operator        String
+  dateIn          DateTime
+  dateOut         DateTime
+  passengerCount  Int
+  status          ItemStatus  @default(pending)
+  description     String
+  salePrice       Float
+  saleCurrency    Currency
+  costPrice       Float
+  costCurrency    Currency
+  reservationCode String
+  paymentDate     DateTime?
+  sale            Sale        @relation(fields: [saleId], references: [id])
+  saleId          String
+}
+
+model Invoice {
+  id            String    @id @default(uuid())
+  sale          Sale      @relation(fields: [saleId], references: [id])
+  saleId        String
+  invoiceNumber String    @unique
+  date          DateTime  @default(now())
+  amount        Float
+  currency      Currency
+  status        String    // pending, paid, cancelled
+}
+
+model Payment {
+  id        String        @id @default(uuid())
+  sale      Sale          @relation(fields: [saleId], references: [id])
+  saleId    String
+  date      DateTime      @default(now())
+  amount    Float
+  currency  Currency
+  method    PaymentMethod
+  reference String
+  status    String        // pending, confirmed
+}
+
+model SupplierPayment {
+  id              String   @id @default(uuid())
+  operator        String
+  date            DateTime @default(now())
+  operationNumber String   @unique
+  amount          Float
+  currency        Currency
+  paymentMethod   String
+  relatedSales    Sale[]   // Many-to-many relation with sales
+}
