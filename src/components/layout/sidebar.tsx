@@ -90,6 +90,10 @@ export function Sidebar({ userRole }: SidebarProps) {
                 <ShoppingBag size={20} />
                 {!collapsed && <span>Sales</span>}
               </SidebarLink>
+              <SidebarLink to="/clients">
+                <Briefcase size={20} />
+                {!collapsed && <span>Clients</span>}
+              </SidebarLink>
               {/* <SidebarLink to="/clients">
                 <Users size={20} />
                 {!collapsed && <span>Clients</span>}

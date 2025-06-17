@@ -1,4 +1,5 @@
 import { Sale, SaleFormData, SaleItemFormData } from '../../types';
+import { Client } from '../../types/client';
 
 const API_URL = 'http://localhost:3001/api';
 
@@ -32,14 +33,20 @@ export const salesService = {
   },
 
   // Create a new sale
-  async createSale(saleData: SaleFormData, items: SaleItemFormData[]) {
+  async createSale(saleData: SaleFormData & { client: Client | null }, items: SaleItemFormData[]) {
     const response = await fetch(`${API_URL}/sales`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${localStorage.getItem('auth_token')}`
       },
-      body: JSON.stringify({ saleData, items }),
+      body: JSON.stringify({ 
+        saleData: {
+          ...saleData,
+          client: saleData.client
+        }, 
+        items 
+      }),
     });
     if (!response.ok) {
       throw new Error('Failed to create sale');

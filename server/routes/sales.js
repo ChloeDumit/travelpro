@@ -55,10 +55,19 @@ router.post('/', authenticate, requireRole([ROLES.SALES, ROLES.ADMIN]), async (r
     const { saleData, items } = req.body;
     const userId = req.user.userId;
 
+    // Validate that we have a client
+    if (!saleData.client) {
+      throw new AppError('Client is required', HTTP_STATUS.BAD_REQUEST);
+    }
+
     const sale = await prisma.sale.create({
       data: {
         passengerName: saleData.passengerName,
-        clientId: saleData.clientId,
+        client: {
+          connect: {
+            id: saleData.client.id
+          }
+        },
         travelDate: new Date(saleData.travelDate),
         saleType: saleData.saleType,
         region: saleData.region,
@@ -94,6 +103,7 @@ router.post('/', authenticate, requireRole([ROLES.SALES, ROLES.ADMIN]), async (r
       include: {
         items: true,
         seller: true,
+        client: true,
       },
     });
 

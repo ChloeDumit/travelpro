@@ -7,10 +7,15 @@ import { Input } from '../ui/input';
 import { Select } from '../ui/select';
 import { saleTypeOptions, regionOptions, serviceTypeOptions, currencyOptions } from '../../types/sales';
 import { Card, CardHeader, CardTitle, CardContent } from '../ui/card';
-import { Plus, Trash2 } from 'lucide-react';
+import { Pencil, Plus, Trash2 } from 'lucide-react';
 import { SaleItemForm } from './sale-item-form';
-import { SaleItemFormData, User } from '../../types';
+import { SaleItemFormData, User, ClientFormData } from '../../types';
 import { usersService } from '../../lib/services/users';
+import { clientsService } from '../../lib/services/clients';
+import { Client } from '../../types/client';
+import { Modal } from '../ui/modal';
+import { ClientSelect } from './client-select';
+import { UserSelect } from './user-select';
 
 const saleFormSchema = z.object({
   passengerName: z.string().min(1, 'El nombre del pasajero es requerido'),
@@ -23,12 +28,13 @@ const saleFormSchema = z.object({
   currency: z.enum(['USD', 'EUR', 'local']),
   seller: z.string().min(1, 'El vendedor es requerido'),
   totalCost: z.number().min(0, 'El total de la venta debe ser positivo'),
+  totalSale: z.number().min(0, 'El total de la venta debe ser positivo'),
 });
 
 type SaleFormData = z.infer<typeof saleFormSchema>;
 
 interface SaleFormProps {
-  onSubmit: (data: SaleFormData, items: SaleItemFormData[]) => void;
+  onSubmit: (data: SaleFormData & { client: Client | null }, items: SaleItemFormData[]) => void;
   initialData?: Partial<SaleFormData>;
 }
 
@@ -37,6 +43,12 @@ export function SaleForm({ onSubmit, initialData }: SaleFormProps) {
   const [users, setUsers] = useState<User[]>([]);
   const [showItemForm, setShowItemForm] = useState(false);
   const [editingItemIndex, setEditingItemIndex] = useState<number | null>(null);
+  const [clients, setClients] = useState<Client[]>([]);
+  const [showClientModal, setShowClientModal] = useState(false);
+  const [newClientLoading, setNewClientLoading] = useState(false);
+  const [clientForm, setClientForm] = useState<ClientFormData>({ name: '', clientId: '', email: '', address: '' });
+  const [clientFormError, setClientFormError] = useState<string | null>(null);
+  const [selectedClient, setSelectedClient] = useState<Client | null>(null);
 
   const form = useForm<SaleFormData>({
     resolver: zodResolver(saleFormSchema),
@@ -62,8 +74,19 @@ export function SaleForm({ onSubmit, initialData }: SaleFormProps) {
     }
   };
 
+  const getClients = async () => {
+    try {
+      const response = await clientsService.getAllClients();
+      console.log(response);
+      setClients(response.clients || response);
+    } catch (error) {
+      console.error('Error fetching clients:', error);
+    }
+  };
+
   useEffect(() => {
     getUsers();
+    getClients();
   }, []);
 
 
@@ -80,9 +103,21 @@ export function SaleForm({ onSubmit, initialData }: SaleFormProps) {
 
   const handleFormSubmit = (data: SaleFormData) => {
     console.log('Form submitted with data:', data);
-    const totalCost = items.reduce((sum, item) => sum + item.salePrice, 0);
+    const totalCost = items.reduce((sum, item) => sum + item.costPrice, 0);
+    const totalSale = items.reduce((sum, item) => sum + item.salePrice, 0);
     console.log('Calculated total cost:', totalCost);
-    onSubmit({ ...data, totalCost: totalCost }, items);
+    
+    if (!selectedClient) {
+      form.setError('clientId', { type: 'manual', message: 'Client is required' });
+      return;
+    }
+
+    onSubmit({ 
+      ...data, 
+      totalCost: totalCost, 
+      totalSale: totalSale, 
+      client: selectedClient 
+    }, items);
   };
 
   return (
@@ -94,15 +129,16 @@ export function SaleForm({ onSubmit, initialData }: SaleFormProps) {
         <form onSubmit={form.handleSubmit(handleFormSubmit)}>
           <CardContent className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <Input
-                label="Nombre del Pasajero"
-                {...form.register('passengerName')}
-                error={form.formState.errors.passengerName?.message}
-              />
-              <Input
-                label="ID/RUT del Cliente"
-                {...form.register('clientId')}
-                error={form.formState.errors.clientId?.message}
+              <ClientSelect
+                clients={clients}
+                value={form.watch('clientId')}
+                onSelect={client => {
+                  setSelectedClient(client);
+                  form.setValue('clientId', client.clientId);
+                  form.setValue('passengerName', client.name);
+                }}
+                onCreateNew={() => setShowClientModal(true)}
+                error={form.formState.errors.clientId?.message || form.formState.errors.passengerName?.message}
               />
             </div>
 
@@ -151,13 +187,10 @@ export function SaleForm({ onSubmit, initialData }: SaleFormProps) {
                 error={form.formState.errors.currency?.message}
               />
             </div>
-            <Select
-              label="Vendedor"
-              options={users.map(user => ({
-                value: user.id,
-                label: user.username,
-              }))}
-              {...form.register('seller')}
+            <UserSelect
+              users={users}
+              value={form.watch('seller')}
+              onSelect={user => form.setValue('seller', user.id)}
               error={form.formState.errors.seller?.message}
             />
           </CardContent>
@@ -207,10 +240,10 @@ export function SaleForm({ onSubmit, initialData }: SaleFormProps) {
                         size="sm"
                         onClick={() => handleEditItem(index)}
                       >
-                        Editar
+                        <Pencil className="h-4 w-4" />
                       </Button>
                       <Button
-                        variant="outline"
+                        variant="danger"
                         size="sm"
                         onClick={() => handleDeleteItem(index)}
                       >
@@ -223,7 +256,7 @@ export function SaleForm({ onSubmit, initialData }: SaleFormProps) {
 
               {/* Summary Section */}
               <div className="mt-6 p-4 border rounded-lg bg-white">
-                <h3 className="text-lg font-medium mb-4">Resumen de Venta</h3>
+                <h3 className="text-lg font-medium mb-4 ">Resumen de Venta</h3>
                 <div>
                   <span className="text-sm text-gray-500">Total de Venta:</span>
                   <p className="text-lg font-medium">
@@ -232,6 +265,17 @@ export function SaleForm({ onSubmit, initialData }: SaleFormProps) {
                       currency: form.getValues('currency'),
                     }).format(
                       items.reduce((sum, item) => sum + item.salePrice, 0)
+                    )}
+                  </p>
+                </div>
+                <div>
+                  <span className="text-sm text-gray-500">Total de Costo:</span>
+                  <p className="text-lg font-medium">
+                    {new Intl.NumberFormat('es-CL', {
+                      style: 'currency',
+                      currency: form.getValues('currency'),
+                    }).format(
+                      items.reduce((sum, item) => sum + item.costPrice, 0)
                     )}
                   </p>
                 </div>
@@ -255,6 +299,77 @@ export function SaleForm({ onSubmit, initialData }: SaleFormProps) {
         setItems={setItems}
         items={items}
       />
+
+      <Modal isOpen={showClientModal} onClose={() => setShowClientModal(false)} title="Crear nuevo cliente">
+        <form
+          onSubmit={async e => {
+            e.preventDefault();
+            setNewClientLoading(true);
+            setClientFormError(null);
+            try {
+              const created = await clientsService.createClient(clientForm);
+              // Add new client to list and select it
+              setClients(prev => [...prev, created]);
+              form.setValue('clientId', created.clientId);
+              form.setValue('passengerName', created.name);
+              setShowClientModal(false);
+              setClientForm({ name: '', clientId: '', email: '', address: '' });
+            } catch (err: any) {
+              setClientFormError(err.message || 'Error al crear cliente');
+            } finally {
+              setNewClientLoading(false);
+            }
+          }}
+          className="space-y-4"
+        >
+          <div>
+            <label className="block text-sm font-medium">Nombre</label>
+            <input
+              className="w-full border rounded px-2 py-1"
+              value={clientForm.name}
+              onChange={e => setClientForm(f => ({ ...f, name: e.target.value }))}
+              required
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium">ID/RUT</label>
+            <input
+              className="w-full border rounded px-2 py-1"
+              value={clientForm.clientId}
+              onChange={e => setClientForm(f => ({ ...f, clientId: e.target.value }))}
+              required
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium">Email</label>
+            <input
+              className="w-full border rounded px-2 py-1"
+              value={clientForm.email}
+              onChange={e => setClientForm(f => ({ ...f, email: e.target.value }))}
+              type="email"
+              required
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium">Dirección</label>
+            <input
+              className="w-full border rounded px-2 py-1"
+              value={clientForm.address}
+              onChange={e => setClientForm(f => ({ ...f, address: e.target.value }))}
+              required
+            />
+          </div>
+          {clientFormError && <div className="text-red-500 text-sm">{clientFormError}</div>}
+          <div className="flex justify-end gap-2">
+            <button type="button" className="px-4 py-2 border rounded" onClick={() => setShowClientModal(false)}>
+              Cancelar
+            </button>
+            <button type="submit" className="px-4 py-2 bg-blue-600 text-white rounded" disabled={newClientLoading}>
+              {newClientLoading ? 'Creando...' : 'Crear'}
+            </button>
+          </div>
+        </form>
+      </Modal>
 
       <div className="flex justify-end gap-2 mt-6">
         <Button

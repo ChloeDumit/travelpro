@@ -16,7 +16,7 @@ export function SaleSummary({ sale }: SaleSummaryProps) {
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center justify-between">
-            <span>Sale #{sale.id}</span>
+            <span>Venta #{sale.id}</span>
             <Badge className={getStatusColor(sale.status)}>
               {saleData.status.charAt(0).toUpperCase() + saleData.status.slice(1)}
             </Badge>
@@ -25,43 +25,43 @@ export function SaleSummary({ sale }: SaleSummaryProps) {
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <h3 className="text-sm font-medium text-gray-500">Passenger</h3>
+              <h3 className="text-sm font-medium text-gray-500">Pasajero</h3>
               <p className="mt-1 text-sm font-medium">{saleData.passengerName}</p>
             </div>
             <div>
-              <h3 className="text-sm font-medium text-gray-500">Client ID</h3>
+              <h3 className="text-sm font-medium text-gray-500">ID/RUT</h3>
               <p className="mt-1 text-sm font-medium">{saleData.clientId}</p>
             </div>
             <div>
-              <h3 className="text-sm font-medium text-gray-500">Creation Date</h3>
+              <h3 className="text-sm font-medium text-gray-500">Fecha de Creación</h3>
               <p className="mt-1 text-sm font-medium">{formatDate(saleData.creationDate)}</p>
             </div>
             <div>
-              <h3 className="text-sm font-medium text-gray-500">Travel Date</h3>
+              <h3 className="text-sm font-medium text-gray-500">Fecha de Viaje</h3>
               <p className="mt-1 text-sm font-medium">{formatDate(saleData.travelDate)}</p>
             </div>
             <div>
-              <h3 className="text-sm font-medium text-gray-500">Sale Type</h3>
+              <h3 className="text-sm font-medium text-gray-500">Tipo de Venta</h3>
               <p className="mt-1 text-sm font-medium capitalize">{saleData.saleType}</p>
             </div>
             <div>
-              <h3 className="text-sm font-medium text-gray-500">Region</h3>
+              <h3 className="text-sm font-medium text-gray-500">Región</h3>
               <p className="mt-1 text-sm font-medium capitalize">{saleData.region}</p>
             </div>
             <div>
-              <h3 className="text-sm font-medium text-gray-500">Service Type</h3>
+              <h3 className="text-sm font-medium text-gray-500">Tipo de Servicio</h3>
               <p className="mt-1 text-sm font-medium capitalize">{saleData.serviceType}</p>
             </div>
             <div>
-              <h3 className="text-sm font-medium text-gray-500">Currency</h3>
+              <h3 className="text-sm font-medium text-gray-500">Moneda</h3>
               <p className="mt-1 text-sm font-medium">{saleData.currency}</p>
             </div>
             <div>
-              <h3 className="text-sm font-medium text-gray-500">Seller</h3>
+              <h3 className="text-sm font-medium text-gray-500">Vendedor</h3>
               <p className="mt-1 text-sm font-medium">{saleData.seller.username}</p>
             </div>
             <div>
-              <h3 className="text-sm font-medium text-gray-500">Passengers</h3>
+              <h3 className="text-sm font-medium text-gray-500">Pasajeros</h3>
               <p className="mt-1 text-sm font-medium">{saleData.passengerCount}</p>
             </div>
           </div>
@@ -70,7 +70,7 @@ export function SaleSummary({ sale }: SaleSummaryProps) {
 
       <Card>
         <CardHeader>
-          <CardTitle>Items ({items.length})</CardTitle>
+            <CardTitle>Items ({items.length})</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
@@ -83,17 +83,17 @@ export function SaleSummary({ sale }: SaleSummaryProps) {
 
       <Card>
         <CardHeader>
-          <CardTitle>Financial Summary</CardTitle>
+          <CardTitle>Resumen Financiero</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="space-y-2">
  
             <div className="flex justify-between py-2 border-b">
-              <span className="font-medium">Total Cost:</span>
+              <span className="font-medium">Costo Total:</span>
               <span>{formatCurrency(saleData.totalCost, saleData.currency)}</span>
             </div>
             <div className="flex justify-between py-2 text-lg font-bold">
-              <span>Balance Due:</span>
+              <span>Balance Pendiente:</span>
                 <span className={saleData.pendingBalance > 0 ? 'text-danger-600' : 'text-success-600'}>
                 {formatCurrency(saleData.pendingBalance, saleData.currency)}
               </span>
@@ -124,44 +124,44 @@ function SaleItemCard({ item }: SaleItemCardProps) {
       
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4">
         <div>
-          <h5 className="text-xs text-gray-500">Provider</h5>
+          <h5 className="text-xs text-gray-500">Proveedor</h5>
           <p className="text-sm">{item.provider}</p>
         </div>
         <div>
-          <h5 className="text-xs text-gray-500">Operator</h5>
+          <h5 className="text-xs text-gray-500">Operador</h5>
           <p className="text-sm">{item.operator}</p>
         </div>
         <div>
-          <h5 className="text-xs text-gray-500">Date Range</h5>
+          <h5 className="text-xs text-gray-500">Rango de Fecha</h5>
           <p className="text-sm">
             {formatDate(item.dateIn)} - {formatDate(item.dateOut)}
           </p>
         </div>
         <div>
-          <h5 className="text-xs text-gray-500">Passengers</h5>
+          <h5 className="text-xs text-gray-500">Pasajeros</h5>
           <p className="text-sm">{item.passengerCount}</p>
         </div>
       </div>
       
       <div className="flex justify-between mt-4 pt-2 border-t">
         <div>
-          <h5 className="text-xs text-gray-500">Sale Price</h5>
+          <h5 className="text-xs text-gray-500">Precio de Venta</h5>
           <p className="text-sm font-medium">
             {formatCurrency(item.salePrice, item.saleCurrency)}
           </p>
         </div>
         <div>
-          <h5 className="text-xs text-gray-500">Cost Price</h5>
+          <h5 className="text-xs text-gray-500">Precio de Costo</h5>
           <p className="text-sm">
             {formatCurrency(item.costPrice, item.costCurrency)}
           </p>
         </div>
         <div>
-          <h5 className="text-xs text-gray-500">Reservation Code</h5>
+          <h5 className="text-xs text-gray-500">Código de Reserva</h5>
           <p className="text-sm">{item.reservationCode || 'N/A'}</p>
         </div>
         <div>
-          <h5 className="text-xs text-gray-500">Payment Date</h5>
+          <h5 className="text-xs text-gray-500">Fecha de Pago</h5>
           <p className="text-sm">{item.paymentDate ? formatDate(item.paymentDate) : 'Pending'}</p>
         </div>
       </div>

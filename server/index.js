@@ -6,6 +6,7 @@ import logger from './utils/logger.js';
 import authRoutes from './routes/auth.js';
 import userRoutes from './routes/users.js';
 import salesRoutes from './routes/sales.js';
+import clientsRoutes from './routes/clients.js';
 
 const app = express();
 
@@ -26,6 +27,7 @@ app.use((req, res, next) => {
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/sales', salesRoutes);
+app.use('/api/clients', clientsRoutes);
 
 // Error handling
 app.use(errorHandler);

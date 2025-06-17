@@ -79,9 +79,20 @@ model User {
   sales     Sale[]   // Relation to sales where user is the seller
 }
 
+model Client {
+  id        String   @id @default(uuid())
+  name      String
+  clientId  String   @unique
+  address   String
+  email     String   @unique
+  createdAt DateTime @default(now())
+  sales     Sale[]
+}
+
 model Sale {
   id             String       @id @default(uuid())
   passengerName  String
+  client         Client       @relation(fields: [clientId], references: [id])
   clientId       String
   creationDate   DateTime     @default(now())
   travelDate     DateTime

@@ -9,6 +9,9 @@ import { SaleDetailPage } from './pages/sales/sale-detail';
 import { NewSalePage } from './pages/sales/new-sale';
 import { InvoicesListPage } from './pages/invoices/invoices-list';
 import { PaymentsListPage } from './pages/payments/payments-list';
+import { ClientsListPage } from './pages/clients/clients-list';
+import { NewClientPage } from './pages/clients/new-client';
+import { EditClientPage } from './pages/clients/edit-client';
 
 // Protected route component
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
@@ -44,14 +47,17 @@ function App() {
               </ProtectedRoute>
             }
           >
-            <Route index element={<Navigate to="/dashboard\" replace />} />
+            <Route index element={<Navigate to="/dashboard" replace />} />
             <Route path="dashboard" element={<DashboardPage />} />
             <Route path="sales" element={<SalesListPage />} />
             <Route path="sales/:id" element={<SaleDetailPage />} />
             <Route path="sales/new" element={<NewSalePage />} />
             <Route path="invoices" element={<InvoicesListPage />} />
             <Route path="payments" element={<PaymentsListPage />} />
-            <Route path="*" element={<Navigate to="/dashboard\" replace />} />
+            <Route path="clients" element={<ClientsListPage />} />
+            <Route path="clients/new" element={<NewClientPage />} />
+            <Route path="clients/:id/edit" element={<EditClientPage />} />
+            <Route path="*" element={<Navigate to="/dashboard" replace />} />
           </Route>
         </Routes>
       </Router>

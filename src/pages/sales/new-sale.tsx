@@ -5,13 +5,14 @@ import { Button } from '../../components/ui/button';
 import { SaleForm } from '../../components/sales/sale-form';
 import { SaleFormData, SaleItemFormData } from '../../types';
 import { salesService } from '../../lib/services/sales';
+import { Client } from '../../types/client';
 
 export function NewSalePage() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const handleSubmit = async (saleData: SaleFormData, items: SaleItemFormData[]) => {
+  const handleSubmit = async (saleData: SaleFormData & { client: Client | null }, items: SaleItemFormData[]) => {
     console.log(saleData, items);
     setLoading(true);
     setError(null);

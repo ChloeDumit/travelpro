@@ -1,3 +1,5 @@
+import { Client } from './client';
+
 // User types
 export type UserRole = 'admin' | 'sales' | 'finance';
 
@@ -101,6 +103,8 @@ export interface SaleFormData {
   seller: string;
   passengerCount: number;
   totalCost: number;
+  totalSale: number;
+  client: Client | null;
 }
 
 export interface SaleItemFormData {
@@ -120,6 +124,14 @@ export interface SaleItemFormData {
   paymentDate: string | null;
 }
 
+export interface ClientFormData {
+  name: string;
+  clientId: string;
+  email: string;
+  address: string;
+}
+
 export * from './sales';
 export * from './user';
 export * from './common';
+export * from './client';

@@ -604,3 +604,328 @@
 {"level":"info","message":"Sales data fetched","timestamp":"2025-06-17T01:57:52.638Z"}
 {"level":"info","message":"GET /api/users/me","timestamp":"2025-06-17T01:59:48.642Z"}
 {"level":"info","message":"GET /api/users/me","timestamp":"2025-06-17T01:59:48.652Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-06-17T13:58:01.965Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-06-17T13:58:01.980Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-06-17T13:58:01.982Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-06-17T13:58:01.984Z"}
+{"level":"info","message":"GET /api/sales/93bf97bb-f760-48cc-8710-b6ac9a959e99","timestamp":"2025-06-17T13:58:04.394Z"}
+{"level":"info","message":"Sale 93bf97bb-f760-48cc-8710-b6ac9a959e99 fetched by user af5631f3-0c3a-44b5-a240-f4e44181068c","timestamp":"2025-06-17T13:58:04.399Z"}
+{"level":"info","message":"GET /api/sales/93bf97bb-f760-48cc-8710-b6ac9a959e99","timestamp":"2025-06-17T13:58:04.401Z"}
+{"level":"info","message":"Sale 93bf97bb-f760-48cc-8710-b6ac9a959e99 fetched by user af5631f3-0c3a-44b5-a240-f4e44181068c","timestamp":"2025-06-17T13:58:04.404Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-06-17T13:58:07.089Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-06-17T13:58:07.092Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-06-17T13:58:07.095Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-06-17T13:58:07.098Z"}
+{"level":"info","message":"GET /api/sales/93bf97bb-f760-48cc-8710-b6ac9a959e99","timestamp":"2025-06-17T13:58:14.348Z"}
+{"level":"info","message":"Sale 93bf97bb-f760-48cc-8710-b6ac9a959e99 fetched by user af5631f3-0c3a-44b5-a240-f4e44181068c","timestamp":"2025-06-17T13:58:14.355Z"}
+{"level":"info","message":"GET /api/sales/93bf97bb-f760-48cc-8710-b6ac9a959e99","timestamp":"2025-06-17T13:58:14.357Z"}
+{"level":"info","message":"Sale 93bf97bb-f760-48cc-8710-b6ac9a959e99 fetched by user af5631f3-0c3a-44b5-a240-f4e44181068c","timestamp":"2025-06-17T13:58:14.361Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-06-17T13:58:17.574Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-06-17T13:58:17.577Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-06-17T13:58:17.579Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-06-17T13:58:17.582Z"}
+{"level":"info","message":"GET /api/sales/93bf97bb-f760-48cc-8710-b6ac9a959e99","timestamp":"2025-06-17T13:58:25.758Z"}
+{"level":"info","message":"Sale 93bf97bb-f760-48cc-8710-b6ac9a959e99 fetched by user af5631f3-0c3a-44b5-a240-f4e44181068c","timestamp":"2025-06-17T13:58:25.762Z"}
+{"level":"info","message":"GET /api/sales/93bf97bb-f760-48cc-8710-b6ac9a959e99","timestamp":"2025-06-17T13:58:25.763Z"}
+{"level":"info","message":"Sale 93bf97bb-f760-48cc-8710-b6ac9a959e99 fetched by user af5631f3-0c3a-44b5-a240-f4e44181068c","timestamp":"2025-06-17T13:58:25.768Z"}
+{"level":"info","message":"PATCH /api/sales/93bf97bb-f760-48cc-8710-b6ac9a959e99/status","timestamp":"2025-06-17T13:58:41.286Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-06-17T13:58:42.281Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-06-17T13:58:42.285Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-06-17T13:58:42.287Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-06-17T13:58:42.289Z"}
+{"level":"info","message":"GET /api/sales/93bf97bb-f760-48cc-8710-b6ac9a959e99","timestamp":"2025-06-17T13:59:18.474Z"}
+{"level":"info","message":"Sale 93bf97bb-f760-48cc-8710-b6ac9a959e99 fetched by user af5631f3-0c3a-44b5-a240-f4e44181068c","timestamp":"2025-06-17T13:59:18.478Z"}
+{"level":"info","message":"GET /api/sales/93bf97bb-f760-48cc-8710-b6ac9a959e99","timestamp":"2025-06-17T13:59:18.479Z"}
+{"level":"info","message":"Sale 93bf97bb-f760-48cc-8710-b6ac9a959e99 fetched by user af5631f3-0c3a-44b5-a240-f4e44181068c","timestamp":"2025-06-17T13:59:18.482Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-06-17T13:59:25.040Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-06-17T13:59:25.042Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-06-17T13:59:25.044Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-06-17T13:59:25.047Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-06-17T13:59:26.337Z"}
+{"level":"info","message":"Users list fetched","timestamp":"2025-06-17T13:59:26.353Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-06-17T13:59:26.354Z"}
+{"level":"info","message":"Users list fetched","timestamp":"2025-06-17T13:59:26.356Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-06-17T14:00:10.637Z"}
+{"level":"info","message":"Users list fetched","timestamp":"2025-06-17T14:00:10.639Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-06-17T14:00:13.081Z"}
+{"level":"info","message":"Users list fetched","timestamp":"2025-06-17T14:00:13.083Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-06-17T14:00:16.336Z"}
+{"level":"info","message":"Users list fetched","timestamp":"2025-06-17T14:00:16.338Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-06-17T14:00:19.570Z"}
+{"level":"info","message":"Users list fetched","timestamp":"2025-06-17T14:00:19.571Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-06-17T14:00:25.471Z"}
+{"level":"info","message":"Users list fetched","timestamp":"2025-06-17T14:00:25.472Z"}
+{"level":"info","message":"GET /api/users/me","timestamp":"2025-06-17T14:00:39.638Z"}
+{"level":"info","message":"GET /api/users/me","timestamp":"2025-06-17T14:00:39.646Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-06-17T14:00:39.755Z"}
+{"level":"info","message":"Users list fetched","timestamp":"2025-06-17T14:00:39.756Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-06-17T14:00:39.758Z"}
+{"level":"info","message":"Users list fetched","timestamp":"2025-06-17T14:00:39.759Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-06-17T14:00:59.543Z"}
+{"level":"info","message":"Users list fetched","timestamp":"2025-06-17T14:00:59.545Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-06-17T14:03:24.004Z"}
+{"level":"info","message":"Users list fetched","timestamp":"2025-06-17T14:03:24.006Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-06-17T14:04:02.116Z"}
+{"level":"info","message":"Users list fetched","timestamp":"2025-06-17T14:04:02.118Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-06-17T14:04:09.983Z"}
+{"level":"info","message":"Users list fetched","timestamp":"2025-06-17T14:04:09.985Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-06-17T14:04:18.668Z"}
+{"level":"info","message":"Users list fetched","timestamp":"2025-06-17T14:04:18.670Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-06-17T14:04:44.144Z"}
+{"level":"info","message":"Users list fetched","timestamp":"2025-06-17T14:04:44.155Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-06-17T14:04:54.338Z"}
+{"level":"info","message":"Users list fetched","timestamp":"2025-06-17T14:04:54.340Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-06-17T14:05:04.066Z"}
+{"level":"info","message":"Users list fetched","timestamp":"2025-06-17T14:05:04.068Z"}
+{"level":"info","message":"POST /api/sales","timestamp":"2025-06-17T14:05:26.562Z"}
+{"level":"info","message":"New sale created by user af5631f3-0c3a-44b5-a240-f4e44181068c","timestamp":"2025-06-17T14:05:26.581Z"}
+{"level":"info","message":"GET /api/sales/a8490e37-3bf1-430b-9369-f3ce2a018947","timestamp":"2025-06-17T14:05:26.590Z"}
+{"level":"info","message":"Sale a8490e37-3bf1-430b-9369-f3ce2a018947 fetched by user af5631f3-0c3a-44b5-a240-f4e44181068c","timestamp":"2025-06-17T14:05:26.594Z"}
+{"level":"info","message":"GET /api/sales/a8490e37-3bf1-430b-9369-f3ce2a018947","timestamp":"2025-06-17T14:05:26.596Z"}
+{"level":"info","message":"Sale a8490e37-3bf1-430b-9369-f3ce2a018947 fetched by user af5631f3-0c3a-44b5-a240-f4e44181068c","timestamp":"2025-06-17T14:05:26.601Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-06-17T14:06:47.148Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-06-17T14:06:47.152Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-06-17T14:06:47.154Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-06-17T14:06:47.158Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-06-17T14:06:48.274Z"}
+{"level":"info","message":"Users list fetched","timestamp":"2025-06-17T14:06:48.276Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-06-17T14:06:48.278Z"}
+{"level":"info","message":"Users list fetched","timestamp":"2025-06-17T14:06:48.281Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-06-17T14:13:34.329Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-06-17T14:13:34.340Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-06-17T14:13:34.342Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-06-17T14:13:34.343Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-06-17T14:14:06.520Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-06-17T14:14:27.664Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-06-17T14:15:18.923Z"}
+{"level":"info","message":"GET /api/users/me","timestamp":"2025-06-17T14:20:01.330Z"}
+{"level":"info","message":"GET /api/users/me","timestamp":"2025-06-17T14:20:01.374Z"}
+{"level":"info","message":"POST /api/auth/login","timestamp":"2025-06-17T14:22:13.045Z"}
+{"level":"info","message":"POST /api/auth/login","timestamp":"2025-06-17T14:22:15.208Z"}
+{"level":"info","message":"POST /api/auth/login","timestamp":"2025-06-17T14:22:17.875Z"}
+{"level":"info","message":"User admin@travelpro.com logged in successfully","timestamp":"2025-06-17T14:22:17.982Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-06-17T14:22:21.448Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-06-17T14:22:21.462Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-06-17T14:22:21.464Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-06-17T14:22:21.467Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-06-17T14:22:23.405Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-06-17T14:22:23.407Z"}
+{"level":"info","message":"Users list fetched","timestamp":"2025-06-17T14:22:23.409Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-06-17T14:22:23.411Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-06-17T14:22:23.414Z"}
+{"level":"info","message":"Users list fetched","timestamp":"2025-06-17T14:22:23.419Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-06-17T14:23:53.185Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-06-17T14:23:53.186Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-06-17T14:23:53.188Z"}
+{"level":"info","message":"Users list fetched","timestamp":"2025-06-17T14:23:53.192Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-06-17T14:23:53.195Z"}
+{"level":"info","message":"Users list fetched","timestamp":"2025-06-17T14:23:53.198Z"}
+{"level":"info","message":"POST /api/clients","timestamp":"2025-06-17T14:24:06.348Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-06-17T14:24:06.349Z"}
+{"level":"info","message":"Users list fetched","timestamp":"2025-06-17T14:24:06.352Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-06-17T14:24:12.109Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-06-17T14:24:12.109Z"}
+{"level":"info","message":"Users list fetched","timestamp":"2025-06-17T14:24:12.112Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-06-17T14:25:24.760Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-06-17T14:25:24.763Z"}
+{"level":"info","message":"Users list fetched","timestamp":"2025-06-17T14:25:24.790Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-06-17T14:25:24.829Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-06-17T14:25:24.829Z"}
+{"level":"info","message":"Users list fetched","timestamp":"2025-06-17T14:25:24.832Z"}
+{"level":"info","message":"POST /api/clients","timestamp":"2025-06-17T14:25:52.373Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-06-17T14:26:02.886Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-06-17T14:26:02.888Z"}
+{"level":"info","message":"Users list fetched","timestamp":"2025-06-17T14:26:02.890Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-06-17T14:26:31.063Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-06-17T14:26:31.064Z"}
+{"level":"info","message":"Users list fetched","timestamp":"2025-06-17T14:26:31.071Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-06-17T14:27:36.069Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-06-17T14:27:39.560Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-06-17T14:27:45.949Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-06-17T14:27:45.974Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-06-17T14:27:45.978Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-06-17T14:27:45.981Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-06-17T14:27:47.525Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-06-17T14:27:47.528Z"}
+{"level":"info","message":"Users list fetched","timestamp":"2025-06-17T14:27:47.542Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-06-17T14:27:47.544Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-06-17T14:27:47.546Z"}
+{"level":"info","message":"Users list fetched","timestamp":"2025-06-17T14:27:47.550Z"}
+{"level":"info","message":"POST /api/clients","timestamp":"2025-06-17T14:28:10.787Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-06-17T14:30:05.403Z"}
+{"level":"info","message":"POST /api/auth/login","timestamp":"2025-06-17T14:30:10.616Z"}
+{"level":"info","message":"User admin@travelpro.com logged in successfully","timestamp":"2025-06-17T14:30:10.790Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-06-17T14:30:13.454Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-06-17T14:30:13.470Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-06-17T14:30:13.473Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-06-17T14:30:13.476Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-06-17T14:30:14.346Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-06-17T14:30:14.349Z"}
+{"level":"info","message":"Users list fetched","timestamp":"2025-06-17T14:30:14.365Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-06-17T14:30:14.368Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-06-17T14:30:14.370Z"}
+{"level":"info","message":"Users list fetched","timestamp":"2025-06-17T14:30:14.372Z"}
+{"level":"info","message":"POST /api/clients","timestamp":"2025-06-17T14:30:22.314Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-06-17T14:30:44.956Z"}
+{"level":"info","message":"POST /api/clients","timestamp":"2025-06-17T14:30:48.202Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-06-17T14:32:09.262Z"}
+{"level":"info","message":"POST /api/clients","timestamp":"2025-06-17T14:32:11.731Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-06-17T14:32:55.014Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-06-17T14:32:55.016Z"}
+{"level":"info","message":"Users list fetched","timestamp":"2025-06-17T14:32:55.032Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-06-17T14:33:34.974Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-06-17T14:33:34.977Z"}
+{"level":"info","message":"Users list fetched","timestamp":"2025-06-17T14:33:34.979Z"}
+{"level":"info","message":"POST /api/sales","timestamp":"2025-06-17T14:34:30.743Z"}
+{"level":"info","message":"POST /api/sales","timestamp":"2025-06-17T14:34:31.919Z"}
+{"level":"info","message":"POST /api/sales","timestamp":"2025-06-17T14:34:32.073Z"}
+{"level":"info","message":"POST /api/sales","timestamp":"2025-06-17T14:34:32.214Z"}
+{"level":"info","message":"POST /api/sales","timestamp":"2025-06-17T14:34:38.255Z"}
+{"level":"info","message":"POST /api/sales","timestamp":"2025-06-17T14:34:49.150Z"}
+{"level":"info","message":"POST /api/sales","timestamp":"2025-06-17T14:34:58.355Z"}
+{"level":"info","message":"POST /api/sales","timestamp":"2025-06-17T14:36:38.029Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-06-17T14:36:56.613Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-06-17T14:36:56.616Z"}
+{"level":"info","message":"Users list fetched","timestamp":"2025-06-17T14:36:56.617Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-06-17T14:36:56.644Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-06-17T14:36:56.645Z"}
+{"level":"info","message":"Users list fetched","timestamp":"2025-06-17T14:36:56.646Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-06-17T14:37:31.348Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-06-17T14:37:31.350Z"}
+{"level":"info","message":"Users list fetched","timestamp":"2025-06-17T14:37:31.436Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-06-17T14:37:31.439Z"}
+{"level":"info","message":"Users list fetched","timestamp":"2025-06-17T14:37:31.448Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-06-17T14:37:31.464Z"}
+{"level":"info","message":"GET /api/users/me","timestamp":"2025-06-17T14:37:39.844Z"}
+{"level":"info","message":"GET /api/users/me","timestamp":"2025-06-17T14:37:39.856Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-06-17T14:37:40.004Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-06-17T14:37:40.006Z"}
+{"level":"info","message":"Users list fetched","timestamp":"2025-06-17T14:37:40.006Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-06-17T14:37:40.009Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-06-17T14:37:40.011Z"}
+{"level":"info","message":"Users list fetched","timestamp":"2025-06-17T14:37:40.011Z"}
+{"level":"info","message":"GET /api/users/me","timestamp":"2025-06-17T14:37:46.463Z"}
+{"level":"info","message":"GET /api/users/me","timestamp":"2025-06-17T14:37:46.467Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-06-17T14:37:46.654Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-06-17T14:37:46.656Z"}
+{"level":"info","message":"Users list fetched","timestamp":"2025-06-17T14:37:46.657Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-06-17T14:37:46.662Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-06-17T14:37:46.664Z"}
+{"level":"info","message":"Users list fetched","timestamp":"2025-06-17T14:37:46.665Z"}
+{"level":"info","message":"POST /api/sales","timestamp":"2025-06-17T14:38:42.122Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-06-17T14:39:05.881Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-06-17T14:39:05.882Z"}
+{"level":"info","message":"Users list fetched","timestamp":"2025-06-17T14:39:05.905Z"}
+{"level":"info","message":"POST /api/sales","timestamp":"2025-06-17T14:39:39.723Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-06-17T14:41:27.114Z"}
+{"level":"info","message":"POST /api/sales","timestamp":"2025-06-17T14:41:29.377Z"}
+{"level":"info","message":"New sale created by user e104f2f9-c685-41a9-b7b3-0158b818c5e9","timestamp":"2025-06-17T14:41:29.430Z"}
+{"level":"info","message":"GET /api/sales/5df1fe90-c501-4fea-9b7a-d3a00ed8cfec","timestamp":"2025-06-17T14:41:29.454Z"}
+{"level":"info","message":"Sale 5df1fe90-c501-4fea-9b7a-d3a00ed8cfec fetched by user e104f2f9-c685-41a9-b7b3-0158b818c5e9","timestamp":"2025-06-17T14:41:29.461Z"}
+{"level":"info","message":"GET /api/sales/5df1fe90-c501-4fea-9b7a-d3a00ed8cfec","timestamp":"2025-06-17T14:41:29.468Z"}
+{"level":"info","message":"Sale 5df1fe90-c501-4fea-9b7a-d3a00ed8cfec fetched by user e104f2f9-c685-41a9-b7b3-0158b818c5e9","timestamp":"2025-06-17T14:41:29.472Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-06-17T14:41:38.523Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-06-17T14:41:38.533Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-06-17T14:41:38.537Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-06-17T14:41:38.544Z"}
+{"level":"info","message":"GET /api/users/me","timestamp":"2025-06-17T14:41:42.405Z"}
+{"level":"info","message":"GET /api/users/me","timestamp":"2025-06-17T14:41:42.428Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-06-17T14:41:42.786Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-06-17T14:41:42.799Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-06-17T14:41:42.806Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-06-17T14:41:42.823Z"}
+{"level":"info","message":"GET /api/users/me","timestamp":"2025-06-17T14:44:21.209Z"}
+{"level":"info","message":"GET /api/users/me","timestamp":"2025-06-17T14:44:21.222Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-06-17T14:44:21.384Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-06-17T14:44:21.393Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-06-17T14:44:21.395Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-06-17T14:44:21.398Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-06-17T14:46:10.826Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-06-17T14:46:10.829Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-06-17T14:46:10.832Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-06-17T14:46:10.835Z"}
+{"level":"info","message":"GET /api/users/me","timestamp":"2025-06-17T14:47:07.908Z"}
+{"level":"info","message":"GET /api/users/me","timestamp":"2025-06-17T14:47:07.999Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-06-17T14:47:09.239Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-06-17T14:47:09.256Z"}
+{"level":"info","message":"POST /api/clients","timestamp":"2025-06-17T14:47:19.459Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-06-17T14:47:49.035Z"}
+{"level":"info","message":"POST /api/clients","timestamp":"2025-06-17T14:47:50.574Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-06-17T14:47:50.615Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-06-17T14:47:50.624Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-06-17T14:48:04.725Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-06-17T14:48:04.745Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-06-17T14:48:04.747Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-06-17T14:48:04.752Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-06-17T14:48:06.491Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-06-17T14:48:06.497Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-06-17T14:49:31.476Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-06-17T14:49:31.481Z"}
+{"level":"info","message":"GET /api/clients/1","timestamp":"2025-06-17T14:49:32.606Z"}
+{"level":"info","message":"GET /api/clients/1","timestamp":"2025-06-17T14:49:32.613Z"}
+{"level":"info","message":"PUT /api/clients/1","timestamp":"2025-06-17T14:49:34.265Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-06-17T14:49:34.281Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-06-17T14:49:34.298Z"}
+{"level":"info","message":"GET /api/clients/1","timestamp":"2025-06-17T14:49:35.556Z"}
+{"level":"info","message":"GET /api/clients/1","timestamp":"2025-06-17T14:49:35.560Z"}
+{"level":"info","message":"PUT /api/clients/1","timestamp":"2025-06-17T14:49:38.681Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-06-17T14:49:38.702Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-06-17T14:49:38.708Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-06-17T14:49:42.428Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-06-17T14:49:42.432Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-06-17T14:49:44.225Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-06-17T14:49:44.229Z"}
+{"level":"info","message":"GET /api/clients/a3513a85-ccbc-4b21-89d5-e847d1451c69","timestamp":"2025-06-17T14:49:45.229Z"}
+{"level":"info","message":"GET /api/clients/a3513a85-ccbc-4b21-89d5-e847d1451c69","timestamp":"2025-06-17T14:49:45.233Z"}
+{"level":"info","message":"PUT /api/clients/a3513a85-ccbc-4b21-89d5-e847d1451c69","timestamp":"2025-06-17T14:49:49.172Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-06-17T14:49:49.184Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-06-17T14:49:49.190Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-06-17T14:49:57.459Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-06-17T14:50:19.102Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-06-17T14:50:26.578Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-06-17T14:51:16.760Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-06-17T14:51:16.766Z"}
+{"level":"info","message":"DELETE /api/clients/afebb343-95e8-4164-9fe9-d04da7fa6f96","timestamp":"2025-06-17T14:51:46.994Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-06-17T14:51:49.880Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-06-17T14:52:12.309Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-06-17T14:52:36.182Z"}
+{"level":"info","message":"GET /api/users/me","timestamp":"2025-06-17T14:52:56.186Z"}
+{"level":"info","message":"GET /api/users/me","timestamp":"2025-06-17T14:52:56.198Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-06-17T14:52:56.206Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-06-17T14:52:56.221Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-06-17T14:53:17.406Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-06-17T14:53:29.143Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-06-17T14:53:36.495Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-06-17T14:53:44.546Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-06-17T14:53:55.130Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-06-17T14:53:55.217Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-06-17T14:54:01.477Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-06-17T14:54:14.910Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-06-17T14:54:18.851Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-06-17T14:54:18.946Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-06-17T14:54:22.817Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-06-17T14:54:22.820Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-06-17T14:55:01.808Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-06-17T14:55:01.813Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-06-17T14:55:25.439Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-06-17T14:55:25.442Z"}
+{"level":"info","message":"GET /api/clients/1","timestamp":"2025-06-17T14:55:27.856Z"}
+{"level":"info","message":"GET /api/clients/1","timestamp":"2025-06-17T14:55:27.860Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-06-17T14:55:29.764Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-06-17T14:55:29.766Z"}
+{"level":"info","message":"GET /api/clients/1","timestamp":"2025-06-17T14:55:54.669Z"}
+{"level":"info","message":"GET /api/clients/1","timestamp":"2025-06-17T14:55:54.672Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-06-17T14:55:59.220Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-06-17T14:55:59.223Z"}
+{"level":"info","message":"GET /api/clients/1","timestamp":"2025-06-17T14:56:13.002Z"}
+{"level":"info","message":"GET /api/clients/1","timestamp":"2025-06-17T14:56:13.005Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-06-17T14:56:20.572Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-06-17T14:56:20.575Z"}
+{"level":"info","message":"GET /api/clients/1","timestamp":"2025-06-17T14:56:21.671Z"}
+{"level":"info","message":"GET /api/clients/1","timestamp":"2025-06-17T14:56:21.675Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-06-17T14:56:26.344Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-06-17T14:56:26.347Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-06-17T14:57:13.568Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-06-17T14:57:13.582Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-06-17T14:57:13.584Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-06-17T14:57:13.586Z"}
