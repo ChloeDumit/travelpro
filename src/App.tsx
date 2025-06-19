@@ -12,6 +12,7 @@ import { PaymentsListPage } from './pages/payments/payments-list';
 import { ClientsListPage } from './pages/clients/clients-list';
 import { NewClientPage } from './pages/clients/new-client';
 import { EditClientPage } from './pages/clients/edit-client';
+import { SaleEditPage } from './pages/sales/sale-edit';
 
 // Protected route component
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
@@ -57,6 +58,7 @@ function App() {
             <Route path="clients" element={<ClientsListPage />} />
             <Route path="clients/new" element={<NewClientPage />} />
             <Route path="clients/:id/edit" element={<EditClientPage />} />
+            <Route path="sales/:id/edit" element={<SaleEditPage />} />
             <Route path="*" element={<Navigate to="/dashboard" replace />} />
           </Route>
         </Routes>

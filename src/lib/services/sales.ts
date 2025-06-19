@@ -57,7 +57,7 @@ export const salesService = {
   // Update a sale
   async updateSale(id: string, saleData: Partial<Sale>) {
     const response = await fetch(`${API_URL}/sales/${id}`, {
-      method: 'PATCH',
+      method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${localStorage.getItem('auth_token')}`
@@ -86,8 +86,8 @@ export const salesService = {
 
   // Update sale status
   async updateSaleStatus(id: string, status: 'draft' | 'confirmed' | 'completed' | 'cancelled') {
-    const response = await fetch(`${API_URL}/sales/${id}/status`, {
-      method: 'PATCH',
+    const response = await fetch(`${API_URL}/sales/${id}`, {
+      method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${localStorage.getItem('auth_token')}`

@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import  { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { ArrowLeft, Edit, Printer, CreditCard, Ban, Check } from 'lucide-react';
-import { Header } from '../../components/layout/header';
+import { ArrowLeft, CreditCard, Ban, Check, Printer } from 'lucide-react';
 import { Button } from '../../components/ui/button';
 import { SaleSummary } from '../../components/sales/sale-summary';
 import { Sale } from '../../types';
@@ -17,9 +16,10 @@ export function SaleDetailPage() {
   useEffect(() => {
     const fetchSale = async () => {
       if (!id) return;
-      
+      debugger
       try {
         const data = await salesService.getSaleById(id);
+        debugger
         setSale(data);
       } catch (err) {
         setError('Failed to fetch sale details');
@@ -28,7 +28,6 @@ export function SaleDetailPage() {
         setLoading(false);
       }
     };
-
     fetchSale();
   }, [id]);
 
@@ -38,6 +37,7 @@ export function SaleDetailPage() {
     try {
       const updatedSale = await salesService.updateSaleStatus(id, status);
       setSale(updatedSale);
+      navigate(`/sales/${id}`);
     } catch (err) {
       console.error('Error updating sale status:', err);
     }
@@ -65,7 +65,7 @@ export function SaleDetailPage() {
       <div className="flex flex-wrap gap-2 justify-end">
         <Button variant="outline" size="sm">
           <CreditCard className="mr-2 h-4 w-4" />
-          Record Payment
+          Registrar Pago
         </Button>
         {sale.status !== 'completed' && (
           <Button 
@@ -74,17 +74,27 @@ export function SaleDetailPage() {
             onClick={() => handleStatusUpdate('completed')}
           >
             <Check className="mr-2 h-4 w-4" />
-            Mark as Completed
+            Completar Venta
           </Button>
         )}
-        {sale.status !== 'cancelled' && (
+        {sale.status !== 'cancelled' && sale.status !== 'completed' && (
           <Button 
             variant="danger" 
             size="sm"
             onClick={() => handleStatusUpdate('cancelled')}
           >
             <Ban className="mr-2 h-4 w-4" />
-            Cancel Sale
+            Cancelar Venta
+          </Button>
+        )}
+        {sale.status === 'completed' && (
+            <Button 
+            variant="outline" 
+            size="sm"
+            onClick={() => console.log('Generar Factura')}
+          >
+            <Printer className="mr-2 h-4 w-4" />
+            Generar Factura
           </Button>
         )}
       </div>

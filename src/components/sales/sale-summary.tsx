@@ -8,16 +8,19 @@ interface SaleSummaryProps {
 }
 
 export function SaleSummary({ sale }: SaleSummaryProps) {
+console.log(sale);
+  const items = sale.items;
+  const saleData = sale;
 
-  const items = sale.sale.items;
-  const saleData = sale.sale;
+  console.log(saleData);
+
   return (
     <div className="space-y-6">
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center justify-between">
-            <span>Venta #{sale.id}</span>
-            <Badge className={getStatusColor(sale.status)}>
+            <span>Venta #{saleData.id}</span>
+            <Badge className={getStatusColor(saleData.status)}>
               {saleData.status.charAt(0).toUpperCase() + saleData.status.slice(1)}
             </Badge>
           </CardTitle>

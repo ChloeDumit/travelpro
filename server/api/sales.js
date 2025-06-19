@@ -29,14 +29,18 @@ router.get('/', async (req, res) => {
 
 // Get a single sale by ID
 router.get('/:id', async (req, res) => {
+  console.log('req.params.id',req.params.id);
   try {
     const sale = await prisma.sale.findUnique({
       where: { id: req.params.id },
       include: {
         items: true,
         seller: true,
+        client: true,
       },
     });
+
+    console.log('sale',sale);
     if (!sale) {
       return res.status(404).json({ error: 'Sale not found' });
     }

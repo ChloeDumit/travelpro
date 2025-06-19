@@ -121,7 +121,7 @@ router.post('/', authenticate, requireRole([ROLES.SALES, ROLES.ADMIN]), async (r
 router.put('/:id', authenticate, requireRole([ROLES.SALES, ROLES.ADMIN]), async (req, res, next) => {
   try {
     const { id } = req.params;
-    const { amount, description } = req.body;
+    const { amount, description, status } = req.body;
     const userId = req.user.userId;
 
     // Check if sale exists and belongs to user
@@ -133,14 +133,18 @@ router.put('/:id', authenticate, requireRole([ROLES.SALES, ROLES.ADMIN]), async 
       throw new AppError(ERROR_MESSAGES.NOT_FOUND, HTTP_STATUS.NOT_FOUND);
     }
 
-    if (existingSale.userId !== userId) {
-      throw new AppError(ERROR_MESSAGES.FORBIDDEN, HTTP_STATUS.FORBIDDEN);
-    }
 
     const updatedSale = await prisma.sale.update({
       where: { id },
-      data: { amount, description }
+      data: { amount, description, status },
+      include: {
+        items: true,
+        seller: true,
+        client: true,
+      },
     });
+
+    console.log(updatedSale);
 
     logger.info(`Sale ${id} updated by user ${userId}`);
     res.status(HTTP_STATUS.OK).json({
@@ -217,7 +221,7 @@ router.get('/:id', authenticate, requireRole([ROLES.ADMIN, ROLES.SALES]), async 
     }
 
     logger.info(`Sale ${id} fetched by user ${userId}`);
-    res.status(HTTP_STATUS.OK).json({ sale });
+    res.status(HTTP_STATUS.OK).json(sale);
   } catch (error) {
     next(error);
   }
