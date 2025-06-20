@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
 import { Button } from '../../components/ui/button';
 import { SaleForm } from '../../components/sales/sale-form';
-import { SaleFormData, SaleItemFormData } from '../../types';
+import { Sale, SaleFormData, SaleItemFormData } from '../../types';
 import { salesService } from '../../lib/services/sales';
 import { Client } from '../../types/client';
 
@@ -12,20 +12,24 @@ export function SaleEditPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [initialData, setInitialData] = useState<any>(null);
-  const { id } = useParams();
+  const { id } = useParams<{ id: string }>();
 
   useEffect(() => {
-    const fetchInitialData = async () => {
+    const fetchSale = async () => {
       if (!id) return;
       try {
-        const sale = await salesService.getSaleById(id);
-        setInitialData(sale.sale);
+        const data = await salesService.getSaleById(id);
+        setInitialData(data);
       } catch (err) {
-        setError('Error fetching sale data');
+        setError('Failed to fetch sale details');
+        console.error('Error fetching sale:', err);
+      } finally {
+        setLoading(false);
       }
     };
-    fetchInitialData();
+    fetchSale();
   }, [id]);
+
 
   const handleSubmit = async (saleData: SaleFormData & { client: Client | null }, items: SaleItemFormData[]) => {
     if (!id) return;
@@ -35,19 +39,11 @@ export function SaleEditPage() {
     try {
       // Convert SaleFormData to Partial<Sale> format
       const updateData = {
-        passengerName: saleData.passengerName,
-        clientId: saleData.clientId,
-        travelDate: saleData.travelDate,
-        saleType: saleData.saleType,
-        region: saleData.region,
-        serviceType: saleData.serviceType,
-        currency: saleData.currency,
-        passengerCount: saleData.passengerCount,
-        totalCost: saleData.totalCost,
-        pendingBalance: saleData.totalCost - (saleData.totalSale || 0),
+        ...saleData,
+        items: items
       };
-      
-      const sale = await salesService.updateSale(id, updateData);
+      const sale = await salesService.updateSale(id, updateData as unknown as Sale);
+      console.log('edited sale', sale);
       navigate(`/sales/${sale.sale.id}`);
     } catch (err) {
       setError('Error al actualizar la venta');
@@ -77,7 +73,7 @@ export function SaleEditPage() {
         </div>
       )}
 
-      <SaleForm onSubmit={handleSubmit} initialData={initialData} />
+      <SaleForm onSubmit={handleSubmit} initialData={initialData} action="edit"/>
     </div>
   );
 }

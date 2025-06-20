@@ -29,14 +29,16 @@ interface SaleItemFormProps {
   isOpen: boolean;
   onClose: () => void;
   initialData?: Partial<SaleItemFormData>;
+  itemIndex?: number;
   setItems: (items: SaleItemFormData[]) => void;
   items: SaleItemFormData[];
 }
 
-export function SaleItemForm({ isOpen, onClose,  initialData, setItems, items }: SaleItemFormProps) {
+export function SaleItemForm({ isOpen, onClose, initialData, itemIndex, setItems, items }: SaleItemFormProps) {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors, isSubmitting },
   } = useForm<SaleItemFormData>({
     resolver: zodResolver(saleItemFormSchema),
@@ -58,6 +60,57 @@ export function SaleItemForm({ isOpen, onClose,  initialData, setItems, items }:
     },
   });
 
+  // Reset form when initialData changes
+  React.useEffect(() => {
+    if (initialData) {
+      // Helper function to format date for HTML date input
+      const formatDateForInput = (dateString: string | null | undefined): string => {
+        if (!dateString) return '';
+        try {
+          const date = new Date(dateString);
+          return date.toISOString().split('T')[0];
+        } catch {
+          return '';
+        }
+      };
+
+      reset({
+        classification: initialData.classification || '',
+        provider: initialData.provider || '',
+        operator: initialData.operator || '',
+        dateIn: formatDateForInput(initialData.dateIn),
+        dateOut: formatDateForInput(initialData.dateOut),
+        passengerCount: initialData.passengerCount || 1,
+        status: initialData.status || 'pending',
+        description: initialData.description || '',
+        salePrice: initialData.salePrice || 0,
+        saleCurrency: initialData.saleCurrency || 'USD',
+        costPrice: initialData.costPrice || 0,
+        costCurrency: initialData.costCurrency || 'USD',
+        reservationCode: initialData.reservationCode || '',
+        paymentDate: formatDateForInput(initialData.paymentDate),
+      });
+    } else {
+      // Reset to empty form when adding new item
+      reset({
+        classification: '',
+        provider: '',
+        operator: '',
+        dateIn: '',
+        dateOut: '',
+        passengerCount: 1,
+        status: 'pending',
+        description: '',
+        salePrice: 0,
+        saleCurrency: 'USD',
+        costPrice: 0,
+        costCurrency: 'USD',
+        reservationCode: '',
+        paymentDate: null,
+      });
+    }
+  }, [initialData, reset]);
+
   const statusOptions = [
     { value: 'pending', label: 'Pendiente' },
     { value: 'confirmed', label: 'Confirmado' },
@@ -71,7 +124,13 @@ export function SaleItemForm({ isOpen, onClose,  initialData, setItems, items }:
   ];
 
   const handleFormSubmit = (data: SaleItemFormData) => {
-    setItems([...items, data]);
+    if (initialData && typeof itemIndex === 'number') {
+      const updatedItems = [...items];
+      updatedItems[itemIndex] = data;
+      setItems(updatedItems);
+    } else {
+      setItems([...items, data]);
+    }
     onClose();
   };
 

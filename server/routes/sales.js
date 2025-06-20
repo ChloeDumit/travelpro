@@ -121,7 +121,7 @@ router.post('/', authenticate, requireRole([ROLES.SALES, ROLES.ADMIN]), async (r
 router.put('/:id', authenticate, requireRole([ROLES.SALES, ROLES.ADMIN]), async (req, res, next) => {
   try {
     const { id } = req.params;
-    const { amount, description, status } = req.body;
+    const body = req.body;
     const userId = req.user.userId;
 
     // Check if sale exists and belongs to user
@@ -129,14 +129,63 @@ router.put('/:id', authenticate, requireRole([ROLES.SALES, ROLES.ADMIN]), async 
       where: { id }
     });
 
+    console.log(req.body);
+
     if (!existingSale) {
       throw new AppError(ERROR_MESSAGES.NOT_FOUND, HTTP_STATUS.NOT_FOUND);
     }
 
+    // Prepare update data with proper date conversion and remove invalid fields
+    const updateData = {
+      passengerName: body.passengerName,
+      travelDate: body.travelDate ? new Date(body.travelDate) : undefined,
+      saleType: body.saleType,
+      region: body.region,
+      serviceType: body.serviceType,
+      currency: body.currency,
+      passengerCount: body.passengerCount,
+      totalCost: body.totalCost,
+      status: body.status,
+    };
+
+    // Only include fields that are actually present in the request
+    Object.keys(updateData).forEach(key => {
+      if (updateData[key] === undefined) {
+        delete updateData[key];
+      }
+    });
+
+    // Handle items update if provided
+    if (body.items && Array.isArray(body.items)) {
+      // Delete existing items
+      await prisma.saleItem.deleteMany({
+        where: { saleId: id }
+      });
+
+      // Add items to updateData
+      updateData.items = {
+        create: body.items.map(item => ({
+          classification: item.classification,
+          provider: item.provider,
+          operator: item.operator,
+          dateIn: new Date(item.dateIn),
+          dateOut: new Date(item.dateOut),
+          passengerCount: item.passengerCount,
+          status: item.status,
+          description: item.description,
+          salePrice: item.salePrice,
+          saleCurrency: item.saleCurrency,
+          costPrice: item.costPrice,
+          costCurrency: item.costCurrency,
+          reservationCode: item.reservationCode,
+          paymentDate: item.paymentDate ? new Date(item.paymentDate) : null,
+        })),
+      };
+    }
 
     const updatedSale = await prisma.sale.update({
       where: { id },
-      data: { amount, description, status },
+      data: updateData,
       include: {
         items: true,
         seller: true,
@@ -201,13 +250,8 @@ router.get('/:id', authenticate, requireRole([ROLES.ADMIN, ROLES.SALES]), async 
       where: { id },
       include: {
         items: true,
-        seller: {
-          select: {
-            id: true,
-            username: true,
-            email: true
-          }
-        }
+        seller: true,
+        client: true,
       }
     });
 

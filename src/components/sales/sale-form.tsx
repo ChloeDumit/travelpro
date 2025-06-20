@@ -9,7 +9,7 @@ import { saleTypeOptions, regionOptions, serviceTypeOptions, currencyOptions } f
 import { Card, CardHeader, CardTitle, CardContent } from '../ui/card';
 import { Pencil, Plus, Trash2 } from 'lucide-react';
 import { SaleItemForm } from './sale-item-form';
-import { SaleItemFormData, User, ClientFormData } from '../../types';
+import { SaleItemFormData, User, ClientFormData, SaleItem, Sale } from '../../types';
 import { usersService } from '../../lib/services/users';
 import { clientsService } from '../../lib/services/clients';
 import { Client } from '../../types/client';
@@ -35,10 +35,11 @@ type SaleFormData = z.infer<typeof saleFormSchema>;
 
 interface SaleFormProps {
   onSubmit: (data: SaleFormData & { client: Client | null }, items: SaleItemFormData[]) => void;
-  initialData?: Partial<SaleFormData>;
+  initialData?: Sale;
+  action: 'new' | 'edit';
 }
 
-export function SaleForm({ onSubmit, initialData }: SaleFormProps) {
+export function SaleForm({ onSubmit, initialData, action }: SaleFormProps) {
   const [items, setItems] = useState<SaleItemFormData[]>([]);
   const [users, setUsers] = useState<User[]>([]);
   const [showItemForm, setShowItemForm] = useState(false);
@@ -53,15 +54,15 @@ export function SaleForm({ onSubmit, initialData }: SaleFormProps) {
   const form = useForm<SaleFormData>({
     resolver: zodResolver(saleFormSchema),
     defaultValues: {
-      saleType: initialData?.saleType || 'individual',
-      serviceType: initialData?.serviceType || 'package',
-      region: initialData?.region || 'national',
-      currency: initialData?.currency || 'USD',
-      passengerCount: initialData?.passengerCount || 1,
-      passengerName: initialData?.passengerName || '',
-      clientId: initialData?.clientId || '',
-      travelDate: initialData?.travelDate || '',
-      seller: initialData?.seller || '',
+      saleType: 'individual',
+      serviceType: 'package',
+      region: 'national',
+      currency: 'USD',
+      passengerCount: 1,
+      passengerName: '',
+      clientId: '',
+      travelDate: '',
+      seller: '',
     },
   });
 
@@ -85,9 +86,62 @@ export function SaleForm({ onSubmit, initialData }: SaleFormProps) {
   };
 
   useEffect(() => {
+    if (initialData) {
+      const formattedDate = initialData.travelDate instanceof Date 
+        ? initialData.travelDate.toISOString().split('T')[0]
+        : new Date(initialData.travelDate).toISOString().split('T')[0];
+      form.reset({
+        passengerName: initialData.passengerName,
+        clientId: initialData.client.clientId,
+        travelDate: formattedDate,
+        saleType: initialData.saleType,
+        serviceType: initialData.serviceType,
+        region: initialData.region,
+        passengerCount: initialData.passengerCount,
+        currency: initialData.currency,
+        seller: initialData.seller.id,
+        totalCost: initialData.totalCost,
+        totalSale: initialData.totalCost - initialData.pendingBalance,
+      });
+
+      // Set selected client if available
+      if (initialData.client) {
+        setSelectedClient(initialData.client);
+      }
+
+      // Set items if available
+      if (initialData.items && initialData.items.length > 0) {
+        const formattedItems: SaleItemFormData[] = initialData.items.map((item: SaleItem) => ({
+          classification: item.classification,
+          provider: item.provider,
+          operator: item.operator,
+          dateIn: item.dateIn instanceof Date 
+            ? item.dateIn.toISOString().split('T')[0]
+            : new Date(item.dateIn).toISOString().split('T')[0],
+          dateOut: item.dateOut instanceof Date 
+            ? item.dateOut.toISOString().split('T')[0]
+            : new Date(item.dateOut).toISOString().split('T')[0],
+          passengerCount: item.passengerCount,
+          status: item.status,
+          description: item.description,
+          salePrice: item.salePrice,
+          saleCurrency: item.saleCurrency,
+          costPrice: item.costPrice,
+          costCurrency: item.costCurrency,
+          reservationCode: item.reservationCode || '',
+          paymentDate: item.paymentDate 
+            ? (item.paymentDate instanceof Date 
+              ? item.paymentDate.toISOString().split('T')[0]
+              : new Date(item.paymentDate).toISOString().split('T')[0])
+            : '',
+        }));
+        setItems(formattedItems);
+      }
+    }
     getUsers();
     getClients();
-  }, []);
+  }, [initialData, form]);
+
 
 
   const handleEditItem = (index: number) => {
@@ -124,7 +178,7 @@ export function SaleForm({ onSubmit, initialData }: SaleFormProps) {
     <div className="space-y-6">
       <Card>
         <CardHeader>
-          <CardTitle>Nuevo Registro de Venta</CardTitle>
+          <CardTitle>{action === 'new' ? 'Nuevo Registro de Venta' : 'Editar Venta'}</CardTitle>
         </CardHeader>
         <form onSubmit={form.handleSubmit(handleFormSubmit)}>
           <CardContent className="space-y-4">
@@ -296,6 +350,7 @@ export function SaleForm({ onSubmit, initialData }: SaleFormProps) {
           setEditingItemIndex(null);
         }}
         initialData={editingItemIndex !== null ? items[editingItemIndex] : undefined}
+        itemIndex={editingItemIndex !== null ? editingItemIndex : undefined}
         setItems={setItems}
         items={items}
       />

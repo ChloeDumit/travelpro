@@ -56,6 +56,7 @@ export const salesService = {
 
   // Update a sale
   async updateSale(id: string, saleData: Partial<Sale>) {
+    console.log('saleData', saleData);
     const response = await fetch(`${API_URL}/sales/${id}`, {
       method: 'PUT',
       headers: {

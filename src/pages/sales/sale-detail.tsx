@@ -1,6 +1,6 @@
 import  { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { ArrowLeft, CreditCard, Ban, Check, Printer } from 'lucide-react';
+import { ArrowLeft, CreditCard, Ban, Check, Printer, Pencil } from 'lucide-react';
 import { Button } from '../../components/ui/button';
 import { SaleSummary } from '../../components/sales/sale-summary';
 import { Sale } from '../../types';
@@ -16,10 +16,8 @@ export function SaleDetailPage() {
   useEffect(() => {
     const fetchSale = async () => {
       if (!id) return;
-      debugger
       try {
         const data = await salesService.getSaleById(id);
-        debugger
         setSale(data);
       } catch (err) {
         setError('Failed to fetch sale details');
@@ -36,8 +34,8 @@ export function SaleDetailPage() {
 
     try {
       const updatedSale = await salesService.updateSaleStatus(id, status);
-      setSale(updatedSale);
-      navigate(`/sales/${id}`);
+      setSale(updatedSale.sale);
+  
     } catch (err) {
       console.error('Error updating sale status:', err);
     }
@@ -51,6 +49,7 @@ export function SaleDetailPage() {
     return <div className="text-red-500">{error || 'Sale not found'}</div>;
   }
 
+
   return (
     <div className="space-y-6">
       <div className="flex gap-2 ">
@@ -58,7 +57,6 @@ export function SaleDetailPage() {
               <ArrowLeft className="mr-2 h-4 w-4" />
               Back
             </Button>
-            
           </div>
 
 
@@ -68,6 +66,7 @@ export function SaleDetailPage() {
           Registrar Pago
         </Button>
         {sale.status !== 'completed' && (
+          <>
           <Button 
             variant="success" 
             size="sm"
@@ -76,6 +75,15 @@ export function SaleDetailPage() {
             <Check className="mr-2 h-4 w-4" />
             Completar Venta
           </Button>
+          <Button 
+            variant="outline" 
+            size="sm"
+            onClick={() => navigate(`/sales/${id}/edit`)}
+          >
+            <Pencil  className="mr-2 h-4 w-4" />
+            Editar Venta
+          </Button>
+          </>
         )}
         {sale.status !== 'cancelled' && sale.status !== 'completed' && (
           <Button 
