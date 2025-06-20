@@ -3,7 +3,9 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft, CreditCard, Ban, Check, Printer, Pencil } from 'lucide-react';
 import { Button } from '../../components/ui/button';
 import { SaleSummary } from '../../components/sales/sale-summary';
-import { Sale } from '../../types';
+import { PaymentForm } from '../../components/sales/payment-form';
+import { PaymentHistory } from '../../components/sales/payment-history';
+import { Sale, Payment } from '../../types';
 import { salesService } from '../../lib/services/sales';
 
 export function SaleDetailPage() {
@@ -12,13 +14,14 @@ export function SaleDetailPage() {
   const [sale, setSale] = useState<Sale | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [showPaymentForm, setShowPaymentForm] = useState(false);
 
   useEffect(() => {
     const fetchSale = async () => {
       if (!id) return;
       try {
-        const data = await salesService.getSaleById(id);
-        setSale(data);
+        const saleData = await salesService.getSaleById(id);
+        setSale(saleData);
       } catch (err) {
         setError('Failed to fetch sale details');
         console.error('Error fetching sale:', err);
@@ -41,6 +44,18 @@ export function SaleDetailPage() {
     }
   };
 
+  const handlePaymentAdded = (payment: Payment) => {
+    if (sale) {
+      setSale(prev => prev ? { ...prev, payments: [payment, ...(prev.payments || [])] } : null);
+    }
+  };
+
+  // Calculate total sale amount from items
+  const calculateTotalSale = (sale: Sale) => {
+    if (!sale.items) return sale.totalCost;
+    return sale.items.reduce((total, item) => total + item.salePrice, 0);
+  };
+
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -49,6 +64,8 @@ export function SaleDetailPage() {
     return <div className="text-red-500">{error || 'Sale not found'}</div>;
   }
 
+  const totalSale = calculateTotalSale(sale);
+  const payments = sale.payments || [];
 
   return (
     <div className="space-y-6">
@@ -59,9 +76,12 @@ export function SaleDetailPage() {
             </Button>
           </div>
 
-
       <div className="flex flex-wrap gap-2 justify-end">
-        <Button variant="outline" size="sm">
+        <Button 
+          variant="outline" 
+          size="sm"
+          onClick={() => setShowPaymentForm(true)}
+        >
           <CreditCard className="mr-2 h-4 w-4" />
           Registrar Pago
         </Button>
@@ -108,6 +128,21 @@ export function SaleDetailPage() {
       </div>
 
       <SaleSummary sale={sale} />
+
+      <PaymentHistory 
+        payments={payments} 
+        totalSale={totalSale} 
+        currency={sale.currency} 
+      />
+
+      <PaymentForm
+        saleId={sale.id}
+        totalSale={totalSale}
+        currency={sale.currency}
+        onPaymentAdded={handlePaymentAdded}
+        onClose={() => setShowPaymentForm(false)}
+        isOpen={showPaymentForm}
+      />
     </div>
   );
 }

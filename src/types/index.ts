@@ -54,7 +54,7 @@ export interface Sale {
   items: SaleItem[];
   totalCost: number;
   pendingBalance: number;
-  
+  payments?: Payment[];
 }
 
 // Invoice types

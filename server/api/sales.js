@@ -27,6 +27,59 @@ router.get('/', async (req, res) => {
   }
 });
 
+// Get total sales - MUST be before /:id route
+router.get('/total', async (req, res) => {
+  try {
+    const totalSales = await prisma.sale.aggregate({
+      _sum: {
+        totalCost: true,
+      },
+    });
+    console.log('totalSales', totalSales);
+    res.json(totalSales._sum.totalCost || 0);
+  } catch (error) {
+    console.error('Error fetching total sales:', error);
+    res.status(500).json({ error: 'Failed to fetch total sales' });
+  }
+});
+
+// Get sales statistics - MUST be before /:id route
+router.get('/stats', async (req, res) => {
+  try {
+    const [totalSales, salesCount, salesByStatus] = await Promise.all([
+      // Total sales amount
+      prisma.sale.aggregate({
+        _sum: {
+          totalCost: true,
+        },
+      }),
+      // Total number of sales
+      prisma.sale.count(),
+      // Sales by status
+      prisma.sale.groupBy({
+        by: ['status'],
+        _count: {
+          status: true,
+        },
+      }),
+    ]);
+
+    const stats = {
+      totalSales: totalSales._sum.totalCost || 0,
+      salesCount: salesCount,
+      salesByStatus: salesByStatus.reduce((acc, item) => {
+        acc[item.status] = item._count.status;
+        return acc;
+      }, {}),
+    };
+
+    res.json(stats);
+  } catch (error) {
+    console.error('Error fetching sales statistics:', error);
+    res.status(500).json({ error: 'Failed to fetch sales statistics' });
+  }
+});
+
 // Get a single sale by ID
 router.get('/:id', async (req, res) => {
   console.log('req.params.id',req.params.id);
@@ -37,6 +90,7 @@ router.get('/:id', async (req, res) => {
         items: true,
         seller: true,
         client: true,
+        payments: true,
       },
     });
 

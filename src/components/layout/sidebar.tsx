@@ -81,18 +81,18 @@ export function Sidebar({ userRole }: SidebarProps) {
         <nav className="flex flex-col gap-1">
           <SidebarLink to="/dashboard">
             <Home size={20} />
-            {!collapsed && <span>Dashboard</span>}
+            {!collapsed && <span>Inicio</span>}
           </SidebarLink>
 
           {(userRole === 'admin' || userRole === 'sales') && (
             <>
               <SidebarLink to="/sales">
                 <ShoppingBag size={20} />
-                {!collapsed && <span>Sales</span>}
+                {!collapsed && <span>Ventas</span>}
               </SidebarLink>
               <SidebarLink to="/clients">
                 <Briefcase size={20} />
-                {!collapsed && <span>Clients</span>}
+                {!collapsed && <span>Clientes</span>}
               </SidebarLink>
               {/* <SidebarLink to="/clients">
                 <Users size={20} />
@@ -121,7 +121,7 @@ export function Sidebar({ userRole }: SidebarProps) {
           {userRole === 'admin' && (
             <SidebarLink to="/users">
               <Users size={20} />
-              {!collapsed && <span>Users</span>}
+              {!collapsed && <span>Usuarios</span>}
             </SidebarLink>
           )}
 
@@ -140,7 +140,7 @@ export function Sidebar({ userRole }: SidebarProps) {
           )}
         >
           <LogOut size={20} />
-          {!collapsed && <span>Logout</span>}
+          {!collapsed && <span>Cerrar Sesión</span>}
         </button>
       </div>
     </div>

@@ -90,16 +90,9 @@ console.log(sale);
         </CardHeader>
         <CardContent>
           <div className="space-y-2">
- 
             <div className="flex justify-between py-2 border-b">
               <span className="font-medium">Costo Total:</span>
               <span>{formatCurrency(saleData.totalCost, saleData.currency)}</span>
-            </div>
-            <div className="flex justify-between py-2 text-lg font-bold">
-              <span>Balance Pendiente:</span>
-                <span className={saleData.pendingBalance > 0 ? 'text-danger-600' : 'text-success-600'}>
-                {formatCurrency(saleData.pendingBalance, saleData.currency)}
-              </span>
             </div>
           </div>
         </CardContent>

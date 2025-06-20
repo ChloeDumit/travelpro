@@ -7,6 +7,7 @@ import authRoutes from './routes/auth.js';
 import userRoutes from './routes/users.js';
 import salesRoutes from './routes/sales.js';
 import clientsRoutes from './routes/clients.js';
+import paymentsRoutes from './api/payments.js';
 
 const app = express();
 
@@ -28,6 +29,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/sales', salesRoutes);
 app.use('/api/clients', clientsRoutes);
+app.use('/api/payments', paymentsRoutes);
 
 // Error handling
 app.use(errorHandler);

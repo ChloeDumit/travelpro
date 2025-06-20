@@ -32,7 +32,6 @@ export function NewSalePage() {
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
-        <h2 className="text-lg font-medium">Nueva Venta</h2>
         <Button variant="outline" size="sm" onClick={() => navigate('/sales')}>
           <ArrowLeft className="mr-2 h-4 w-4" />
           Volver
@@ -45,7 +44,7 @@ export function NewSalePage() {
         </div>
       )}
 
-      <SaleForm onSubmit={handleSubmit} />
+      <SaleForm onSubmit={handleSubmit} action="new" />
     </div>
   );
 }

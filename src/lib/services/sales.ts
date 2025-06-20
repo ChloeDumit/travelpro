@@ -32,6 +32,79 @@ export const salesService = {
     return response.json();
   },
 
+  // Get total sales amount
+  async getTotalSales() {
+    const response = await fetch(`${API_URL}/sales/total`, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('auth_token')}`
+      },
+    });
+    console.log('response total sales', response);
+    if (!response.ok) {
+      throw new Error('Failed to fetch total sales');
+    }
+    const data = await response.json();
+    return data.total || 0;
+  },
+
+  // Get sales statistics
+  async getSalesStats() {
+    const response = await fetch(`${API_URL}/sales/stats`, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('auth_token')}`
+      },
+    });
+    console.log('response sales stats', response);
+    if (!response.ok) {
+      throw new Error('Failed to fetch sales statistics');
+    }
+    return response.json();
+  },
+
+  // Get sales statistics by type
+  async getSalesStatsByType() {
+    const response = await fetch(`${API_URL}/sales/stats-by-type`, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('auth_token')}`
+      },
+    });
+    if (!response.ok) {
+      throw new Error('Failed to fetch sales statistics by type');
+    }
+    return response.json();
+  },
+
+  // Get upcoming departures
+  async getUpcomingDepartures() {
+    const response = await fetch(`${API_URL}/sales/upcoming-departures`, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('auth_token')}`
+      },
+    });
+    if (!response.ok) {
+      throw new Error('Failed to fetch upcoming departures');
+    }
+    return response.json();
+  },
+
+  // Get sales overview data for chart
+  async getSalesOverview() {
+    const response = await fetch(`${API_URL}/sales/sales-overview`, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('auth_token')}`
+      },
+    });
+    if (!response.ok) {
+      throw new Error('Failed to fetch sales overview data');
+    }
+    return response.json();
+  },
+
   // Create a new sale
   async createSale(saleData: SaleFormData & { client: Client | null }, items: SaleItemFormData[]) {
     const response = await fetch(`${API_URL}/sales`, {
@@ -100,4 +173,7 @@ export const salesService = {
     }
     return response.json();
   },
+
+ 
 }; 
+

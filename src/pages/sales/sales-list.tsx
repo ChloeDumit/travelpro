@@ -1,8 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import type { JSX } from 'react';
+import  { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Plus, Filter, Download, ArrowLeft } from 'lucide-react';
-import { Header } from '../../components/layout/header';
+import { Plus,  } from 'lucide-react';
 import { Button } from '../../components/ui/button';
 import { Badge } from '../../components/ui/badge';
 import { Card } from '../../components/ui/card';
@@ -57,10 +55,10 @@ export function SalesListPage() {
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
-        <h2 className="text-lg font-medium">Sales</h2>
+        <h2 className="text-lg font-medium">Ventas</h2>
         <Button variant='default' size="sm" onClick={() => navigate('/sales/new')}>
           <Plus className="mr-2 h-4 w-4" />
-          New Sale
+          Nueva Venta
         </Button>
       
       </div>
@@ -72,35 +70,35 @@ export function SalesListPage() {
             size="sm"
             onClick={() => handleStatusFilter('all')}
           >
-            All Sales
+            Todas las Ventas
           </Button>
           <Button 
             variant={statusFilter === 'draft' ? 'default' : 'ghost'} 
             size="sm"
             onClick={() => handleStatusFilter('draft')}
           >
-            Drafts
+            Borradores
           </Button>
           <Button 
             variant={statusFilter === 'confirmed' ? 'default' : 'ghost'} 
             size="sm"
             onClick={() => handleStatusFilter('confirmed')}
           >
-            Confirmed
+            Confirmadas
           </Button>
           <Button 
             variant={statusFilter === 'completed' ? 'default' : 'ghost'} 
             size="sm"
             onClick={() => handleStatusFilter('completed')}
           >
-            Completed
+            Completadas
           </Button>
           <Button 
             variant={statusFilter === 'cancelled' ? 'default' : 'ghost'} 
             size="sm"
             onClick={() => handleStatusFilter('cancelled')}
           >
-            Cancelled
+            Canceladas
           </Button>
         </div>
         
@@ -128,54 +126,48 @@ export function SalesListPage() {
                   </div>
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4">
                     <div>
-                      <p className="text-sm text-gray-500">Sale ID</p>
+                      <p className="text-sm text-gray-500">ID de Venta</p>
                       <p className="text-sm font-medium">#{sale.id}</p>
                     </div>
                     <div>
-                      <p className="text-sm text-gray-500">Client ID</p>
+                      <p className="text-sm text-gray-500">ID de Cliente</p>
                       <p className="text-sm font-medium">{sale.clientId}</p>
                     </div>
                     <div>
-                      <p className="text-sm text-gray-500">Creation Date</p>
+                      <p className="text-sm text-gray-500">Fecha de Creación</p>
                       <p className="text-sm">{formatDate(sale.creationDate)}</p>
                     </div>
                     <div>
-                      <p className="text-sm text-gray-500">Travel Date</p>
+                      <p className="text-sm text-gray-500">Fecha de Viaje</p>
                       <p className="text-sm">{formatDate(sale.travelDate)}</p>
                     </div>
                   </div>
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4">
                     <div>
-                      <p className="text-sm text-gray-500">Type</p>
+                      <p className="text-sm text-gray-500">Tipo</p>
                       <p className="text-sm capitalize">{sale.saleType}</p>
                     </div>
                     <div>
-                      <p className="text-sm text-gray-500">Service</p>
+                      <p className="text-sm text-gray-500">Servicio</p>
                       <p className="text-sm capitalize">{sale.serviceType}</p>
                     </div>
                     <div>
-                      <p className="text-sm text-gray-500">Region</p>
+                      <p className="text-sm text-gray-500">Región</p>
                       <p className="text-sm capitalize">{sale.region}</p>
                     </div>
                     <div>
-                      <p className="text-sm text-gray-500">Passengers</p>
+                      <p className="text-sm text-gray-500">Pasajeros</p>
                       <p className="text-sm">{sale.passengerCount}</p>
                     </div>
                   </div>
                 </div>
                 <div className="md:w-64 flex flex-col justify-between border-t pt-4 md:border-t-0 md:pt-0 md:border-l md:pl-4">
                   <div>
-                    <p className="text-sm text-gray-500">Total Cost</p>
+                    <p className="text-sm text-gray-500">Total Costo</p>
                     <p className="text-lg font-bold">{formatCurrency(sale.totalCost, sale.currency)}</p>
                   </div>
                   <div>
-                    <p className="text-sm text-gray-500">Balance Due</p>
-                    <p className={`text-sm font-medium ${sale.pendingBalance > 0 ? 'text-danger-600' : 'text-success-600'}`}>
-                      {formatCurrency(sale.pendingBalance, sale.currency)}
-                    </p>
-                  </div>
-                  <div>
-                    <p className="text-sm text-gray-500">Seller</p>
+                    <p className="text-sm text-gray-500">Vendedor</p>
                     <p className="text-sm">{sale.seller.username}</p>
                   </div>
                 </div>
