@@ -1,7 +1,7 @@
 import { Sale, SaleFormData, SaleItemFormData } from '../../types';
 import { Client } from '../../types/client';
 
-const API_URL = 'http://localhost:3001/api';
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001/api';
 
 export const salesService = {
   // Get all sales

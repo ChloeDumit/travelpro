@@ -8,13 +8,15 @@ import userRoutes from './routes/users.js';
 import salesRoutes from './routes/sales.js';
 import clientsRoutes from './routes/clients.js';
 import paymentsRoutes from './api/payments.js';
+import dotenv from 'dotenv';
+dotenv.config();
 
 const app = express();
 
 // Middleware
 app.use(express.json());
 app.use(cors({
-  origin: config.corsOrigin,
+  origin: process.env.FRONTEND_URL || '*',
   credentials: true
 }));
 
@@ -35,6 +37,7 @@ app.use('/api/payments', paymentsRoutes);
 app.use(errorHandler);
 
 // Start server
-app.listen(config.port, () => {
-  logger.info(`Server running on port ${config.port}`);
+const PORT = process.env.PORT || config.port || 3001;
+app.listen(PORT, () => {
+  logger.info(`Server running on port ${PORT}`);
 });
