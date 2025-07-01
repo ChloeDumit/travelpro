@@ -111,11 +111,10 @@ export function LoginPage() {
       <p className="mt-6 text-center text-sm text-primary-100">
         Demo logins: 
         <br />
-        <code className="bg-primary-700/50 px-2 py-1 rounded text-white">admin@travelpro.com / admin123</code>
-        {/* <br />
+        <code className="bg-primary-700/50 px-2 py-1 rounded text-white">admin@travelpro.com / password</code>
+         <br />
         <code className="bg-primary-700/50 px-2 py-1 rounded text-white">sales@example.com / password</code>
         <br />
-        <code className="bg-primary-700/50 px-2 py-1 rounded text-white">finance@example.com / password</code> */}
       </p>
     </div>
   );
