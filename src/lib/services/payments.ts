@@ -5,7 +5,7 @@ const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001/api';
 export const paymentsService = {
   // Get payments for a specific sale
   async getPaymentsBySaleId(saleId: string) {
-    const response = await fetch(`${API_URL}/payments/sale/${saleId}`, {
+    const response = await fetch(`${API_URL}/api/payments/sale/${saleId}`, {
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${localStorage.getItem('auth_token')}`
@@ -26,7 +26,7 @@ export const paymentsService = {
     method: 'creditCard' | 'cash' | 'transfer';
     reference: string;
   }) {
-    const response = await fetch(`${API_URL}/payments`, {
+    const response = await fetch(`${API_URL}/api/payments`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -42,7 +42,7 @@ export const paymentsService = {
 
   // Update payment status
   async updatePaymentStatus(id: string, status: 'pending' | 'confirmed') {
-    const response = await fetch(`${API_URL}/payments/${id}/status`, {
+    const response = await fetch(`${API_URL}/api/payments/${id}/status`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
@@ -58,7 +58,7 @@ export const paymentsService = {
 
   // Delete a payment
   async deletePayment(id: string) {
-    const response = await fetch(`${API_URL}/payments/${id}`, {
+    const response = await fetch(`${API_URL}/api/payments/${id}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',

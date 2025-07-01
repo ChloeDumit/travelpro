@@ -6,7 +6,7 @@ const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001/api';
 export const salesService = {
   // Get all sales
   async getAllSales() {
-    const response = await fetch(`${API_URL}/sales`, {
+    const response = await fetch(`${API_URL}/api/sales`, {
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${localStorage.getItem('auth_token')}`
@@ -20,7 +20,7 @@ export const salesService = {
 
   // Get a single sale by ID
   async getSaleById(id: string) {
-    const response = await fetch(`${API_URL}/sales/${id}`, {
+    const response = await fetch(`${API_URL}/api/sales/${id}`, {
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${localStorage.getItem('auth_token')}`
@@ -34,7 +34,7 @@ export const salesService = {
 
   // Get total sales amount
   async getTotalSales() {
-    const response = await fetch(`${API_URL}/sales/total`, {
+    const response = await fetch(`${API_URL}/api/sales/total`, {
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${localStorage.getItem('auth_token')}`
@@ -50,7 +50,7 @@ export const salesService = {
 
   // Get sales statistics
   async getSalesStats() {
-    const response = await fetch(`${API_URL}/sales/stats`, {
+    const response = await fetch(`${API_URL}/api/sales/stats`, {
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${localStorage.getItem('auth_token')}`
@@ -65,7 +65,7 @@ export const salesService = {
 
   // Get sales statistics by type
   async getSalesStatsByType() {
-    const response = await fetch(`${API_URL}/sales/stats-by-type`, {
+    const response = await fetch(`${API_URL}/api/sales/stats-by-type`, {
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${localStorage.getItem('auth_token')}`
@@ -79,7 +79,7 @@ export const salesService = {
 
   // Get upcoming departures
   async getUpcomingDepartures() {
-    const response = await fetch(`${API_URL}/sales/upcoming-departures`, {
+    const response = await fetch(`${API_URL}/api/sales/upcoming-departures`, {
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${localStorage.getItem('auth_token')}`
@@ -93,7 +93,7 @@ export const salesService = {
 
   // Get sales overview data for chart
   async getSalesOverview() {
-    const response = await fetch(`${API_URL}/sales/sales-overview`, {
+    const response = await fetch(`${API_URL}/api/sales/sales-overview`, {
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${localStorage.getItem('auth_token')}`
@@ -107,7 +107,7 @@ export const salesService = {
 
   // Create a new sale
   async createSale(saleData: SaleFormData & { client: Client | null }, items: SaleItemFormData[]) {
-    const response = await fetch(`${API_URL}/sales`, {
+    const response = await fetch(`${API_URL}/api/sales`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -130,7 +130,7 @@ export const salesService = {
   // Update a sale
   async updateSale(id: string, saleData: Partial<Sale>) {
     console.log('saleData', saleData);
-    const response = await fetch(`${API_URL}/sales/${id}`, {
+    const response = await fetch(`${API_URL}/api/sales/${id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -146,7 +146,7 @@ export const salesService = {
 
   // Delete a sale
   async deleteSale(id: string) {
-    const response = await fetch(`${API_URL}/sales/${id}`, {
+    const response = await fetch(`${API_URL}/api/sales/${id}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
@@ -160,7 +160,7 @@ export const salesService = {
 
   // Update sale status
   async updateSaleStatus(id: string, status: 'draft' | 'confirmed' | 'completed' | 'cancelled') {
-    const response = await fetch(`${API_URL}/sales/${id}`, {
+    const response = await fetch(`${API_URL}/api/sales/${id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',

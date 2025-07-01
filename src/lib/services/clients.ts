@@ -4,7 +4,7 @@ const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001/api';
 
 export const clientsService = {
   getAllClients: async () => {
-    const response = await fetch(`${API_URL}/clients`, {
+    const response = await fetch(`${API_URL}/api/clients`, {
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${localStorage.getItem('auth_token')}`
@@ -17,7 +17,7 @@ export const clientsService = {
   },
 
   createClient: async (data: ClientFormData) => {
-    const response = await fetch(`${API_URL}/clients`, {
+    const response = await fetch(`${API_URL}/api/clients`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -33,7 +33,7 @@ export const clientsService = {
   },
 
   updateClient: async (id: string, data: Partial<ClientFormData>) => {
-    const response = await fetch(`${API_URL}/clients/${id}`, {
+    const response = await fetch(`${API_URL}/api/clients/${id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -49,7 +49,7 @@ export const clientsService = {
   },
 
   deleteClient: async (id: string) => {
-    const response = await fetch(`${API_URL}/clients/${id}`, {
+    const response = await fetch(`${API_URL}/api/clients/${id}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
@@ -64,7 +64,7 @@ export const clientsService = {
   },
 
   getClientById: async (id: string) => {
-    const response = await fetch(`${API_URL}/clients/${id}`, {
+    const response = await fetch(`${API_URL}/api/clients/${id}`, {
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${localStorage.getItem('auth_token')}`
