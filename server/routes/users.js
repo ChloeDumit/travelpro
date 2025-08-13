@@ -18,6 +18,9 @@ router.get('/', authenticate, requireRole([ROLES.ADMIN, ROLES.SALES]), async (re
         email: true,
         role: true,
         createdAt: true,
+      },
+      where: {
+        companyId: req.user.companyId
       }
     });
 
@@ -38,7 +41,8 @@ router.get('/me', authenticate, async (req, res, next) => {
         username: true,
         email: true,
         role: true,
-        createdAt: true
+        createdAt: true,
+        companyId: true
       }
     });
 
@@ -66,7 +70,8 @@ router.put('/me', authenticate, async (req, res, next) => {
         username: true,
         email: true,
         role: true,
-        updatedAt: true
+        updatedAt: true,
+        companyId: true
       }
     });
 
@@ -86,7 +91,7 @@ router.delete('/:id', authenticate, requireRole([ROLES.ADMIN]), async (req, res,
     const { id } = req.params;
 
     await prisma.user.delete({
-      where: { id }
+      where: { id, companyId: req.user.companyId}
     });
 
     logger.info(`Admin deleted user ${id}`);

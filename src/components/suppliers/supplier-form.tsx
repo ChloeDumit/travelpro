@@ -4,35 +4,32 @@ import { z } from 'zod';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
 import { Card, CardHeader, CardContent } from '../ui/card';
-import { ClientFormData } from '../../types';
+import { SupplierFormData } from '../../types';
 
 // Helper for optional string that can be empty or min length 1
 const optionalNonEmptyString = (message: string) =>
   z.string().min(1, message).or(z.literal('')).optional();
 
-const clientFormSchema = z.object({
+const supplierFormSchema = z.object({
   name: z.string().min(1, 'Name is required'),
-  clientId: optionalNonEmptyString('Client ID must not be empty if provided'),
+  supplierId: optionalNonEmptyString('Supplier ID must not be empty if provided'),
   email: z.string().email('Invalid email address').or(z.literal('')).optional(),
   address: optionalNonEmptyString('Address must not be empty if provided'),
 });
 
-type ClientFormValues = z.infer<typeof clientFormSchema>;
+type SupplierFormValues = z.infer<typeof supplierFormSchema>;
 
-interface ClientFormProps {
-  onSubmit: (data: ClientFormData) => void;
-  initialData?: Partial<ClientFormData>;
+interface SupplierFormProps {
+  onSubmit: (data: SupplierFormData) => void;
+  initialData?: Partial<SupplierFormData>;
   submitLabel?: string;
 }
 
-export function ClientForm({ onSubmit, initialData, submitLabel = 'Save' }: ClientFormProps) {
-  const form = useForm<ClientFormValues>({
-    resolver: zodResolver(clientFormSchema),
+export function SupplierForm({ onSubmit, initialData, submitLabel = 'Save' }: SupplierFormProps) {
+  const form = useForm<SupplierFormValues>({
+    resolver: zodResolver(supplierFormSchema),
     defaultValues: {
       name: initialData?.name || '',
-      clientId: initialData?.clientId || '',
-      email: initialData?.email || '',
-      address: initialData?.address || '',
     },
   });
 
@@ -45,22 +42,6 @@ export function ClientForm({ onSubmit, initialData, submitLabel = 'Save' }: Clie
             label="Nombre"
             {...form.register('name')}
             error={form.formState.errors.name?.message}
-          />
-          <Input
-            label="ID/RUT"
-            {...form.register('clientId')}
-            error={form.formState.errors.clientId?.message}
-          />
-          <Input
-            label="Email"
-            type="email"
-            {...form.register('email')}
-            error={form.formState.errors.email?.message}
-          />
-          <Input
-            label="Dirección"
-            {...form.register('address')}
-            error={form.formState.errors.address?.message}
           />
           <div className="flex justify-end gap-2">
             <Button type="submit" disabled={form.formState.isSubmitting}>

@@ -1,68 +1,66 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Plus, Search, Filter, Download, Trash2, Pencil } from 'lucide-react';
+import { Plus, Search,  Trash2, Pencil } from 'lucide-react';
 import { Button } from '../../components/ui/button';
 import { Card } from '../../components/ui/card';
 import { Input } from '../../components/ui/input';
-import { clientsService } from '../../lib/services/clients';
-import { Client } from '../../types/client';
+import { suppliersService } from '../../lib/services/suppliers';
+import { Supplier } from '../../types/supplier';
 import { ConfirmModal } from '../../components/ui/confirm-modal';
 
-export function ClientsListPage() {
+export function SuppliersListPage() {
   const navigate = useNavigate();
-  const [clients, setClients] = useState<Client[]>([]);
+  const [suppliers, setSuppliers] = useState<Supplier[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
-  const [clientToDelete, setClientToDelete] = useState<Client | null>(null);
+  const [supplierToDelete, setSupplierToDelete] = useState<Supplier | null>(null);
   const [isDeleting, setIsDeleting] = useState(false);
 
   useEffect(() => {
-    loadClients();
+    loadSuppliers();
   }, []);
 
-  const loadClients = async () => {
+  const loadSuppliers = async () => {
     try {
       setLoading(true);
-      const response = await clientsService.getAllClients();
-      setClients(response.clients || response);
+      const response = await suppliersService.getAllSuppliers();
+      setSuppliers(response.suppliers || response);
     } catch (err) {
-      setError('Error loading clients');
-      console.error('Error loading clients:', err);
+      setError('Error loading suppliers');
+      console.error('Error loading suppliers:', err);
     } finally {
       setLoading(false);
     }
   };
 
   const handleDelete = async () => {
-    if (!clientToDelete) return;
+    if (!supplierToDelete) return;
 
     try {
       setIsDeleting(true);
-      await clientsService.deleteClient(clientToDelete.id);
-      setClients(clients.filter(c => c.id !== clientToDelete.id));
-      setClientToDelete(null);
+      await suppliersService.deleteSupplier(supplierToDelete.id);
+      setSuppliers(suppliers.filter(c => c.id !== supplierToDelete.id));
+      setSupplierToDelete(null);
     } catch (err) {
-      setError('Error deleting client');
-      console.error('Error deleting client:', err);
+      setError('Error deleting supplier');
+      console.error('Error deleting supplier:', err);
     } finally {
       setIsDeleting(false);
     }
   };
 
-  const filteredClients = clients.filter(client => 
-    client.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    client.clientId.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    client.email.toLowerCase().includes(searchQuery.toLowerCase())
+  const filteredSuppliers = suppliers.filter(supplier => 
+    supplier.name.toLowerCase().includes(searchQuery.toLowerCase()) 
   );
 
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
-        <h2 className="text-lg font-medium">Clientes</h2>
-        <Button onClick={() => navigate('/clients/new')}>
+        <h2 className="text-lg font-medium">Proveedores</h2>
+        <Button onClick={() => navigate('/suppliers/new')}>
           <Plus className="mr-2 h-4 w-4" />
-          Nuevo Cliente
+          Nuevo Proveedor
         </Button>
       </div>
 
@@ -76,7 +74,7 @@ export function ClientsListPage() {
         <div className="relative flex-1">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
           <Input
-            placeholder="Buscar clientes..."
+            placeholder="Buscar proveedores..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="pl-10"
@@ -85,28 +83,22 @@ export function ClientsListPage() {
       </div>
 
       {loading ? (
-        <div className="text-center py-8">Cargando clientes...</div>
-      ) : filteredClients.length === 0 ? (
+        <div className="text-center py-8">Cargando proveedores...</div>
+      ) : filteredSuppliers.length === 0 ? (
         <div className="text-center py-8 text-gray-500">
-          No se encontraron clientes
+          No se encontraron proveedores
         </div>
       ) : (
         <div className="grid gap-4">
-          {filteredClients.map((client) => (
+          {filteredSuppliers.map((supplier) => (
             <Card
-              key={client.id}
+              key={supplier.id}
               className="p-4"
-              
             >
               <div className="flex flex-col md:flex-row justify-between gap-4">
                 <div className="flex-1">
                   <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-4">
-                    <h3 className="text-lg font-medium">{client.name}</h3>
-                    {client.clientId && <span className="text-sm text-gray-500">ID: {client.clientId}</span>}
-                  </div>
-                  <div className="mt-2">
-                    <p className="text-sm text-gray-600">{client.email}</p>
-                    <p className="text-sm text-gray-600">{client.address}</p>
+                    <h3 className="text-lg font-medium">{supplier.name}</h3>
                   </div>
                 </div>
                 <div className="flex items-center gap-2">
@@ -115,7 +107,7 @@ export function ClientsListPage() {
                     size="sm"
                     onClick={(e) => {
                       e.stopPropagation();
-                      navigate(`/clients/${client.id}/edit`);
+                      navigate(`/suppliers/${supplier.id}/edit`);
                     }}
                   >
                       <Pencil className="h-4 w-4" />
@@ -126,7 +118,7 @@ export function ClientsListPage() {
                     size="sm"
                     onClick={(e) => {
                       e.stopPropagation();
-                      setClientToDelete(client);
+                      setSupplierToDelete(supplier);
                     }}
                   >
                     <Trash2 className="h-4 w-4" />
@@ -139,11 +131,11 @@ export function ClientsListPage() {
       )}
 
       <ConfirmModal
-        isOpen={!!clientToDelete}
-        onClose={() => setClientToDelete(null)}
+        isOpen={!!supplierToDelete}
+        onClose={() => setSupplierToDelete(null)}
         onConfirm={handleDelete}
-        title="Delete Client"
-        description={`Are you sure you want to delete ${clientToDelete?.name}? This action cannot be undone.`}
+        title="Delete Supplier"
+        description={`Are you sure you want to delete ${supplierToDelete?.name}? This action cannot be undone.`}
         confirmLabel="Delete"
         isLoading={isDeleting}
       />

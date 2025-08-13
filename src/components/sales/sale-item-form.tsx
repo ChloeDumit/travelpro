@@ -1,22 +1,25 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { SaleItemFormData, ItemStatus, Currency } from '../../types';
+import { SaleItemFormData, ItemStatus, Currency, Client, Supplier, SupplierFormData } from '../../types';
 import { Input } from '../ui/input';
 import { Select } from '../ui/select';
 import { Button } from '../ui/button';
 import { Modal } from '../ui/modal';
+import { SupplierSelect } from './supplier-select';
+import { suppliersService } from '../../lib/services/suppliers';
+
 
 const saleItemFormSchema = z.object({
   classification: z.string().min(1, 'La clasificación es requerida'),
   provider: z.string().min(1, 'El proveedor es requerido'),
   operator: z.string().min(1, 'El operador es requerido'),
-  dateIn: z.string().min(1, 'La fecha de entrada es requerida'),
-  dateOut: z.string().min(1, 'La fecha de salida es requerida'),
+  dateIn: z.string().or(z.literal('')).optional(),
+  dateOut: z.string().or(z.literal('')).optional(),
   passengerCount: z.number().min(1, 'Se requiere al menos 1 pasajero'),
   status: z.enum(['pending', 'confirmed', 'cancelled']),
-  description: z.string().min(1, 'La descripción es requerida'),
+  description: z.string().min(1).or(z.literal('')).optional(),
   salePrice: z.number().min(0, 'El precio de venta debe ser positivo'),
   saleCurrency: z.enum(['USD', 'EUR', 'local']),
   costPrice: z.number().min(0, 'El precio de costo debe ser positivo'),
@@ -40,6 +43,8 @@ export function SaleItemForm({ isOpen, onClose, initialData, itemIndex, setItems
     handleSubmit,
     reset,
     formState: { errors, isSubmitting },
+    setValue,
+    watch
   } = useForm<SaleItemFormData>({
     resolver: zodResolver(saleItemFormSchema),
     defaultValues: {
@@ -60,6 +65,23 @@ export function SaleItemForm({ isOpen, onClose, initialData, itemIndex, setItems
     },
   });
 
+  const [selectedSupplier, setSelectedSupplier] = useState<Supplier | null>(null);
+  const [suppliers, setSuppliers] = useState<Client[]>([]);
+  const [showSupplierModal, setShowSupplierModal] = useState(false);
+  const [newSupplierLoading, setNewSupplierLoading] = useState(false);
+  const [supplierForm, setSupplierForm] = useState<SupplierFormData>({ name: '' });
+  const [supplierFormError, setSupplierFormError] = useState<string | null>(null);
+
+
+  const getSuppliers = async () => {
+    try {
+      const response = await suppliersService.getAllSuppliers();
+      console.log(response);
+      setSuppliers(response.clients || response);
+    } catch (error) {
+      console.error('Error fetching clients:', error);
+    }
+  };
   // Reset form when initialData changes
   React.useEffect(() => {
     if (initialData) {
@@ -109,6 +131,7 @@ export function SaleItemForm({ isOpen, onClose, initialData, itemIndex, setItems
         paymentDate: null,
       });
     }
+    getSuppliers()
   }, [initialData, reset]);
 
   const statusOptions = [
@@ -135,6 +158,7 @@ export function SaleItemForm({ isOpen, onClose, initialData, itemIndex, setItems
   };
 
   return (
+    <>
     <Modal
       isOpen={isOpen}
       onClose={onClose}
@@ -147,11 +171,18 @@ export function SaleItemForm({ isOpen, onClose, initialData, itemIndex, setItems
             {...register('classification')}
             error={errors.classification?.message}
           />
-          <Input
-            label="Proveedor"
-            {...register('provider')}
-            error={errors.provider?.message}
-          />
+          <SupplierSelect 
+                suppliers={suppliers}
+                value={watch('supplierId')}
+                onSelect={supplier => {
+                  setSelectedSupplier(supplier);
+                  setValue('supplierId', supplier.id);
+                  setValue('supplierName', supplier.name);
+                }}
+                onCreateNew={() => setShowSupplierModal(true)}
+                error={errors.supplierId?.message || errors.supplierName?.message}
+              />
+         
           <Input
             label="Operador"
             {...register('operator')}
@@ -264,5 +295,49 @@ export function SaleItemForm({ isOpen, onClose, initialData, itemIndex, setItems
         </div>
       </form>
     </Modal>
+
+<Modal isOpen={showSupplierModal} onClose={() => setShowSupplierModal(false)} title="Crear nuevo cliente">
+<form
+  onSubmit={async e => {
+    e.preventDefault();
+    setNewSupplierLoading(true);
+    setSupplierFormError(null);
+    try {
+      const created = await suppliersService.createSupplier(supplierForm);
+      // Add new client to list and select it
+      setSuppliers(prev => [...prev, created]);
+      setValue('supplierId', created.id);
+      setValue('supplierName', created.name);
+      setShowSupplierModal(false);
+      setSupplierForm({ name: '' });
+    } catch (err: any) {
+      setSupplierFormError(err.message || 'Error al crear cliente');
+    } finally {
+      setNewSupplierLoading(false);
+    }
+  }}
+  className="space-y-4"
+>
+  <div>
+    <label className="block text-sm font-medium">Nombre</label>
+    <input
+      className="w-full border rounded px-2 py-1"
+      value={supplierForm.name}
+      onChange={e => setSupplierForm(f => ({ ...f, name: e.target.value }))}
+      required
+    />
+  </div>
+  {supplierFormError && <div className="text-red-500 text-sm">{supplierFormError}</div>}
+  <div className="flex justify-end gap-2">
+    <button type="button" className="px-4 py-2 border rounded" onClick={() => setShowSupplierModal(false)}>
+      Cancelar
+    </button>
+    <button type="submit" className="px-4 py-2 bg-blue-600 text-white rounded" disabled={newSupplierLoading}>
+      {newSupplierLoading ? 'Creando...' : 'Crear'}
+    </button>
+  </div>
+</form>
+</Modal>
+</>
   );
 }

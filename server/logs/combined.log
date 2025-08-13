@@ -1,0 +1,667 @@
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-08-12T20:55:48.511Z"}
+{"level":"info","message":"POST /api/auth/login","timestamp":"2025-08-12T21:00:46.194Z"}
+{"level":"info","message":"User admin@travelpro.com logged in successfully","timestamp":"2025-08-12T21:00:47.683Z"}
+{"level":"info","message":"GET /api/api/sales/stats","timestamp":"2025-08-12T21:00:47.776Z"}
+{"level":"info","message":"GET /api/api/sales/stats-by-type","timestamp":"2025-08-12T21:00:47.777Z"}
+{"level":"info","message":"GET /api/api/sales/upcoming-departures","timestamp":"2025-08-12T21:00:47.779Z"}
+{"level":"info","message":"GET /api/api/sales/total","timestamp":"2025-08-12T21:00:47.780Z"}
+{"level":"info","message":"GET /api/api/sales/stats","timestamp":"2025-08-12T21:00:47.788Z"}
+{"level":"info","message":"GET /api/api/sales/stats-by-type","timestamp":"2025-08-12T21:00:47.789Z"}
+{"level":"info","message":"GET /api/api/sales/upcoming-departures","timestamp":"2025-08-12T21:00:47.791Z"}
+{"level":"info","message":"GET /api/api/sales/total","timestamp":"2025-08-12T21:00:47.798Z"}
+{"level":"info","message":"GET /api/api/sales","timestamp":"2025-08-12T21:01:20.022Z"}
+{"level":"info","message":"GET /api/api/sales","timestamp":"2025-08-12T21:01:20.025Z"}
+{"level":"info","message":"GET /api/api/sales","timestamp":"2025-08-12T21:01:29.695Z"}
+{"level":"info","message":"GET /api/api/sales/total","timestamp":"2025-08-12T21:02:24.073Z"}
+{"level":"info","message":"GET /api/api/sales/stats-by-type","timestamp":"2025-08-12T21:02:24.078Z"}
+{"level":"info","message":"GET /api/api/sales/upcoming-departures","timestamp":"2025-08-12T21:02:24.088Z"}
+{"level":"info","message":"GET /api/api/sales/stats","timestamp":"2025-08-12T21:02:24.092Z"}
+{"level":"info","message":"GET /api/api/sales/stats-by-type","timestamp":"2025-08-12T21:02:24.098Z"}
+{"level":"info","message":"GET /api/api/sales/upcoming-departures","timestamp":"2025-08-12T21:02:24.099Z"}
+{"level":"info","message":"GET /api/api/sales/total","timestamp":"2025-08-12T21:02:24.102Z"}
+{"level":"info","message":"GET /api/api/sales/stats","timestamp":"2025-08-12T21:02:24.109Z"}
+{"level":"info","message":"GET /api/api/sales","timestamp":"2025-08-12T21:02:29.078Z"}
+{"level":"info","message":"GET /api/api/sales","timestamp":"2025-08-12T21:02:29.081Z"}
+{"level":"info","message":"GET //api/sales","timestamp":"2025-08-12T21:03:21.884Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-08-12T21:03:30.067Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-08-12T21:03:30.670Z"}
+{"level":"info","message":"GET /api/sales/total","timestamp":"2025-08-12T21:03:32.985Z"}
+{"level":"info","message":"GET /api/sales/stats","timestamp":"2025-08-12T21:03:32.992Z"}
+{"level":"info","message":"GET /api/sales/stats-by-type","timestamp":"2025-08-12T21:03:32.996Z"}
+{"level":"info","message":"GET /api/sales/upcoming-departures","timestamp":"2025-08-12T21:03:33.002Z"}
+{"level":"info","message":"GET /api/sales/total","timestamp":"2025-08-12T21:03:33.245Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-08-12T21:03:33.445Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-08-12T21:03:33.537Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-08-12T21:03:33.541Z"}
+{"level":"info","message":"GET /api/sales/upcoming-departures","timestamp":"2025-08-12T21:03:33.614Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-08-12T21:03:33.656Z"}
+{"level":"info","message":"GET /api/sales/stats","timestamp":"2025-08-12T21:03:33.729Z"}
+{"level":"info","message":"GET /api/sales/stats-by-type","timestamp":"2025-08-12T21:03:33.828Z"}
+{"level":"info","message":"GET /api/api/clients","timestamp":"2025-08-12T21:04:23.507Z"}
+{"level":"info","message":"GET /api/api/clients","timestamp":"2025-08-12T21:04:23.511Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-08-12T21:04:23.951Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-08-12T21:04:24.252Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-08-12T21:04:24.255Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-08-12T21:04:24.356Z"}
+{"level":"info","message":"GET /api/api/users","timestamp":"2025-08-12T21:06:40.772Z"}
+{"level":"info","message":"GET /api/api/clients","timestamp":"2025-08-12T21:06:40.774Z"}
+{"level":"info","message":"GET /api/api/users","timestamp":"2025-08-12T21:06:40.776Z"}
+{"level":"info","message":"GET /api/api/clients","timestamp":"2025-08-12T21:06:40.778Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-08-12T21:06:46.503Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-08-12T21:06:46.715Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-08-12T21:06:46.719Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-08-12T21:06:46.824Z"}
+{"level":"info","message":"GET /api/api/users","timestamp":"2025-08-12T21:06:47.613Z"}
+{"level":"info","message":"GET /api/api/clients","timestamp":"2025-08-12T21:06:47.616Z"}
+{"level":"info","message":"GET /api/api/users","timestamp":"2025-08-12T21:06:47.621Z"}
+{"level":"info","message":"GET /api/api/clients","timestamp":"2025-08-12T21:06:47.629Z"}
+{"level":"info","message":"GET /api/api/clients","timestamp":"2025-08-12T21:07:31.633Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-08-12T21:07:31.654Z"}
+{"level":"info","message":"Users list fetched","timestamp":"2025-08-12T21:07:32.369Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-08-12T21:07:35.443Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-12T21:07:35.445Z"}
+{"level":"info","message":"Users list fetched","timestamp":"2025-08-12T21:07:35.526Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-08-12T21:09:35.324Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-08-12T21:09:36.010Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-08-12T21:09:36.013Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-08-12T21:09:36.101Z"}
+{"level":"info","message":"GET /api/users/me","timestamp":"2025-08-12T21:09:45.561Z"}
+{"level":"info","message":"GET /api/users/me","timestamp":"2025-08-12T21:09:45.700Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-08-12T21:09:45.710Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-08-12T21:09:45.808Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-08-12T21:09:45.815Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-08-12T21:09:45.976Z"}
+{"level":"info","message":"GET /api/users/me","timestamp":"2025-08-12T21:10:25.166Z"}
+{"level":"info","message":"GET /api/users/me","timestamp":"2025-08-12T21:10:25.342Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-08-12T21:10:25.354Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-08-12T21:10:25.519Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-08-12T21:10:25.522Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-08-12T21:10:25.611Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-12T21:11:34.667Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-12T21:11:34.764Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-08-12T21:11:35.160Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-08-12T21:11:35.291Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-08-12T21:11:35.294Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-08-12T21:11:35.460Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-08-12T21:12:44.304Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-08-12T21:12:53.918Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-12T21:12:59.724Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-12T21:13:00.228Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-08-12T21:13:01.549Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-08-12T21:13:02.104Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-08-12T21:13:02.115Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-08-12T21:13:02.207Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-08-12T21:13:17.366Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-12T21:13:21.902Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-12T21:13:22.512Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-08-12T21:13:22.608Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-08-12T21:13:22.622Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-08-12T21:13:37.114Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-12T21:13:40.732Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-08-12T21:13:41.034Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-12T21:13:41.291Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-08-12T21:13:41.552Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-08-12T21:13:48.410Z"}
+{"level":"info","message":"GET /api/sales/total","timestamp":"2025-08-12T21:16:53.370Z"}
+{"level":"info","message":"GET /api/sales/stats-by-type","timestamp":"2025-08-12T21:16:53.381Z"}
+{"level":"info","message":"GET /api/sales/stats","timestamp":"2025-08-12T21:16:53.385Z"}
+{"level":"info","message":"GET /api/sales/upcoming-departures","timestamp":"2025-08-12T21:16:53.388Z"}
+{"level":"info","message":"GET /api/sales/stats","timestamp":"2025-08-12T21:16:54.008Z"}
+{"level":"info","message":"GET /api/sales/total","timestamp":"2025-08-12T21:16:54.376Z"}
+{"level":"info","message":"GET /api/sales/upcoming-departures","timestamp":"2025-08-12T21:16:54.427Z"}
+{"level":"info","message":"GET /api/sales/stats-by-type","timestamp":"2025-08-12T21:16:54.557Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-08-12T21:16:55.673Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-08-12T21:16:55.769Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-08-12T21:16:55.773Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-08-12T21:16:55.899Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-12T21:16:56.957Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-12T21:16:57.470Z"}
+{"level":"info","message":"GET /api/sales/total","timestamp":"2025-08-12T21:16:58.292Z"}
+{"level":"info","message":"GET /api/sales/stats","timestamp":"2025-08-12T21:16:58.294Z"}
+{"level":"info","message":"GET /api/sales/stats-by-type","timestamp":"2025-08-12T21:16:58.301Z"}
+{"level":"info","message":"GET /api/sales/upcoming-departures","timestamp":"2025-08-12T21:16:58.303Z"}
+{"level":"info","message":"GET /api/sales/total","timestamp":"2025-08-12T21:16:58.384Z"}
+{"level":"info","message":"GET /api/sales/upcoming-departures","timestamp":"2025-08-12T21:16:58.522Z"}
+{"level":"info","message":"GET /api/sales/stats","timestamp":"2025-08-12T21:16:58.571Z"}
+{"level":"info","message":"GET /api/sales/stats-by-type","timestamp":"2025-08-12T21:16:58.654Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-12T21:16:59.681Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-12T21:16:59.727Z"}
+{"level":"info","message":"GET /api/sales/total","timestamp":"2025-08-12T21:16:59.940Z"}
+{"level":"info","message":"GET /api/sales/stats","timestamp":"2025-08-12T21:16:59.942Z"}
+{"level":"info","message":"GET /api/sales/stats-by-type","timestamp":"2025-08-12T21:16:59.944Z"}
+{"level":"info","message":"GET /api/sales/upcoming-departures","timestamp":"2025-08-12T21:16:59.946Z"}
+{"level":"info","message":"GET /api/sales/total","timestamp":"2025-08-12T21:16:59.988Z"}
+{"level":"info","message":"GET /api/sales/stats","timestamp":"2025-08-12T21:17:00.098Z"}
+{"level":"info","message":"GET /api/sales/upcoming-departures","timestamp":"2025-08-12T21:17:00.100Z"}
+{"level":"info","message":"GET /api/sales/stats-by-type","timestamp":"2025-08-12T21:17:00.187Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-12T21:17:00.568Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-12T21:17:00.664Z"}
+{"level":"info","message":"GET /api/users/me","timestamp":"2025-08-12T21:30:13.934Z"}
+{"level":"info","message":"GET /api/users/me","timestamp":"2025-08-12T21:30:14.495Z"}
+{"level":"info","message":"POST /api/auth/login","timestamp":"2025-08-12T21:30:20.921Z"}
+{"level":"info","message":"POST /api/auth/login","timestamp":"2025-08-12T21:30:33.475Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-08-12T21:30:56.000Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-08-12T21:31:00.054Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-08-12T21:31:20.416Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-08-12T21:31:25.904Z"}
+{"level":"info","message":"POST /api/auth/login","timestamp":"2025-08-12T21:31:29.197Z"}
+{"level":"info","message":"User admin@travelpro.com logged in successfully","timestamp":"2025-08-12T21:31:29.958Z"}
+{"level":"info","message":"GET /api/sales/total","timestamp":"2025-08-12T21:31:30.013Z"}
+{"level":"info","message":"GET /api/sales/stats","timestamp":"2025-08-12T21:31:30.018Z"}
+{"level":"info","message":"GET /api/sales/stats-by-type","timestamp":"2025-08-12T21:31:30.022Z"}
+{"level":"info","message":"GET /api/sales/upcoming-departures","timestamp":"2025-08-12T21:31:30.029Z"}
+{"level":"info","message":"GET /api/sales/total","timestamp":"2025-08-12T21:31:30.519Z"}
+{"level":"info","message":"GET /api/sales/upcoming-departures","timestamp":"2025-08-12T21:31:31.000Z"}
+{"level":"info","message":"GET /api/sales/stats","timestamp":"2025-08-12T21:31:31.086Z"}
+{"level":"info","message":"GET /api/sales/stats-by-type","timestamp":"2025-08-12T21:31:31.163Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-08-12T21:31:34.053Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-08-12T21:31:34.176Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-08-12T21:31:34.181Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-08-12T21:31:34.225Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-08-12T21:31:49.956Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-08-12T21:32:36.718Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-08-12T21:33:04.419Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-08-12T21:33:17.913Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-08-12T21:33:33.938Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-08-12T21:33:49.766Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-08-12T21:33:58.361Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-08-12T21:34:02.661Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-08-12T21:34:07.948Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-08-12T21:34:10.809Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-08-12T21:34:12.249Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-08-12T21:35:24.178Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-08-12T21:35:40.720Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-08-12T21:35:43.988Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-08-12T21:35:50.950Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-08-12T21:38:12.535Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-08-12T21:38:23.607Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-08-12T21:38:50.086Z"}
+{"level":"info","message":"POST /api/clients","timestamp":"2025-08-12T21:38:52.424Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-08-12T21:39:00.625Z"}
+{"level":"info","message":"POST /api/clients","timestamp":"2025-08-12T21:39:01.824Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-08-12T21:40:14.734Z"}
+{"level":"info","message":"POST /api/clients","timestamp":"2025-08-12T21:40:17.405Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-08-12T21:42:31.453Z"}
+{"level":"info","message":"POST /api/clients","timestamp":"2025-08-12T21:42:37.849Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-08-12T21:43:00.129Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-08-12T21:43:16.980Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-08-12T21:43:19.114Z"}
+{"level":"info","message":"POST /api/clients","timestamp":"2025-08-12T21:43:22.523Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-08-12T21:44:33.108Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-08-12T21:44:36.577Z"}
+{"level":"info","message":"POST /api/clients","timestamp":"2025-08-12T21:44:40.650Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-08-12T21:44:49.915Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-08-12T21:44:50.858Z"}
+{"level":"info","message":"POST /api/auth/logout","timestamp":"2025-08-12T21:44:57.930Z"}
+{"level":"info","message":"User undefined logged out","timestamp":"2025-08-12T21:44:57.935Z"}
+{"level":"info","message":"POST /api/auth/login","timestamp":"2025-08-12T21:45:06.339Z"}
+{"level":"info","message":"POST /api/auth/login","timestamp":"2025-08-12T21:45:16.372Z"}
+{"level":"info","message":"User admin@travelpro.com logged in successfully","timestamp":"2025-08-12T21:45:16.553Z"}
+{"level":"info","message":"GET /api/sales/total","timestamp":"2025-08-12T21:45:16.588Z"}
+{"level":"info","message":"GET /api/sales/stats-by-type","timestamp":"2025-08-12T21:45:16.598Z"}
+{"level":"info","message":"GET /api/sales/upcoming-departures","timestamp":"2025-08-12T21:45:16.601Z"}
+{"level":"info","message":"GET /api/sales/stats","timestamp":"2025-08-12T21:45:16.604Z"}
+{"level":"info","message":"GET /api/sales/total","timestamp":"2025-08-12T21:45:17.217Z"}
+{"level":"info","message":"GET /api/sales/upcoming-departures","timestamp":"2025-08-12T21:45:17.563Z"}
+{"level":"info","message":"GET /api/sales/stats","timestamp":"2025-08-12T21:45:17.693Z"}
+{"level":"info","message":"GET /api/sales/stats-by-type","timestamp":"2025-08-12T21:45:17.733Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-12T21:45:20.291Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-12T21:45:20.684Z"}
+{"level":"info","message":"POST /api/clients","timestamp":"2025-08-12T21:45:32.099Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-08-12T21:45:55.762Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-08-12T21:46:07.024Z"}
+{"level":"info","message":"POST /api/auth/logout","timestamp":"2025-08-12T21:46:12.986Z"}
+{"level":"info","message":"User undefined logged out","timestamp":"2025-08-12T21:46:12.991Z"}
+{"level":"info","message":"POST /api/auth/login","timestamp":"2025-08-12T21:46:17.584Z"}
+{"level":"info","message":"User admin@travelpro.com logged in successfully","timestamp":"2025-08-12T21:46:18.389Z"}
+{"level":"info","message":"GET /api/sales/total","timestamp":"2025-08-12T21:46:18.425Z"}
+{"level":"info","message":"GET /api/sales/stats","timestamp":"2025-08-12T21:46:18.430Z"}
+{"level":"info","message":"GET /api/sales/upcoming-departures","timestamp":"2025-08-12T21:46:18.437Z"}
+{"level":"info","message":"GET /api/sales/stats-by-type","timestamp":"2025-08-12T21:46:18.441Z"}
+{"level":"info","message":"GET /api/sales/total","timestamp":"2025-08-12T21:46:19.075Z"}
+{"level":"info","message":"GET /api/sales/upcoming-departures","timestamp":"2025-08-12T21:46:19.330Z"}
+{"level":"info","message":"GET /api/sales/stats","timestamp":"2025-08-12T21:46:19.373Z"}
+{"level":"info","message":"GET /api/sales/stats-by-type","timestamp":"2025-08-12T21:46:19.558Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-08-12T21:46:47.365Z"}
+{"level":"info","message":"POST /api/auth/logout","timestamp":"2025-08-12T21:46:55.086Z"}
+{"level":"info","message":"User undefined logged out","timestamp":"2025-08-12T21:46:55.091Z"}
+{"level":"info","message":"POST /api/auth/login","timestamp":"2025-08-12T21:46:59.287Z"}
+{"level":"info","message":"User admin@travelpro.com logged in successfully","timestamp":"2025-08-12T21:47:00.071Z"}
+{"level":"info","message":"GET /api/sales/stats-by-type","timestamp":"2025-08-12T21:47:00.106Z"}
+{"level":"info","message":"GET /api/sales/stats","timestamp":"2025-08-12T21:47:00.111Z"}
+{"level":"info","message":"GET /api/sales/upcoming-departures","timestamp":"2025-08-12T21:47:00.115Z"}
+{"level":"info","message":"GET /api/sales/total","timestamp":"2025-08-12T21:47:00.118Z"}
+{"level":"info","message":"GET /api/sales/stats-by-type","timestamp":"2025-08-12T21:47:00.524Z"}
+{"level":"info","message":"GET /api/sales/upcoming-departures","timestamp":"2025-08-12T21:47:00.849Z"}
+{"level":"info","message":"GET /api/sales/total","timestamp":"2025-08-12T21:47:00.884Z"}
+{"level":"info","message":"GET /api/sales/stats","timestamp":"2025-08-12T21:47:00.977Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-08-12T21:47:17.789Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-12T21:47:23.177Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-12T21:47:23.665Z"}
+{"level":"info","message":"POST /api/clients","timestamp":"2025-08-12T21:47:39.991Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-08-12T21:49:41.839Z"}
+{"level":"info","message":"POST /api/clients","timestamp":"2025-08-12T21:49:49.649Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-08-12T21:50:51.464Z"}
+{"level":"info","message":"POST /api/clients","timestamp":"2025-08-12T21:50:55.180Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-08-12T21:51:18.878Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-08-12T21:51:20.804Z"}
+{"level":"info","message":"POST /api/clients","timestamp":"2025-08-12T21:51:22.568Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-08-12T21:51:27.965Z"}
+{"level":"info","message":"POST /api/auth/logout","timestamp":"2025-08-12T21:51:40.529Z"}
+{"level":"info","message":"User undefined logged out","timestamp":"2025-08-12T21:51:40.534Z"}
+{"level":"info","message":"POST /api/auth/login","timestamp":"2025-08-12T21:51:45.835Z"}
+{"level":"info","message":"User admin@travelpro.com logged in successfully","timestamp":"2025-08-12T21:51:47.023Z"}
+{"level":"info","message":"GET /api/sales/total","timestamp":"2025-08-12T21:51:47.072Z"}
+{"level":"info","message":"GET /api/sales/stats-by-type","timestamp":"2025-08-12T21:51:47.077Z"}
+{"level":"info","message":"GET /api/sales/stats","timestamp":"2025-08-12T21:51:47.082Z"}
+{"level":"info","message":"GET /api/sales/upcoming-departures","timestamp":"2025-08-12T21:51:47.086Z"}
+{"level":"info","message":"GET /api/sales/total","timestamp":"2025-08-12T21:51:47.769Z"}
+{"level":"info","message":"GET /api/sales/stats-by-type","timestamp":"2025-08-12T21:51:47.772Z"}
+{"level":"info","message":"GET /api/sales/upcoming-departures","timestamp":"2025-08-12T21:51:48.644Z"}
+{"level":"info","message":"GET /api/sales/stats","timestamp":"2025-08-12T21:51:49.244Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-08-12T21:51:59.619Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-08-12T21:52:13.383Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-08-12T21:52:29.081Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-08-12T21:52:41.029Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-12T21:52:43.196Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-12T21:52:44.381Z"}
+{"level":"info","message":"POST /api/clients","timestamp":"2025-08-12T21:52:50.806Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-12T21:52:52.111Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-12T21:52:52.256Z"}
+{"level":"info","message":"GET /api/users/me","timestamp":"2025-08-12T21:54:19.101Z"}
+{"level":"info","message":"GET /api/users/me","timestamp":"2025-08-12T21:54:20.028Z"}
+{"level":"info","message":"POST /api/auth/login","timestamp":"2025-08-12T21:54:25.559Z"}
+{"level":"info","message":"User admin@travelpro.com logged in successfully","timestamp":"2025-08-12T21:54:26.623Z"}
+{"level":"info","message":"GET /api/sales/stats-by-type","timestamp":"2025-08-12T21:54:26.670Z"}
+{"level":"info","message":"GET /api/sales/total","timestamp":"2025-08-12T21:54:26.674Z"}
+{"level":"info","message":"GET /api/sales/upcoming-departures","timestamp":"2025-08-12T21:54:26.680Z"}
+{"level":"info","message":"GET /api/sales/stats","timestamp":"2025-08-12T21:54:26.684Z"}
+{"level":"info","message":"GET /api/sales/total","timestamp":"2025-08-12T21:54:27.414Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-12T21:54:27.544Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-12T21:54:27.905Z"}
+{"level":"info","message":"GET /api/sales/upcoming-departures","timestamp":"2025-08-12T21:54:28.407Z"}
+{"level":"info","message":"GET /api/sales/stats","timestamp":"2025-08-12T21:54:28.620Z"}
+{"level":"info","message":"GET /api/sales/stats-by-type","timestamp":"2025-08-12T21:54:28.979Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-08-12T21:54:35.598Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-08-12T21:54:35.804Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-08-12T21:54:35.806Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-08-12T21:54:35.911Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-12T21:54:38.520Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-08-12T21:54:38.522Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-08-12T21:54:38.573Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-12T21:54:38.582Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-12T21:54:39.826Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-12T21:54:39.878Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-08-12T21:54:44.442Z"}
+{"level":"info","message":"GET /api/users/me","timestamp":"2025-08-12T21:57:02.510Z"}
+{"level":"info","message":"GET /api/users/me","timestamp":"2025-08-12T21:57:03.052Z"}
+{"level":"info","message":"POST /api/auth/login","timestamp":"2025-08-12T21:57:26.419Z"}
+{"level":"info","message":"User admin@travelpro.com logged in successfully","timestamp":"2025-08-12T21:57:27.678Z"}
+{"level":"info","message":"GET /api/sales/total","timestamp":"2025-08-12T21:57:27.723Z"}
+{"level":"info","message":"GET /api/sales/stats","timestamp":"2025-08-12T21:57:27.726Z"}
+{"level":"info","message":"GET /api/sales/stats-by-type","timestamp":"2025-08-12T21:57:27.730Z"}
+{"level":"info","message":"GET /api/sales/upcoming-departures","timestamp":"2025-08-12T21:57:27.734Z"}
+{"level":"info","message":"GET /api/sales/total","timestamp":"2025-08-12T21:57:28.417Z"}
+{"level":"info","message":"GET /api/sales/upcoming-departures","timestamp":"2025-08-12T21:57:29.282Z"}
+{"level":"info","message":"GET /api/sales/stats","timestamp":"2025-08-12T21:57:29.408Z"}
+{"level":"info","message":"GET /api/sales/stats-by-type","timestamp":"2025-08-12T21:57:29.414Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-12T21:57:30.884Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-12T21:57:31.726Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-12T21:57:36.125Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-12T21:57:36.171Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-08-12T21:57:36.415Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-08-12T21:57:36.496Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-08-12T21:57:36.498Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-08-12T21:57:36.539Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-12T21:57:36.830Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-12T21:57:36.969Z"}
+{"level":"info","message":"GET /api/users/me","timestamp":"2025-08-12T21:57:45.555Z"}
+{"level":"info","message":"GET /api/users/me","timestamp":"2025-08-12T21:57:45.616Z"}
+{"level":"info","message":"POST /api/auth/login","timestamp":"2025-08-12T21:58:14.257Z"}
+{"level":"info","message":"User admin@travelpro.com logged in successfully","timestamp":"2025-08-12T21:58:14.482Z"}
+{"level":"info","message":"GET /api/sales/total","timestamp":"2025-08-12T21:58:14.548Z"}
+{"level":"info","message":"GET /api/sales/stats","timestamp":"2025-08-12T21:58:14.550Z"}
+{"level":"info","message":"GET /api/sales/stats-by-type","timestamp":"2025-08-12T21:58:14.552Z"}
+{"level":"info","message":"GET /api/sales/upcoming-departures","timestamp":"2025-08-12T21:58:14.554Z"}
+{"level":"info","message":"GET /api/sales/total","timestamp":"2025-08-12T21:58:14.803Z"}
+{"level":"info","message":"GET /api/sales/upcoming-departures","timestamp":"2025-08-12T21:58:14.811Z"}
+{"level":"info","message":"GET /api/sales/stats","timestamp":"2025-08-12T21:58:14.813Z"}
+{"level":"info","message":"GET /api/sales/stats-by-type","timestamp":"2025-08-12T21:58:14.970Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-08-12T21:58:18.515Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-08-12T21:58:18.615Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-08-12T21:58:18.617Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-08-12T21:58:18.746Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-12T21:58:19.580Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-12T21:58:19.669Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-08-12T21:59:12.175Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-12T21:59:12.579Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-08-12T21:59:12.584Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-08-12T21:59:12.586Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-08-12T21:59:12.634Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-12T21:59:12.732Z"}
+{"level":"info","message":"POST /api/clients","timestamp":"2025-08-12T22:00:39.191Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-12T22:00:39.651Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-12T22:00:39.762Z"}
+{"level":"info","message":"GET /api/sales/stats","timestamp":"2025-08-12T22:00:42.579Z"}
+{"level":"info","message":"GET /api/sales/total","timestamp":"2025-08-12T22:00:42.583Z"}
+{"level":"info","message":"GET /api/sales/stats-by-type","timestamp":"2025-08-12T22:00:42.586Z"}
+{"level":"info","message":"GET /api/sales/upcoming-departures","timestamp":"2025-08-12T22:00:42.588Z"}
+{"level":"info","message":"GET /api/sales/upcoming-departures","timestamp":"2025-08-12T22:00:42.701Z"}
+{"level":"info","message":"GET /api/sales/total","timestamp":"2025-08-12T22:00:42.712Z"}
+{"level":"info","message":"GET /api/sales/stats","timestamp":"2025-08-12T22:00:42.748Z"}
+{"level":"info","message":"GET /api/sales/stats-by-type","timestamp":"2025-08-12T22:00:42.948Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-12T22:00:43.621Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-12T22:00:43.669Z"}
+{"level":"info","message":"POST /api/clients","timestamp":"2025-08-12T22:00:52.330Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-08-12T22:01:30.638Z"}
+{"level":"info","message":"POST /api/clients","timestamp":"2025-08-12T22:01:34.574Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-08-12T22:01:44.481Z"}
+{"level":"info","message":"POST /api/clients","timestamp":"2025-08-12T22:01:58.537Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-08-12T22:02:49.413Z"}
+{"level":"info","message":"POST /api/clients","timestamp":"2025-08-12T22:02:54.405Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-12T22:02:55.430Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-12T22:02:55.530Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-08-12T22:02:58.961Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-08-12T22:02:59.557Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-08-12T22:02:59.561Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-08-12T22:02:59.612Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-12T22:03:00.208Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-12T22:03:00.309Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-08-12T22:03:01.400Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-08-12T22:03:01.493Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-08-12T22:03:01.496Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-08-12T22:03:01.546Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-12T22:03:05.153Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-12T22:03:05.203Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-08-12T22:03:07.118Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-08-12T22:03:07.219Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-08-12T22:03:07.221Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-08-12T22:03:07.271Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-08-12T22:03:07.959Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-12T22:03:07.962Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-12T22:03:08.019Z"}
+{"level":"info","message":"Users list fetched","timestamp":"2025-08-12T22:03:08.456Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-08-12T22:03:08.458Z"}
+{"level":"info","message":"Users list fetched","timestamp":"2025-08-12T22:03:08.503Z"}
+{"level":"info","message":"POST /api/sales","timestamp":"2025-08-12T22:06:03.422Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-08-12T22:06:54.644Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-08-12T22:06:55.226Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-08-12T22:07:07.393Z"}
+{"level":"info","message":"POST /api/sales","timestamp":"2025-08-12T22:07:19.822Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-08-12T22:07:29.160Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-08-12T22:07:41.491Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-08-12T22:07:46.827Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-08-12T22:08:39.648Z"}
+{"level":"info","message":"POST /api/sales","timestamp":"2025-08-12T22:08:42.467Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-08-12T22:08:58.209Z"}
+{"level":"info","message":"POST /api/sales","timestamp":"2025-08-12T22:08:59.889Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-08-12T22:10:38.117Z"}
+{"level":"info","message":"POST /api/sales","timestamp":"2025-08-12T22:10:41.342Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-08-12T22:10:49.217Z"}
+{"level":"info","message":"POST /api/sales","timestamp":"2025-08-12T22:10:51.097Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-08-12T22:10:57.387Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-08-12T22:11:39.088Z"}
+{"level":"info","message":"POST /api/sales","timestamp":"2025-08-12T22:11:41.652Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-08-12T22:11:53.318Z"}
+{"level":"info","message":"POST /api/sales","timestamp":"2025-08-12T22:11:56.856Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-08-12T22:12:32.070Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-08-12T22:13:28.651Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-08-12T22:13:33.554Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-08-12T22:17:38.919Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-08-12T22:17:46.673Z"}
+{"level":"info","message":"GET /api/users/me","timestamp":"2025-08-12T22:21:01.892Z"}
+{"level":"info","message":"POST /api/auth/login","timestamp":"2025-08-12T22:25:18.098Z"}
+{"level":"info","message":"User admin@travelpro.com logged in successfully","timestamp":"2025-08-12T22:25:19.003Z"}
+{"level":"info","message":"GET /api/sales/total","timestamp":"2025-08-12T22:25:19.110Z"}
+{"level":"info","message":"GET /api/sales/upcoming-departures","timestamp":"2025-08-12T22:25:19.114Z"}
+{"level":"info","message":"GET /api/sales/stats","timestamp":"2025-08-12T22:25:19.159Z"}
+{"level":"info","message":"GET /api/sales/stats-by-type","timestamp":"2025-08-12T22:25:19.177Z"}
+{"level":"info","message":"GET /api/sales/upcoming-departures","timestamp":"2025-08-12T22:25:19.770Z"}
+{"level":"info","message":"GET /api/sales/total","timestamp":"2025-08-12T22:25:20.118Z"}
+{"level":"info","message":"GET /api/sales/stats","timestamp":"2025-08-12T22:25:20.208Z"}
+{"level":"info","message":"GET /api/sales/stats-by-type","timestamp":"2025-08-12T22:25:20.292Z"}
+{"level":"info","message":"GET /api/sales/total","timestamp":"2025-08-12T22:25:27.241Z"}
+{"level":"info","message":"GET /api/sales/upcoming-departures","timestamp":"2025-08-12T22:25:27.244Z"}
+{"level":"info","message":"GET /api/sales/stats","timestamp":"2025-08-12T22:25:27.246Z"}
+{"level":"info","message":"GET /api/sales/stats-by-type","timestamp":"2025-08-12T22:25:27.249Z"}
+{"level":"info","message":"GET /api/sales/total","timestamp":"2025-08-12T22:25:27.288Z"}
+{"level":"info","message":"GET /api/sales/upcoming-departures","timestamp":"2025-08-12T22:25:27.336Z"}
+{"level":"info","message":"GET /api/sales/stats","timestamp":"2025-08-12T22:25:27.461Z"}
+{"level":"info","message":"GET /api/sales/stats-by-type","timestamp":"2025-08-12T22:25:27.557Z"}
+{"level":"info","message":"GET /api/users/me","timestamp":"2025-08-12T22:25:54.664Z"}
+{"level":"info","message":"GET /api/users/me","timestamp":"2025-08-12T22:25:54.779Z"}
+{"level":"info","message":"POST /api/auth/login","timestamp":"2025-08-12T22:27:12.868Z"}
+{"level":"info","message":"POST /api/auth/login","timestamp":"2025-08-12T22:27:15.897Z"}
+{"level":"info","message":"POST /api/auth/login","timestamp":"2025-08-12T22:27:19.277Z"}
+{"level":"info","message":"User admin@travelpro.com logged in successfully","timestamp":"2025-08-12T22:27:19.461Z"}
+{"level":"info","message":"GET /api/sales/total","timestamp":"2025-08-12T22:27:19.552Z"}
+{"level":"info","message":"GET /api/sales/stats","timestamp":"2025-08-12T22:27:19.554Z"}
+{"level":"info","message":"GET /api/sales/stats-by-type","timestamp":"2025-08-12T22:27:19.556Z"}
+{"level":"info","message":"GET /api/sales/upcoming-departures","timestamp":"2025-08-12T22:27:19.559Z"}
+{"level":"info","message":"GET /api/sales/total","timestamp":"2025-08-12T22:27:19.727Z"}
+{"level":"info","message":"GET /api/sales/upcoming-departures","timestamp":"2025-08-12T22:27:19.730Z"}
+{"level":"info","message":"GET /api/sales/stats-by-type","timestamp":"2025-08-12T22:27:19.815Z"}
+{"level":"info","message":"GET /api/sales/stats","timestamp":"2025-08-12T22:27:19.855Z"}
+{"level":"info","message":"GET /api/suppliers","timestamp":"2025-08-12T22:27:22.114Z"}
+{"level":"info","message":"GET /api/suppliers","timestamp":"2025-08-12T22:27:22.124Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-08-12T22:28:00.816Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-08-12T22:28:08.175Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-12T22:28:11.456Z"}
+{"level":"info","message":"GET /api/suppliers","timestamp":"2025-08-12T22:28:12.085Z"}
+{"level":"info","message":"GET /api/suppliers","timestamp":"2025-08-12T22:28:12.092Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-12T22:28:13.037Z"}
+{"level":"info","message":"GET /api/suppliers","timestamp":"2025-08-12T22:29:07.856Z"}
+{"level":"info","message":"GET /api/suppliers","timestamp":"2025-08-12T22:29:26.881Z"}
+{"level":"info","message":"GET /api/suppliers","timestamp":"2025-08-12T22:29:31.902Z"}
+{"level":"info","message":"GET /api/suppliers","timestamp":"2025-08-12T22:29:44.256Z"}
+{"level":"info","message":"GET /api/suppliers","timestamp":"2025-08-12T22:29:57.065Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-12T22:30:05.247Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-12T22:30:05.405Z"}
+{"level":"info","message":"GET /api/suppliers","timestamp":"2025-08-12T22:30:05.960Z"}
+{"level":"info","message":"GET /api/suppliers","timestamp":"2025-08-12T22:30:05.965Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-08-12T22:30:28.903Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-12T22:30:31.768Z"}
+{"level":"info","message":"GET /api/suppliers","timestamp":"2025-08-12T22:30:32.172Z"}
+{"level":"info","message":"GET /api/suppliers","timestamp":"2025-08-12T22:30:32.179Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-12T22:30:32.426Z"}
+{"level":"info","message":"GET /api/suppliers","timestamp":"2025-08-12T22:31:08.637Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-08-12T22:31:13.756Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-12T22:31:16.173Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-12T22:31:16.723Z"}
+{"level":"info","message":"GET /api/suppliers","timestamp":"2025-08-12T22:31:18.184Z"}
+{"level":"info","message":"GET /api/suppliers","timestamp":"2025-08-12T22:31:18.195Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-08-12T22:33:17.299Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-12T22:33:19.452Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-12T22:33:20.084Z"}
+{"level":"info","message":"GET /api/suppliers","timestamp":"2025-08-12T22:33:20.181Z"}
+{"level":"info","message":"GET /api/suppliers","timestamp":"2025-08-12T22:33:20.188Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-08-12T22:33:29.369Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-12T22:33:32.053Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-12T22:33:32.647Z"}
+{"level":"info","message":"GET /api/suppliers","timestamp":"2025-08-12T22:33:33.469Z"}
+{"level":"info","message":"GET /api/suppliers","timestamp":"2025-08-12T22:33:33.476Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-08-12T22:33:42.666Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-08-12T22:33:47.522Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-12T22:33:49.330Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-12T22:33:49.809Z"}
+{"level":"info","message":"GET /api/suppliers","timestamp":"2025-08-12T22:33:50.740Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-08-12T22:38:49.762Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-12T22:38:51.382Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-12T22:38:51.968Z"}
+{"level":"info","message":"GET /api/suppliers","timestamp":"2025-08-12T22:38:52.964Z"}
+{"level":"info","message":"GET /api/suppliers","timestamp":"2025-08-12T22:38:53.081Z"}
+{"level":"info","message":"POST /api/suppliers","timestamp":"2025-08-12T22:39:03.003Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-08-12T22:42:09.963Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-12T22:42:11.824Z"}
+{"level":"info","message":"GET /api/suppliers","timestamp":"2025-08-12T22:42:12.402Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-12T22:42:12.506Z"}
+{"level":"info","message":"GET /api/suppliers","timestamp":"2025-08-12T22:42:12.940Z"}
+{"level":"info","message":"POST /api/suppliers","timestamp":"2025-08-12T22:42:18.054Z"}
+{"level":"info","message":"GET /api/suppliers","timestamp":"2025-08-12T22:42:18.524Z"}
+{"level":"info","message":"GET /api/suppliers","timestamp":"2025-08-12T22:42:18.576Z"}
+{"level":"info","message":"POST /api/suppliers","timestamp":"2025-08-12T22:42:26.685Z"}
+{"level":"info","message":"GET /api/suppliers","timestamp":"2025-08-12T22:42:27.002Z"}
+{"level":"info","message":"GET /api/suppliers","timestamp":"2025-08-12T22:42:27.085Z"}
+{"level":"info","message":"GET /api/suppliers","timestamp":"2025-08-12T22:42:55.838Z"}
+{"level":"info","message":"GET /api/suppliers/1","timestamp":"2025-08-12T22:42:59.786Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-08-12T22:44:26.348Z"}
+{"level":"info","message":"POST /api/auth/login","timestamp":"2025-08-12T22:44:28.259Z"}
+{"level":"info","message":"User admin@travelpro.com logged in successfully","timestamp":"2025-08-12T22:44:29.074Z"}
+{"level":"info","message":"GET /api/sales/total","timestamp":"2025-08-12T22:44:29.125Z"}
+{"level":"info","message":"GET /api/sales/stats","timestamp":"2025-08-12T22:44:29.133Z"}
+{"level":"info","message":"GET /api/sales/stats-by-type","timestamp":"2025-08-12T22:44:29.137Z"}
+{"level":"info","message":"GET /api/sales/upcoming-departures","timestamp":"2025-08-12T22:44:29.140Z"}
+{"level":"info","message":"GET /api/sales/stats","timestamp":"2025-08-12T22:44:29.748Z"}
+{"level":"info","message":"GET /api/sales/upcoming-departures","timestamp":"2025-08-12T22:44:30.143Z"}
+{"level":"info","message":"GET /api/sales/total","timestamp":"2025-08-12T22:44:30.176Z"}
+{"level":"info","message":"GET /api/sales/stats-by-type","timestamp":"2025-08-12T22:44:30.503Z"}
+{"level":"info","message":"GET /api/suppliers","timestamp":"2025-08-12T22:44:32.433Z"}
+{"level":"info","message":"GET /api/suppliers","timestamp":"2025-08-12T22:44:32.987Z"}
+{"level":"info","message":"GET /api/suppliers/2","timestamp":"2025-08-12T22:44:36.342Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-08-12T22:44:52.010Z"}
+{"level":"info","message":"GET /api/suppliers","timestamp":"2025-08-12T22:44:53.361Z"}
+{"level":"info","message":"GET /api/suppliers","timestamp":"2025-08-12T22:44:53.825Z"}
+{"level":"info","message":"GET /api/suppliers/2","timestamp":"2025-08-12T22:44:54.825Z"}
+{"level":"info","message":"GET /api/suppliers/2","timestamp":"2025-08-12T22:44:54.912Z"}
+{"level":"info","message":"GET /api/suppliers","timestamp":"2025-08-12T22:44:56.936Z"}
+{"level":"info","message":"GET /api/suppliers","timestamp":"2025-08-12T22:44:56.986Z"}
+{"level":"info","message":"GET /api/sales/stats","timestamp":"2025-08-12T22:44:57.632Z"}
+{"level":"info","message":"GET /api/sales/stats-by-type","timestamp":"2025-08-12T22:44:57.638Z"}
+{"level":"info","message":"GET /api/sales/total","timestamp":"2025-08-12T22:44:57.643Z"}
+{"level":"info","message":"GET /api/sales/upcoming-departures","timestamp":"2025-08-12T22:44:57.647Z"}
+{"level":"info","message":"GET /api/sales/stats","timestamp":"2025-08-12T22:44:58.285Z"}
+{"level":"info","message":"GET /api/suppliers","timestamp":"2025-08-12T22:44:58.468Z"}
+{"level":"info","message":"GET /api/sales/total","timestamp":"2025-08-12T22:44:58.530Z"}
+{"level":"info","message":"GET /api/suppliers","timestamp":"2025-08-12T22:44:58.533Z"}
+{"level":"info","message":"GET /api/sales/upcoming-departures","timestamp":"2025-08-12T22:44:58.549Z"}
+{"level":"info","message":"GET /api/sales/stats-by-type","timestamp":"2025-08-12T22:44:58.688Z"}
+{"level":"info","message":"GET /api/suppliers/1","timestamp":"2025-08-12T22:44:59.863Z"}
+{"level":"info","message":"GET /api/suppliers/1","timestamp":"2025-08-12T22:44:59.905Z"}
+{"level":"info","message":"GET /api/suppliers","timestamp":"2025-08-12T22:45:01.471Z"}
+{"level":"info","message":"GET /api/suppliers","timestamp":"2025-08-12T22:45:01.513Z"}
+{"level":"info","message":"GET /api/sales/total","timestamp":"2025-08-12T22:45:03.617Z"}
+{"level":"info","message":"GET /api/sales/stats","timestamp":"2025-08-12T22:45:03.619Z"}
+{"level":"info","message":"GET /api/sales/stats-by-type","timestamp":"2025-08-12T22:45:03.623Z"}
+{"level":"info","message":"GET /api/sales/upcoming-departures","timestamp":"2025-08-12T22:45:03.626Z"}
+{"level":"info","message":"GET /api/sales/total","timestamp":"2025-08-12T22:45:03.659Z"}
+{"level":"info","message":"GET /api/sales/upcoming-departures","timestamp":"2025-08-12T22:45:03.711Z"}
+{"level":"info","message":"GET /api/sales/stats","timestamp":"2025-08-12T22:45:03.773Z"}
+{"level":"info","message":"GET /api/sales/stats-by-type","timestamp":"2025-08-12T22:45:03.884Z"}
+{"level":"info","message":"GET /api/suppliers","timestamp":"2025-08-12T22:45:04.826Z"}
+{"level":"info","message":"GET /api/suppliers","timestamp":"2025-08-12T22:45:04.880Z"}
+{"level":"info","message":"GET /api/suppliers","timestamp":"2025-08-12T22:45:25.230Z"}
+{"level":"info","message":"GET /api/suppliers","timestamp":"2025-08-12T22:45:32.967Z"}
+{"level":"info","message":"GET /api/suppliers","timestamp":"2025-08-12T22:45:33.056Z"}
+{"level":"info","message":"GET /api/suppliers","timestamp":"2025-08-12T22:45:38.228Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-12T22:45:44.146Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-12T22:45:44.326Z"}
+{"level":"info","message":"GET /api/suppliers","timestamp":"2025-08-12T22:45:44.493Z"}
+{"level":"info","message":"GET /api/suppliers","timestamp":"2025-08-12T22:45:44.534Z"}
+{"level":"info","message":"GET /api/suppliers","timestamp":"2025-08-12T22:45:55.934Z"}
+{"level":"info","message":"GET /api/suppliers","timestamp":"2025-08-12T22:46:01.257Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-12T22:46:06.759Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-12T22:46:06.799Z"}
+{"level":"info","message":"GET /api/sales/total","timestamp":"2025-08-12T22:46:08.440Z"}
+{"level":"info","message":"GET /api/sales/stats","timestamp":"2025-08-12T22:46:08.443Z"}
+{"level":"info","message":"GET /api/sales/stats-by-type","timestamp":"2025-08-12T22:46:08.445Z"}
+{"level":"info","message":"GET /api/sales/upcoming-departures","timestamp":"2025-08-12T22:46:08.448Z"}
+{"level":"info","message":"GET /api/sales/total","timestamp":"2025-08-12T22:46:08.614Z"}
+{"level":"info","message":"GET /api/sales/upcoming-departures","timestamp":"2025-08-12T22:46:08.653Z"}
+{"level":"info","message":"GET /api/sales/stats","timestamp":"2025-08-12T22:46:08.748Z"}
+{"level":"info","message":"GET /api/sales/stats-by-type","timestamp":"2025-08-12T22:46:08.820Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-12T22:46:10.535Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-12T22:46:10.641Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-12T22:46:49.004Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-12T22:46:49.172Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-12T22:46:55.136Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-12T22:46:55.241Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-12T22:47:17.295Z"}
+{"level":"info","message":"GET /api/sales/total","timestamp":"2025-08-12T22:47:21.921Z"}
+{"level":"info","message":"GET /api/sales/stats","timestamp":"2025-08-12T22:47:21.928Z"}
+{"level":"info","message":"GET /api/sales/stats-by-type","timestamp":"2025-08-12T22:47:21.933Z"}
+{"level":"info","message":"GET /api/sales/upcoming-departures","timestamp":"2025-08-12T22:47:21.936Z"}
+{"level":"info","message":"GET /api/sales/upcoming-departures","timestamp":"2025-08-12T22:47:22.017Z"}
+{"level":"info","message":"GET /api/sales/stats-by-type","timestamp":"2025-08-12T22:47:22.097Z"}
+{"level":"info","message":"GET /api/sales/total","timestamp":"2025-08-12T22:47:22.101Z"}
+{"level":"info","message":"GET /api/sales/stats","timestamp":"2025-08-12T22:47:22.134Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-12T22:47:23.369Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-12T22:47:23.410Z"}
+{"level":"info","message":"GET /api/suppliers","timestamp":"2025-08-12T22:47:24.193Z"}
+{"level":"info","message":"GET /api/suppliers","timestamp":"2025-08-12T22:47:24.275Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-08-12T22:47:25.104Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-08-12T22:47:25.191Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-08-12T22:47:25.195Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-08-12T22:47:25.238Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-12T22:47:26.247Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-08-12T22:47:26.249Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-12T22:47:26.294Z"}
+{"level":"info","message":"Users list fetched","timestamp":"2025-08-12T22:47:26.751Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-08-12T22:47:26.753Z"}
+{"level":"info","message":"Users list fetched","timestamp":"2025-08-12T22:47:26.798Z"}
+{"level":"info","message":"GET /api/users/me","timestamp":"2025-08-12T22:54:18.741Z"}
+{"level":"info","message":"GET /api/users/me","timestamp":"2025-08-12T22:54:19.864Z"}
+{"level":"info","message":"POST /api/auth/login","timestamp":"2025-08-12T23:04:20.559Z"}
+{"level":"info","message":"User admin@travelpro.com logged in successfully","timestamp":"2025-08-12T23:04:22.751Z"}
+{"level":"info","message":"GET /api/sales/total","timestamp":"2025-08-12T23:04:22.803Z"}
+{"level":"info","message":"GET /api/sales/stats","timestamp":"2025-08-12T23:04:22.806Z"}
+{"level":"info","message":"GET /api/sales/stats-by-type","timestamp":"2025-08-12T23:04:22.808Z"}
+{"level":"info","message":"GET /api/sales/upcoming-departures","timestamp":"2025-08-12T23:04:22.811Z"}
+{"level":"info","message":"GET /api/sales/total","timestamp":"2025-08-12T23:04:23.406Z"}
+{"level":"info","message":"GET /api/sales/upcoming-departures","timestamp":"2025-08-12T23:04:23.445Z"}
+{"level":"info","message":"GET /api/sales/stats","timestamp":"2025-08-12T23:04:23.518Z"}
+{"level":"info","message":"GET /api/sales/stats-by-type","timestamp":"2025-08-12T23:04:23.606Z"}
+{"level":"info","message":"GET /api/suppliers","timestamp":"2025-08-12T23:04:27.458Z"}
+{"level":"info","message":"GET /api/suppliers","timestamp":"2025-08-12T23:04:27.986Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-08-12T23:04:30.084Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-08-12T23:04:30.172Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-08-12T23:04:30.174Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-08-12T23:04:30.221Z"}
+{"level":"info","message":"GET /api/suppliers","timestamp":"2025-08-12T23:04:31.772Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-08-12T23:04:31.777Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-12T23:04:31.783Z"}
+{"level":"info","message":"GET /api/suppliers","timestamp":"2025-08-12T23:04:31.819Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-12T23:04:32.226Z"}
+{"level":"info","message":"Users list fetched","timestamp":"2025-08-12T23:04:32.261Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-08-12T23:04:32.263Z"}
+{"level":"info","message":"Users list fetched","timestamp":"2025-08-12T23:04:32.307Z"}
+{"level":"info","message":"POST /api/suppliers","timestamp":"2025-08-12T23:04:38.668Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-08-12T23:05:26.722Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-12T23:05:26.725Z"}
+{"level":"info","message":"Users list fetched","timestamp":"2025-08-12T23:05:26.809Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-08-12T23:05:30.506Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-12T23:05:30.508Z"}
+{"level":"info","message":"Users list fetched","timestamp":"2025-08-12T23:05:30.550Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-08-12T23:05:39.056Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-12T23:05:39.058Z"}
+{"level":"info","message":"Users list fetched","timestamp":"2025-08-12T23:05:39.101Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-08-12T23:05:39.194Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-12T23:05:39.195Z"}
+{"level":"info","message":"Users list fetched","timestamp":"2025-08-12T23:05:39.289Z"}
+{"level":"info","message":"GET /api/users/me","timestamp":"2025-08-12T23:06:02.585Z"}
+{"level":"info","message":"GET /api/users/me","timestamp":"2025-08-12T23:06:02.648Z"}
+{"level":"info","message":"POST /api/auth/login","timestamp":"2025-08-12T23:06:33.171Z"}
+{"level":"info","message":"User admin@travelpro.com logged in successfully","timestamp":"2025-08-12T23:06:33.438Z"}
+{"level":"info","message":"GET /api/sales/total","timestamp":"2025-08-12T23:06:33.483Z"}
+{"level":"info","message":"GET /api/sales/stats","timestamp":"2025-08-12T23:06:33.485Z"}
+{"level":"info","message":"GET /api/sales/stats-by-type","timestamp":"2025-08-12T23:06:33.487Z"}
+{"level":"info","message":"GET /api/sales/upcoming-departures","timestamp":"2025-08-12T23:06:33.489Z"}
+{"level":"info","message":"GET /api/sales/total","timestamp":"2025-08-12T23:06:33.616Z"}
+{"level":"info","message":"GET /api/sales/upcoming-departures","timestamp":"2025-08-12T23:06:33.620Z"}
+{"level":"info","message":"GET /api/sales/stats","timestamp":"2025-08-12T23:06:33.692Z"}
+{"level":"info","message":"GET /api/sales/stats-by-type","timestamp":"2025-08-12T23:06:33.907Z"}
+{"level":"info","message":"GET /api/suppliers","timestamp":"2025-08-12T23:06:36.373Z"}
+{"level":"info","message":"GET /api/suppliers","timestamp":"2025-08-12T23:06:36.563Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-08-12T23:06:37.955Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-08-12T23:06:38.095Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-08-12T23:06:38.097Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-08-12T23:06:38.142Z"}
+{"level":"info","message":"GET /api/suppliers","timestamp":"2025-08-12T23:06:38.909Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-08-12T23:06:38.912Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-12T23:06:38.914Z"}
+{"level":"info","message":"GET /api/suppliers","timestamp":"2025-08-12T23:06:38.952Z"}
+{"level":"info","message":"Users list fetched","timestamp":"2025-08-12T23:06:39.060Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-08-12T23:06:39.062Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-12T23:06:39.102Z"}
+{"level":"info","message":"Users list fetched","timestamp":"2025-08-12T23:06:39.104Z"}
+{"level":"info","message":"GET /api/users/me","timestamp":"2025-08-12T23:17:07.455Z"}
+{"level":"info","message":"GET /api/users/me","timestamp":"2025-08-12T23:17:09.299Z"}

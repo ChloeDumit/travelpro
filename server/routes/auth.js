@@ -31,8 +31,10 @@ router.post('/login', validate(loginSchema), async (req, res, next) => {
       throw new AppError(ERROR_MESSAGES.INVALID_CREDENTIALS, HTTP_STATUS.UNAUTHORIZED);
     }
 
+    console.log(user)
+
     const token = jwt.sign(
-      { userId: user.id, role: user.role },
+      { userId: user.id.toString(), role: user.role, companyId: user.companyId },
       config.jwtSecret,
       { expiresIn: config.jwtExpiration }
     );
@@ -43,9 +45,10 @@ router.post('/login', validate(loginSchema), async (req, res, next) => {
       message: SUCCESS_MESSAGES.LOGIN_SUCCESS,
       token,
       user: {
-        id: user.id,
+        id: user.id.toString(),
         email: user.email,
-        role: user.role
+        role: user.role,
+        company_id: user.company_id
       }
     });
   } catch (error) {

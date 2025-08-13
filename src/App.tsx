@@ -13,6 +13,9 @@ import { ClientsListPage } from './pages/clients/clients-list';
 import { NewClientPage } from './pages/clients/new-client';
 import { EditClientPage } from './pages/clients/edit-client';
 import { SaleEditPage } from './pages/sales/sale-edit';
+import { SuppliersListPage } from './pages/suppliers/suppliers-list';
+import { NewSupplierPage } from './pages/suppliers/new-supplier';
+import { EditSupplierPage } from './pages/suppliers/edit-supplier';
 
 // Protected route component
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
@@ -58,6 +61,9 @@ function App() {
             <Route path="clients" element={<ClientsListPage />} />
             <Route path="clients/new" element={<NewClientPage />} />
             <Route path="clients/:id/edit" element={<EditClientPage />} />
+            <Route path="suppliers" element={<SuppliersListPage />} />
+            <Route path="suppliers/new" element={<NewSupplierPage />} />
+            <Route path="suppliers/:id/edit" element={<EditSupplierPage />} />
             <Route path="sales/:id/edit" element={<SaleEditPage />} />
             <Route path="*" element={<Navigate to="/dashboard" replace />} />
           </Route>

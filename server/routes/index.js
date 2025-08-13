@@ -37,6 +37,7 @@ app.post('/api/auth/logout', authenticate, (req, res) => {
   // API routes
   app.use('/api/sales', salesRouter);
   app.use('/api/users', usersRouter);
+  app.use('api/suppliers', suppliersRouter)
 
 
 module.exports = router;

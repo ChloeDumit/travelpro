@@ -163,9 +163,10 @@ export function SalesListPage() {
                 </div>
                 <div className="md:w-64 flex flex-col justify-between border-t pt-4 md:border-t-0 md:pt-0 md:border-l md:pl-4">
                   <div>
-                    <p className="text-sm text-gray-500">Total Costo</p>
-                    <p className="text-lg font-bold">{formatCurrency(sale.totalCost, sale.currency)}</p>
+                    <p className="text-sm text-gray-500">Total Venta</p>
+                    <p className="text-lg font-bold">{formatCurrency(sale.salePrice, sale.currency)}</p>
                   </div>
+
                   <div>
                     <p className="text-sm text-gray-500">Vendedor</p>
                     <p className="text-sm">{sale.seller.username}</p>

@@ -55,6 +55,8 @@ export interface Sale {
   totalCost: number;
   pendingBalance: number;
   payments?: Payment[];
+  salePrice: number;
+  client: Client;
 }
 
 // Invoice types
@@ -123,16 +125,26 @@ export interface SaleItemFormData {
   costCurrency: Currency;
   reservationCode: string;
   paymentDate: string | null;
+  supplierId: string
+  supplierName: string
 }
 
 export interface ClientFormData {
   name: string;
-  clientId: string;
-  email: string;
-  address: string;
+  clientId?: string;
+  email?: string;
+  address?: string;
+}
+
+export interface SupplierFormData {
+  name: string;
+  supplierId?: string;
+  email?: string;
+  address?: string;
 }
 
 export * from './sales';
 export * from './user';
 export * from './common';
 export * from './client';
+export * from './supplier';

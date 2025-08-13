@@ -92,7 +92,7 @@ export function SaleForm({ onSubmit, initialData, action }: SaleFormProps) {
         : new Date(initialData.travelDate).toISOString().split('T')[0];
       form.reset({
         passengerName: initialData.passengerName,
-        clientId: initialData.client.clientId,
+        clientId: initialData.clientId,
         travelDate: formattedDate,
         saleType: initialData.saleType,
         serviceType: initialData.serviceType,

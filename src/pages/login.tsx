@@ -113,7 +113,7 @@ export function LoginPage() {
         <br />
         <code className="bg-primary-700/50 px-2 py-1 rounded text-white">admin@travelpro.com / password</code>
          <br />
-        <code className="bg-primary-700/50 px-2 py-1 rounded text-white">sales@example.com / password</code>
+        <code className="bg-primary-700/50 px-2 py-1 rounded text-white">sales@travelpro.com / password</code>
         <br />
       </p>
     </div>

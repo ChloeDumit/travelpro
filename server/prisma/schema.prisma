@@ -69,98 +69,146 @@ enum PaymentMethod {
 }
 
 // Models
+model Company {
+  id      Int      @id @default(autoincrement())
+  name    String   @unique
+  users   User[]
+  clients Client[]
+  sales   Sale[]
+  suppliers Supplier[]
+  operator Operator[]
+  classification Classification[]
+}
+
 model User {
-  id        String   @id @default(uuid())
+  id        Int      @id @default(autoincrement())
+  company   Company  @relation(fields: [companyId], references: [id])
+  companyId Int
   username  String   @unique
   email     String   @unique
   password  String
   role      UserRole
   createdAt DateTime @default(now())
-  sales     Sale[]   // Relation to sales where user is the seller
+  sales     Sale[] // Relation to sales where user is the seller
 }
 
 model Client {
-  id        String   @id @default(uuid())
+  id        Int      @id @default(autoincrement())
+  company   Company  @relation(fields: [companyId], references: [id])
+  companyId Int
   name      String
-  clientId  String   @unique
-  address   String
-  email     String   @unique
+  clientId  String?  
+  address   String?
+  email     String?
   createdAt DateTime @default(now())
   sales     Sale[]
 }
 
 model Sale {
-  id             String       @id @default(uuid())
-  passengerName  String
-  client         Client       @relation(fields: [clientId], references: [id])
-  clientId       String
-  creationDate   DateTime     @default(now())
-  travelDate     DateTime
-  saleType       SaleType
-  region         Region
-  serviceType    ServiceType
-  status         SaleStatus   @default(draft)
-  currency       Currency
-  seller         User         @relation(fields: [sellerId], references: [id])
-  sellerId       String
-  passengerCount Int
-  items          SaleItem[]
-  totalCost      Float
-  invoices       Invoice[]
-  payments       Payment[]
+  id               Int               @id @default(autoincrement())
+  company          Company           @relation(fields: [companyId], references: [id])
+  companyId        Int
+  passengerName    String
+  client           Client            @relation(fields: [clientId], references: [id])
+  clientId         Int
+  creationDate     DateTime          @default(now())
+  travelDate       DateTime
+  saleType         SaleType
+  region           Region
+  serviceType      ServiceType
+  status           SaleStatus        @default(draft)
+  currency         Currency
+  seller           User              @relation(fields: [sellerId], references: [id])
+  sellerId         Int
+  passengerCount   Int
+  items            SaleItem[]
+  totalCost        Float
+  salePrice        Float
+  invoices         Invoice[]
+  payments         Payment[]
   supplierPayments SupplierPayment[]
 }
 
 model SaleItem {
-  id              String      @id @default(uuid())
-  classification  String
-  provider        String
-  operator        String
-  dateIn          DateTime
-  dateOut         DateTime
+  id              Int              @id @default(autoincrement())
+  classification  Classification[]
+  supplier        Supplier[]
+  operator        Operator[]
+  dateIn          DateTime?
+  dateOut         DateTime?
   passengerCount  Int
-  status          ItemStatus  @default(pending)
-  description     String
+  status          ItemStatus       @default(pending)
+  description     String?
   salePrice       Float
-  saleCurrency    Currency
   costPrice       Float
-  costCurrency    Currency
-  reservationCode String
+  reservationCode String?
   paymentDate     DateTime?
-  sale            Sale        @relation(fields: [saleId], references: [id])
-  saleId          String
+  sale            Sale             @relation(fields: [saleId], references: [id])
+  saleId          Int
 }
 
 model Invoice {
-  id            String    @id @default(uuid())
-  sale          Sale      @relation(fields: [saleId], references: [id])
-  saleId        String
-  invoiceNumber String    @unique
-  date          DateTime  @default(now())
+  id            Int      @id @default(autoincrement())
+  sale          Sale     @relation(fields: [saleId], references: [id])
+  saleId        Int
+  invoiceNumber String   @unique
+  date          DateTime @default(now())
   amount        Float
   currency      Currency
-  status        String    // pending, paid, cancelled
+  status        String // pending, paid, cancelled
 }
 
 model Payment {
-  id        String        @id @default(uuid())
+  id        Int           @id @default(autoincrement())
   sale      Sale          @relation(fields: [saleId], references: [id])
-  saleId    String
+  saleId    Int
   date      DateTime      @default(now())
   amount    Float
   currency  Currency
   method    PaymentMethod
   reference String
-  status    String        // pending, confirmed
+  status    String // pending, confirmed
 }
 
 model SupplierPayment {
-  id              String   @id @default(uuid())
+  id              Int      @id @default(autoincrement())
   operator        String
   date            DateTime @default(now())
   operationNumber String   @unique
   amount          Float
   currency        Currency
   paymentMethod   String
-  relatedSales    Sale[]   // Many-to-many relation with sales
+  relatedSales    Sale[] // Many-to-many relation with sales
+}
+
+// For these models, I assume they do not need company scope unless you want to add it:
+model Supplier {
+  id         Int       @id @default(autoincrement())
+  name       String
+  SaleItem   SaleItem? @relation(fields: [saleItemId], references: [id])
+  saleItemId Int?
+
+  company    Company   @relation(fields: [companyId], references: [id])
+  companyId  Int
+}
+
+model Operator {
+  id         Int       @id @default(autoincrement())
+  name       String
+
+  SaleItem   SaleItem? @relation(fields: [saleItemId], references: [id])
+  saleItemId Int?
+
+  company    Company   @relation(fields: [companyId], references: [id])
+  companyId  Int
+}
+
+model Classification {
+  id         Int       @id @default(autoincrement())
+  name       String
+  SaleItem   SaleItem? @relation(fields: [saleItemId], references: [id])
+  saleItemId Int?
+
+  company    Company   @relation(fields: [companyId], references: [id])
+  companyId  Int
 }

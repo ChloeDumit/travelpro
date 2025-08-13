@@ -1,23 +1,23 @@
-import { Client, ClientFormData } from '../../types';
+import { SupplierFormData } from '../../types';
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
 
 
-export const clientsService = {
-  getAllClients: async () => {
-    const response = await fetch(`${API_URL}/api/clients`, {
+export const suppliersService = {
+  getAllSuppliers: async () => {
+    const response = await fetch(`${API_URL}/api/suppliers`, {
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${localStorage.getItem('auth_token')}`
         }
     });
     if (!response.ok) {
-      throw new Error('Failed to fetch clients');
+      throw new Error('Failed to fetch suppliers');
     }
     return response.json();
   },
 
-  createClient: async (data: ClientFormData) => {
-    const response = await fetch(`${API_URL}/api/clients`, {
+  createSupplier: async (data: SupplierFormData) => {
+    const response = await fetch(`${API_URL}/api/suppliers`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -27,13 +27,13 @@ export const clientsService = {
     });
 
     if (!response.ok) {
-      throw new Error('Failed to create client');
+      throw new Error('Failed to create supplier');
     }
     return response.json();
   },
 
-  updateClient: async (id: string, data: Partial<ClientFormData>) => {
-    const response = await fetch(`${API_URL}/api/clients/${id}`, {
+  updateSupplier: async (id: string, data: Partial<SupplierFormData>) => {
+    const response = await fetch(`${API_URL}/api/suppliers/${id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -43,13 +43,13 @@ export const clientsService = {
     });
 
     if (!response.ok) {
-      throw new Error('Failed to update client');
+      throw new Error('Failed to update supplier');
     }
     return response.json();
   },
 
-  deleteClient: async (id: string) => {
-    const response = await fetch(`${API_URL}/api/clients/${id}`, {
+  deleteSupplier: async (id: string) => {
+    const response = await fetch(`${API_URL}/api/suppliers/${id}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
@@ -58,20 +58,20 @@ export const clientsService = {
     });
 
     if (!response.ok) {
-      throw new Error('Failed to delete client');
+      throw new Error('Failed to delete supplier');
     }
     return response.json();
   },
 
-  getClientById: async (id: string) => {
-    const response = await fetch(`${API_URL}/api/clients/${id}`, {
+  getSupplierById: async (id: string) => {
+    const response = await fetch(`${API_URL}/api/suppliers/${id}`, {
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${localStorage.getItem('auth_token')}`
       },
     });
     if (!response.ok) {
-      throw new Error('Failed to fetch client');
+      throw new Error('Failed to fetch supplier');
     }
     return response.json();
   },

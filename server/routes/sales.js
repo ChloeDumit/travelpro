@@ -19,15 +19,22 @@ router.get('/', authenticate, requireRole([ROLES.ADMIN, ROLES.SALES]), async (re
             username: true,
             email: true
           }
-        }
+        },
+      },
+      where: {
+        companyId: req.user.companyId
       },
       orderBy: {
         creationDate: 'desc'
       }
-    });
+    },
+
+  );
 
     logger.info('Sales data fetched');
+console.log(sales)
     res.status(HTTP_STATUS.OK).json({ sales });
+    
   } catch (error) {
     next(error);
   }
@@ -37,6 +44,9 @@ router.get('/', authenticate, requireRole([ROLES.ADMIN, ROLES.SALES]), async (re
 router.get('/my-sales', authenticate, requireRole([ROLES.SALES]), async (req, res, next) => {
   try {
     const sales = await prisma.sale.findMany({
+      where: {
+        companyId: req.user.companyId
+      },
       orderBy: {
         creationDate: 'desc'
       }
@@ -54,6 +64,7 @@ router.post('/', authenticate, requireRole([ROLES.SALES, ROLES.ADMIN]), async (r
   try {
     const { saleData, items } = req.body;
     const userId = req.user.userId;
+    const companyId = req.user.companyId;
 
     // Validate that we have a client
     if (!saleData.client) {
@@ -62,6 +73,11 @@ router.post('/', authenticate, requireRole([ROLES.SALES, ROLES.ADMIN]), async (r
 
     const sale = await prisma.sale.create({
       data: {
+        company: {
+          connect: {
+            id: req.user.companyId
+          }
+        },
         passengerName: saleData.passengerName,
         client: {
           connect: {
@@ -81,13 +97,14 @@ router.post('/', authenticate, requireRole([ROLES.SALES, ROLES.ADMIN]), async (r
         },
         passengerCount: saleData.passengerCount,
         totalCost: saleData.totalCost,
+        salePrice: saleData.totalSale,
         items: {
           create: items.map(item => ({
             classification: item.classification,
             provider: item.provider,
             operator: item.operator,
-            dateIn: new Date(item.dateIn),
-            dateOut: new Date(item.dateOut),
+            dateIn: item.dateIn ?? new Date(item.dateIn),
+            dateOut: item.dateOut ?? new Date(item.dateOut),
             passengerCount: item.passengerCount,
             status: item.status,
             description: item.description,
@@ -96,7 +113,7 @@ router.post('/', authenticate, requireRole([ROLES.SALES, ROLES.ADMIN]), async (r
             costPrice: item.costPrice,
             costCurrency: item.costCurrency,
             reservationCode: item.reservationCode,
-            paymentDate: item.paymentDate ? new Date(item.paymentDate) : null,
+            paymentDate: item.paymentDate ?? new Date(item.paymentDate),
           })),
         },
       },
@@ -104,6 +121,7 @@ router.post('/', authenticate, requireRole([ROLES.SALES, ROLES.ADMIN]), async (r
         items: true,
         seller: true,
         client: true,
+        company: true
       },
     });
 
@@ -126,7 +144,7 @@ router.put('/:id', authenticate, requireRole([ROLES.SALES, ROLES.ADMIN]), async 
 
     // Check if sale exists and belongs to user
     const existingSale = await prisma.sale.findUnique({
-      where: { id }
+      where: { id, companyId: req.user.companyId }
     });
 
     console.log(req.body);
@@ -245,6 +263,9 @@ router.get('/total', authenticate, requireRole([ROLES.ADMIN, ROLES.SALES]), asyn
     const totalSales = await prisma.sale.aggregate({
       _sum: {
         totalCost: true
+      },
+      where: {
+        companyId: req.user.companyId
       }
     });
 
@@ -266,6 +287,9 @@ router.get('/stats', authenticate, requireRole([ROLES.ADMIN, ROLES.SALES]), asyn
       },
       _sum: {
         totalCost: true
+      },
+      where: {
+        companyId: req.user.companyId
       }
     });
 
@@ -309,6 +333,9 @@ router.get('/stats-by-type', authenticate, requireRole([ROLES.ADMIN, ROLES.SALES
       },
       _sum: {
         totalCost: true
+      },
+      where: {
+        companyId: req.user.companyId
       }
     });
 
@@ -320,6 +347,9 @@ router.get('/stats-by-type', authenticate, requireRole([ROLES.ADMIN, ROLES.SALES
       },
       _sum: {
         totalCost: true
+      },
+      where: {
+        companyId: req.user.companyId
       }
     });
 
@@ -331,6 +361,9 @@ router.get('/stats-by-type', authenticate, requireRole([ROLES.ADMIN, ROLES.SALES
       },
       _sum: {
         totalCost: true
+      },
+      where: {
+        companyId: req.user.companyId
       }
     });
 
@@ -387,7 +420,9 @@ router.get('/upcoming-departures', authenticate, requireRole([ROLES.ADMIN, ROLES
         },
         status: {
           in: ['confirmed', 'completed']
-        }
+        },
+        companyId: req.user.companyId
+        
       },
       select: {
         id: true,
@@ -405,7 +440,8 @@ router.get('/upcoming-departures', authenticate, requireRole([ROLES.ADMIN, ROLES
         travelDate: 'asc'
       },
       take: 10
-    });
+    }
+    );
 
     res.status(HTTP_STATUS.OK).json({ departures: upcomingDepartures });
   } catch (error) {
@@ -435,7 +471,8 @@ router.get('/sales-overview', authenticate, requireRole([ROLES.ADMIN, ROLES.SALE
         creationDate: {
           gte: sevenDaysAgo,
           lte: today
-        }
+        },
+        companyId: req.user.companyId
       }
     });
 
@@ -484,6 +521,9 @@ router.get('/:id', authenticate, requireRole([ROLES.ADMIN, ROLES.SALES]), async 
         items: true,
         seller: true,
         client: true,
+      },
+      where: {
+        companyId: req.user.companyId
       }
     });
 

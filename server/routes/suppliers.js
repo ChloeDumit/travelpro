@@ -6,24 +6,25 @@ import { ROLES } from '../constants/index.js';
 const router = express.Router();
 
 router.get('/', authenticate, requireRole([ROLES.ADMIN, ROLES.SALES]), async (req, res) => {
-  const clients = await prisma.client.findMany({
+  console.log(';entre')
+  const suppliers = await prisma.supplier.findMany({
     where: {
       companyId: req.user.companyId
     }
   });
-  res.json(clients);
+  res.json(suppliers);
 });
 
 router.get('/:id', authenticate, requireRole([ROLES.ADMIN, ROLES.SALES]), async (req, res) => {
-  const client = await prisma.client.findUnique({
-    where: { id: req.params.id, companyId: req.user.companyId },
+  const supplier = await prisma.supplier.findUnique({
+    where: { id: parseInt(req.params.id), companyId: req.user.companyId },
   });
-  res.json(client);
+  res.json(supplier);
 });
 
 router.post('/', authenticate, requireRole([ROLES.ADMIN, ROLES.SALES]), async (req, res) => {
 console.log('acaaaaaaaa', req.user)
-  const client = await prisma.client.create({
+  const supplier = await prisma.supplier.create({
     data: {
       ...req.body,
       companyId: req.user.companyId
@@ -32,22 +33,22 @@ console.log('acaaaaaaaa', req.user)
       company: true
     }
   });
-  res.json(client);
+  res.json(supplier);
 });
 
 router.put('/:id', authenticate, requireRole([ROLES.ADMIN, ROLES.SALES]), async (req, res) => {
-  const client = await prisma.client.update({
+  const supplier = await prisma.supplier.update({
     where: { id: req.params.id, companyId: req.user.companyId },
     data: req.body,
   });
-  res.json(client);
+  res.json(supplier);
 });
 
 router.delete('/:id', authenticate, requireRole([ROLES.ADMIN, ROLES.SALES]), async (req, res) => {
-  const client = await prisma.client.delete({
+  const supplier = await prisma.supplier.delete({
     where: { id: req.params.id, companyId: req.user.companyId },
   });
-  res.json(client);
+  res.json(supplier);
 });
 
 

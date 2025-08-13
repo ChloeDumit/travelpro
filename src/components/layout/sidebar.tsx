@@ -119,10 +119,16 @@ export function Sidebar({ userRole }: SidebarProps) {
           )} */}
 
           {userRole === 'admin' && (
+<>
+            <SidebarLink to="/suppliers">
+              <Users size={20} />
+              {!collapsed && <span>Proveedores</span>}
+            </SidebarLink>
             <SidebarLink to="/users">
               <Users size={20} />
               {!collapsed && <span>Usuarios</span>}
             </SidebarLink>
+            </>
           )}
 
           {/* <SidebarLink to="/settings">
