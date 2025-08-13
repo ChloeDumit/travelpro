@@ -141,9 +141,11 @@ interface SaleItemCardProps {
 }
 
 function SaleItemCard({ item, saleCurrency }: SaleItemCardProps) {
-  const classificationName = item.classificationName || "N/A";
-  const supplierName = item.supplierName || "N/A";
-  const operatorName = item.operatorName || "N/A";
+  console.log("Item:", item);
+  const classificationName = item.classification?.at(0)?.name || "N/A";
+
+  const supplierName = item.supplier.at(0)?.name || "N/A";
+  const operatorName = item.operator.at(0)?.name || "N/A";
 
   return (
     <div className="border rounded-md p-4 bg-white hover:shadow-md transition-shadow">

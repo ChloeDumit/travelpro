@@ -1,19 +1,32 @@
-import { Sale, SaleFormData, SaleItemFormData } from '../../types';
-import { Client } from '../../types/client';
+import { Sale, SaleFormData, SaleItemFormData } from "../../types";
+import { Client } from "../../types/client";
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:3001";
 
 export const salesService = {
   // Get all sales
   async getAllSales() {
     const response = await fetch(`${API_URL}/api/sales`, {
       headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('auth_token')}`
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("auth_token")}`,
       },
     });
     if (!response.ok) {
-      throw new Error('Failed to fetch sales');
+      throw new Error("Failed to fetch sales");
+    }
+    return response.json();
+  },
+
+  async getMySales() {
+    const response = await fetch(`${API_URL}/api/sales/my-sales`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("auth_token")}`,
+      },
+    });
+    if (!response.ok) {
+      throw new Error("Failed to fetch my sales");
     }
     return response.json();
   },
@@ -22,12 +35,12 @@ export const salesService = {
   async getSaleById(id: string) {
     const response = await fetch(`${API_URL}/api/sales/${id}`, {
       headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('auth_token')}`
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("auth_token")}`,
       },
     });
     if (!response.ok) {
-      throw new Error('Failed to fetch sale');
+      throw new Error("Failed to fetch sale");
     }
     return response.json();
   },
@@ -36,13 +49,13 @@ export const salesService = {
   async getTotalSales() {
     const response = await fetch(`${API_URL}/api/sales/total`, {
       headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('auth_token')}`
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("auth_token")}`,
       },
     });
-    console.log('response total sales', response);
+    console.log("response total sales", response);
     if (!response.ok) {
-      throw new Error('Failed to fetch total sales');
+      throw new Error("Failed to fetch total sales");
     }
     const data = await response.json();
     return data.total || 0;
@@ -52,13 +65,13 @@ export const salesService = {
   async getSalesStats() {
     const response = await fetch(`${API_URL}/api/sales/stats`, {
       headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('auth_token')}`
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("auth_token")}`,
       },
     });
-    console.log('response sales stats', response);
+    console.log("response sales stats", response);
     if (!response.ok) {
-      throw new Error('Failed to fetch sales statistics');
+      throw new Error("Failed to fetch sales statistics");
     }
     return response.json();
   },
@@ -67,12 +80,12 @@ export const salesService = {
   async getSalesStatsByType() {
     const response = await fetch(`${API_URL}/api/sales/stats-by-type`, {
       headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('auth_token')}`
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("auth_token")}`,
       },
     });
     if (!response.ok) {
-      throw new Error('Failed to fetch sales statistics by type');
+      throw new Error("Failed to fetch sales statistics by type");
     }
     return response.json();
   },
@@ -81,12 +94,12 @@ export const salesService = {
   async getUpcomingDepartures() {
     const response = await fetch(`${API_URL}/api/sales/upcoming-departures`, {
       headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('auth_token')}`
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("auth_token")}`,
       },
     });
     if (!response.ok) {
-      throw new Error('Failed to fetch upcoming departures');
+      throw new Error("Failed to fetch upcoming departures");
     }
     return response.json();
   },
@@ -95,51 +108,54 @@ export const salesService = {
   async getSalesOverview() {
     const response = await fetch(`${API_URL}/api/sales/sales-overview`, {
       headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('auth_token')}`
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("auth_token")}`,
       },
     });
     if (!response.ok) {
-      throw new Error('Failed to fetch sales overview data');
+      throw new Error("Failed to fetch sales overview data");
     }
     return response.json();
   },
 
   // Create a new sale
-  async createSale(saleData: SaleFormData & { client: Client | null }, items: SaleItemFormData[]) {
+  async createSale(
+    saleData: SaleFormData & { client: Client | null },
+    items: SaleItemFormData[]
+  ) {
     const response = await fetch(`${API_URL}/api/sales`, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('auth_token')}`
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("auth_token")}`,
       },
-      body: JSON.stringify({ 
+      body: JSON.stringify({
         saleData: {
           ...saleData,
-          client: saleData.client
-        }, 
-        items 
+          client: saleData.client,
+        },
+        items,
       }),
     });
     if (!response.ok) {
-      throw new Error('Failed to create sale');
+      throw new Error("Failed to create sale");
     }
     return response.json();
   },
 
   // Update a sale
   async updateSale(id: string, saleData: Partial<Sale>) {
-    console.log('saleData', saleData);
+    console.log("saleData", saleData);
     const response = await fetch(`${API_URL}/api/sales/${id}`, {
-      method: 'PUT',
+      method: "PUT",
       headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('auth_token')}`
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("auth_token")}`,
       },
       body: JSON.stringify(saleData),
     });
     if (!response.ok) {
-      throw new Error('Failed to update sale');
+      throw new Error("Failed to update sale");
     }
     return response.json();
   },
@@ -147,33 +163,33 @@ export const salesService = {
   // Delete a sale
   async deleteSale(id: string) {
     const response = await fetch(`${API_URL}/api/sales/${id}`, {
-      method: 'DELETE',
+      method: "DELETE",
       headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('auth_token')}`
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("auth_token")}`,
       },
     });
     if (!response.ok) {
-      throw new Error('Failed to delete sale');
+      throw new Error("Failed to delete sale");
     }
   },
 
   // Update sale status
-  async updateSaleStatus(id: string, status: 'draft' | 'confirmed' | 'completed' | 'cancelled') {
+  async updateSaleStatus(
+    id: string,
+    status: "draft" | "confirmed" | "completed" | "cancelled"
+  ) {
     const response = await fetch(`${API_URL}/api/sales/${id}`, {
-      method: 'PUT',
+      method: "PUT",
       headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('auth_token')}`
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("auth_token")}`,
       },
       body: JSON.stringify({ status }),
     });
     if (!response.ok) {
-      throw new Error('Failed to update sale status');
+      throw new Error("Failed to update sale status");
     }
     return response.json();
   },
-
- 
-}; 
-
+};

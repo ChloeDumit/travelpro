@@ -55,8 +55,18 @@ router.get(
   async (req, res, next) => {
     try {
       const sales = await prisma.sale.findMany({
+        include: {
+          seller: {
+            select: {
+              id: true,
+              username: true,
+              email: true,
+            },
+          },
+        },
         where: {
           companyId: req.user.companyId,
+          sellerId: parseInt(req.user.userId),
         },
         orderBy: {
           creationDate: "desc",
@@ -104,7 +114,7 @@ router.post(
           saleType: saleData.saleType,
           region: saleData.region,
           serviceType: saleData.serviceType,
-          status: "draft",
+          status: "confirmed",
           currency: saleData.currency,
           seller: {
             connect: {
@@ -389,19 +399,23 @@ router.get(
   authenticate,
   requireRole([ROLES.ADMIN, ROLES.SALES]),
   async (req, res, next) => {
+    const isAdmin = req.user.role === ROLES.ADMIN;
+    const where = isAdmin
+      ? { companyId: req.user.companyId }
+      : { companyId: req.user.companyId, sellerId: req.user.userId };
     try {
       const totalSales = await prisma.sale.aggregate({
         _sum: {
-          totalCost: true,
+          salePrice: true,
         },
         where: {
-          companyId: req.user.companyId,
+          ...where,
         },
       });
-
+      console.log(totalSales);
       res
         .status(HTTP_STATUS.OK)
-        .json({ total: totalSales._sum.totalCost || 0 });
+        .json({ total: totalSales._sum.salePrice || 0 });
     } catch (error) {
       next(error);
     }

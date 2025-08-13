@@ -21,7 +21,7 @@ export function EditOperatorPage() {
 
   const fetchOperator = async () => {
     try {
-      const data = await operatorsService.getOperatorById(parseInt(id));
+      const data = await operatorsService.getOperatorById(parseInt(id || "0"));
       setOperator(data);
     } catch (err) {
       setError("Error al cargar operador");

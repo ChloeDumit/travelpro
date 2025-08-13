@@ -14,19 +14,14 @@ import {
 import { Card, CardHeader, CardTitle, CardContent } from "../ui/card";
 import { Pencil, Plus, Trash2 } from "lucide-react";
 import { SaleItemForm } from "./sale-item-form";
-import {
-  SaleItemFormData,
-  User,
-  ClientFormData,
-  SaleItem,
-  Sale,
-} from "../../types";
+import { SaleItemFormData, User, ClientFormData, Sale } from "../../types";
 import { usersService } from "../../lib/services/users";
 import { clientsService } from "../../lib/services/clients";
 import { Client } from "../../types/client";
 import { Modal } from "../ui/modal";
 import { ClientSelect } from "./client-select";
 import { UserSelect } from "./user-select";
+import { useAuth } from "../../contexts/auth-context";
 
 const saleFormSchema = z.object({
   passengerName: z.string().min(1, "El nombre del pasajero es requerido"),
@@ -59,9 +54,16 @@ interface SaleFormProps {
   ) => void;
   initialData?: Sale;
   action: "new" | "edit";
+  loading: boolean;
 }
 
-export function SaleForm({ onSubmit, initialData, action }: SaleFormProps) {
+export function SaleForm({
+  onSubmit,
+  initialData,
+  action,
+  loading,
+}: SaleFormProps) {
+  const { user: currentUser } = useAuth();
   const [items, setItems] = useState<SaleItemFormData[]>([]);
   const [users, setUsers] = useState<User[]>([]);
   const [showItemForm, setShowItemForm] = useState(false);
@@ -89,7 +91,7 @@ export function SaleForm({ onSubmit, initialData, action }: SaleFormProps) {
       passengerName: "",
       clientId: "",
       travelDate: "",
-      sellerId: "",
+      sellerId: currentUser?.id || "",
     },
   });
 
@@ -114,13 +116,13 @@ export function SaleForm({ onSubmit, initialData, action }: SaleFormProps) {
 
   useEffect(() => {
     if (initialData) {
-      const formattedDate =
-        initialData.travelDate instanceof Date
-          ? initialData.travelDate.toISOString().split("T")[0]
-          : new Date(initialData.travelDate).toISOString().split("T")[0];
+      const formattedDate = initialData.travelDate
+        ? new Date(initialData.travelDate).toISOString().split("T")[0]
+        : "";
+
       form.reset({
         passengerName: initialData.passengerName,
-        clientId: initialData.clientId,
+        clientId: initialData.client?.clientId || "",
         travelDate: formattedDate,
         saleType: initialData.saleType,
         serviceType: initialData.serviceType,
@@ -140,40 +142,36 @@ export function SaleForm({ onSubmit, initialData, action }: SaleFormProps) {
       // Set items if available
       if (initialData.items && initialData.items.length > 0) {
         const formattedItems: SaleItemFormData[] = initialData.items.map(
-          (item: SaleItem) => ({
-            classificationId: item.classification?.[0]?.id || 0,
-            classificationName: item.classification?.[0]?.name || "",
-            supplierId: item.supplier?.[0]?.id || 0,
-            supplierName: item.supplier?.[0]?.name || "",
-            operatorId: item.operator?.[0]?.id || 0,
-            operatorName: item.operator?.[0]?.name || "",
-            dateIn:
-              item.dateIn instanceof Date
-                ? item.dateIn.toISOString().split("T")[0]
-                : new Date(item.dateIn).toISOString().split("T")[0],
-            dateOut:
-              item.dateOut instanceof Date
-                ? item.dateOut.toISOString().split("T")[0]
-                : new Date(item.dateOut).toISOString().split("T")[0],
+          (item) => ({
+            classificationId: item.classificationId || 0,
+            classificationName: item.classificationName || "",
+            supplierId: item.supplierId || 0,
+            supplierName: item.supplierName || "",
+            operatorId: item.operatorId || 0,
+            operatorName: item.operatorName || "",
+            dateIn: item.dateIn || "",
+            dateOut: item.dateOut || "",
             passengerCount: item.passengerCount,
             status: item.status,
             description: item.description || "",
             salePrice: item.salePrice,
             costPrice: item.costPrice,
             reservationCode: item.reservationCode || "",
-            paymentDate: item.paymentDate
-              ? item.paymentDate instanceof Date
-                ? item.paymentDate.toISOString().split("T")[0]
-                : new Date(item.paymentDate).toISOString().split("T")[0]
-              : null,
+            paymentDate: item.paymentDate || null,
+            supplier: item.supplier || [],
+            operator: item.operator || [],
+            classification: item.classification || [],
           })
         );
         setItems(formattedItems);
       }
+    } else if (currentUser) {
+      // Si es una nueva venta, establecer el vendedor por defecto
+      form.setValue("sellerId", currentUser.id);
     }
     getUsers();
     getClients();
-  }, [initialData, form]);
+  }, [initialData, form, currentUser]);
 
   const handleEditItem = (index: number) => {
     console.log(index);
@@ -188,6 +186,7 @@ export function SaleForm({ onSubmit, initialData, action }: SaleFormProps) {
 
   const handleFormSubmit = (data: SaleFormData) => {
     console.log("Form submitted with data:", data);
+
     const totalCost = items.reduce((sum, item) => sum + item.costPrice, 0);
     const totalSale = items.reduce((sum, item) => sum + item.salePrice, 0);
     console.log("Calculated total cost:", totalCost);
@@ -288,6 +287,7 @@ export function SaleForm({ onSubmit, initialData, action }: SaleFormProps) {
               value={form.watch("sellerId")}
               onSelect={(user) => form.setValue("sellerId", user.id)}
               error={form.formState.errors.sellerId?.message}
+              currentUser={currentUser}
             />
           </CardContent>
         </form>
@@ -425,8 +425,10 @@ export function SaleForm({ onSubmit, initialData, action }: SaleFormProps) {
               form.setValue("passengerName", created.name);
               setShowClientModal(false);
               setClientForm({ name: "", clientId: "", email: "", address: "" });
-            } catch (err: any) {
-              setClientFormError(err.message || "Error al crear cliente");
+            } catch (err: unknown) {
+              const errorMessage =
+                err instanceof Error ? err.message : "Error al crear cliente";
+              setClientFormError(errorMessage);
             } finally {
               setNewClientLoading(false);
             }
@@ -508,7 +510,9 @@ export function SaleForm({ onSubmit, initialData, action }: SaleFormProps) {
           }}
           disabled={form.formState.isSubmitting}
         >
-          {form.formState.isSubmitting ? "Guardando..." : "Guardar Venta"}
+          {form.formState.isSubmitting || loading
+            ? "Guardando..."
+            : "Guardar Venta"}
         </Button>
       </div>
     </div>

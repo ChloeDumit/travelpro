@@ -1,4 +1,7 @@
+import { Classification } from "./classification";
 import { Client } from "./client";
+import { Operator } from "./operator";
+import { Supplier } from "./supplier";
 
 // User types
 export type UserRole = "admin" | "sales" | "finance";

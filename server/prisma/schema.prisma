@@ -116,7 +116,7 @@ model Sale {
   saleType         SaleType
   region           Region
   serviceType      ServiceType
-  status           SaleStatus        @default(draft)
+  status           SaleStatus        @default(confirmed)
   currency         Currency
   seller           User              @relation(fields: [sellerId], references: [id])
   sellerId         Int

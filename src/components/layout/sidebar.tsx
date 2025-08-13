@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { Link, NavLink } from 'react-router-dom';
-import { cn } from '../../lib/utils';
+import React, { useState } from "react";
+import { Link, NavLink } from "react-router-dom";
+import { cn } from "../../lib/utils";
 import {
   Home,
   PanelRight,
@@ -14,9 +14,12 @@ import {
   Menu,
   X,
   LogOut,
-} from 'lucide-react';
-import { UserRole } from '../../types';
-import { useAuth } from '../../contexts/auth-context';
+  Users2,
+  Car,
+  ShoppingCart,
+} from "lucide-react";
+import { UserRole } from "../../types";
+import { useAuth } from "../../contexts/auth-context";
 
 interface SidebarProps {
   userRole: UserRole;
@@ -30,10 +33,10 @@ const SidebarLink = React.forwardRef<
     ref={ref}
     className={({ isActive }) =>
       cn(
-        'flex items-center gap-3 rounded-md px-3 py-2 text-sm transition-colors',
+        "flex items-center gap-3 rounded-md px-3 py-2 text-sm transition-colors",
         isActive
-          ? 'bg-primary-100 text-primary-900 font-medium'
-          : 'text-gray-500 hover:bg-gray-100 hover:text-gray-900',
+          ? "bg-primary-100 text-primary-900 font-medium"
+          : "text-gray-500 hover:bg-gray-100 hover:text-gray-900",
         className
       )
     }
@@ -42,7 +45,7 @@ const SidebarLink = React.forwardRef<
     {children}
   </NavLink>
 ));
-SidebarLink.displayName = 'SidebarLink';
+SidebarLink.displayName = "SidebarLink";
 
 export function Sidebar({ userRole }: SidebarProps) {
   const [collapsed, setCollapsed] = useState(false);
@@ -52,21 +55,21 @@ export function Sidebar({ userRole }: SidebarProps) {
     try {
       await logout();
     } catch (error) {
-      console.error('Logout failed:', error);
+      console.error("Logout failed:", error);
     }
   };
 
   return (
     <div
       className={cn(
-        'fixed inset-y-0 left-0 z-20 flex flex-col border-r bg-white transition-all duration-300',
-        collapsed ? 'w-16' : 'w-64'
+        "fixed inset-y-0 left-0 z-20 flex flex-col border-r bg-white transition-all duration-300",
+        collapsed ? "w-16" : "w-64"
       )}
     >
       <div className="flex h-16 items-center justify-between border-b px-4">
         {!collapsed && (
           <Link to="/dashboard">
-          <h2 className="text-xl font-bold text-primary-900">TravelPro</h2>
+            <h2 className="text-xl font-bold text-primary-900">TravelPro</h2>
           </Link>
         )}
         <button
@@ -84,7 +87,7 @@ export function Sidebar({ userRole }: SidebarProps) {
             {!collapsed && <span>Inicio</span>}
           </SidebarLink>
 
-          {(userRole === 'admin' || userRole === 'sales') && (
+          {(userRole === "admin" || userRole === "sales") && (
             <>
               <SidebarLink to="/sales">
                 <ShoppingBag size={20} />
@@ -94,10 +97,6 @@ export function Sidebar({ userRole }: SidebarProps) {
                 <Briefcase size={20} />
                 {!collapsed && <span>Clientes</span>}
               </SidebarLink>
-              {/* <SidebarLink to="/clients">
-                <Users size={20} />
-                {!collapsed && <span>Clients</span>}
-              </SidebarLink> */}
             </>
           )}
 
@@ -118,16 +117,22 @@ export function Sidebar({ userRole }: SidebarProps) {
             </>
           )} */}
 
-          {userRole === 'admin' && (
-<>
-            <SidebarLink to="/suppliers">
-              <Users size={20} />
-              {!collapsed && <span>Proveedores</span>}
-            </SidebarLink>
-            <SidebarLink to="/users">
-              <Users size={20} />
-              {!collapsed && <span>Usuarios</span>}
-            </SidebarLink>
+          {userRole === "admin" && (
+            <>
+              <SidebarLink to="/suppliers">
+                <ShoppingCart size={20} />
+                {!collapsed && <span>Proveedores</span>}
+              </SidebarLink>
+
+              <SidebarLink to="/operators">
+                <Users2 size={20} />
+                {!collapsed && <span>Operadores</span>}
+              </SidebarLink>
+
+              <SidebarLink to="/classifications">
+                <FileText size={20} />
+                {!collapsed && <span>Clasificaciones</span>}
+              </SidebarLink>
             </>
           )}
 
@@ -142,7 +147,7 @@ export function Sidebar({ userRole }: SidebarProps) {
         <button
           onClick={handleLogout}
           className={cn(
-            'flex w-full items-center gap-3 rounded-md px-3 py-2 text-sm text-danger-500 transition-colors hover:bg-danger-50 hover:text-danger-700'
+            "flex w-full items-center gap-3 rounded-md px-3 py-2 text-sm text-danger-500 transition-colors hover:bg-danger-50 hover:text-danger-700"
           )}
         >
           <LogOut size={20} />
