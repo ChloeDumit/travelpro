@@ -1,7 +1,7 @@
-import { Client } from './client';
+import { Client } from "./client";
 
 // User types
-export type UserRole = 'admin' | 'sales' | 'finance';
+export type UserRole = "admin" | "sales" | "finance";
 
 export interface User {
   id: string;
@@ -12,13 +12,20 @@ export interface User {
 }
 
 // Sale types
-export type SaleType = 'individual' | 'corporate' | 'sports' | 'group';
-export type Region = 'national' | 'international' | 'regional';
-export type ServiceType = 'flight' | 'hotel' | 'package' | 'transfer' | 'excursion' | 'insurance' | 'other';
-export type SaleStatus = 'draft' | 'confirmed' | 'completed' | 'cancelled';
-export type Currency = 'USD' | 'EUR' | 'local';
-export type ItemStatus = 'pending' | 'confirmed' | 'cancelled';
-export type PaymentMethod = 'creditCard' | 'cash' | 'transfer';
+export type SaleType = "individual" | "corporate" | "sports" | "group";
+export type Region = "national" | "international" | "regional";
+export type ServiceType =
+  | "flight"
+  | "hotel"
+  | "package"
+  | "transfer"
+  | "excursion"
+  | "insurance"
+  | "other";
+export type SaleStatus = "draft" | "confirmed" | "completed" | "cancelled";
+export type Currency = "USD" | "EUR" | "local";
+export type ItemStatus = "pending" | "confirmed" | "cancelled";
+export type PaymentMethod = "creditCard" | "cash" | "transfer";
 
 export interface SaleItem {
   id: string;
@@ -41,7 +48,7 @@ export interface SaleItem {
 export interface Sale {
   id: string;
   passengerName: string;
-  clientId: string;
+  client: Client;
   creationDate: string;
   travelDate: string;
   saleType: SaleType;
@@ -51,12 +58,11 @@ export interface Sale {
   currency: Currency;
   seller: User;
   passengerCount: number;
-  items: SaleItem[];
+  items: SaleItemFormData[];
   totalCost: number;
   pendingBalance: number;
   payments?: Payment[];
   salePrice: number;
-  client: Client;
 }
 
 // Invoice types
@@ -67,7 +73,7 @@ export interface Invoice {
   date: string;
   amount: number;
   currency: Currency;
-  status: 'pending' | 'paid' | 'cancelled';
+  status: "pending" | "paid" | "cancelled";
 }
 
 // Payment types
@@ -79,7 +85,7 @@ export interface Payment {
   currency: Currency;
   method: PaymentMethod;
   reference: string;
-  status: 'pending' | 'confirmed';
+  status: "pending" | "confirmed";
 }
 
 // Supplier payment types
@@ -103,7 +109,7 @@ export interface SaleFormData {
   region: Region;
   serviceType: ServiceType;
   currency: Currency;
-  seller: string;
+  sellerId: string;
   passengerCount: number;
   totalCost: number;
   totalSale: number;
@@ -111,22 +117,21 @@ export interface SaleFormData {
 }
 
 export interface SaleItemFormData {
-  classification: string;
-  provider: string;
-  operator: string;
+  classificationId: number;
+  classificationName: string;
+  supplierId: number;
+  supplierName: string;
+  operatorId: number;
+  operatorName: string;
   dateIn: string;
   dateOut: string;
   passengerCount: number;
   status: ItemStatus;
   description: string;
   salePrice: number;
-  saleCurrency: Currency;
   costPrice: number;
-  costCurrency: Currency;
   reservationCode: string;
   paymentDate: string | null;
-  supplierId: string
-  supplierName: string
 }
 
 export interface ClientFormData {
@@ -143,8 +148,18 @@ export interface SupplierFormData {
   address?: string;
 }
 
-export * from './sales';
-export * from './user';
-export * from './common';
-export * from './client';
-export * from './supplier';
+export interface OperatorFormData {
+  name: string;
+}
+
+export interface ClassificationFormData {
+  name: string;
+}
+
+export * from "./operator";
+export * from "./sales";
+export * from "./user";
+export * from "./common";
+export * from "./client";
+export * from "./supplier";
+export * from "./classification";

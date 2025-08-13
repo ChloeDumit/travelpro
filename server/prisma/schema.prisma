@@ -183,32 +183,25 @@ model SupplierPayment {
 
 // For these models, I assume they do not need company scope unless you want to add it:
 model Supplier {
-  id         Int       @id @default(autoincrement())
+  id         Int         @id @default(autoincrement())
   name       String
-  SaleItem   SaleItem? @relation(fields: [saleItemId], references: [id])
-  saleItemId Int?
-
-  company    Company   @relation(fields: [companyId], references: [id])
+  saleItems  SaleItem[]
+  company    Company     @relation(fields: [companyId], references: [id])
   companyId  Int
 }
 
 model Operator {
-  id         Int       @id @default(autoincrement())
+  id         Int         @id @default(autoincrement())
   name       String
-
-  SaleItem   SaleItem? @relation(fields: [saleItemId], references: [id])
-  saleItemId Int?
-
-  company    Company   @relation(fields: [companyId], references: [id])
+  saleItems  SaleItem[]
+  company    Company     @relation(fields: [companyId], references: [id])
   companyId  Int
 }
 
 model Classification {
-  id         Int       @id @default(autoincrement())
+  id         Int         @id @default(autoincrement())
   name       String
-  SaleItem   SaleItem? @relation(fields: [saleItemId], references: [id])
-  saleItemId Int?
-
-  company    Company   @relation(fields: [companyId], references: [id])
+  saleItems  SaleItem[]
+  company    Company     @relation(fields: [companyId], references: [id])
   companyId  Int
 }

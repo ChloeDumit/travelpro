@@ -1,18 +1,19 @@
-import { formatCurrency, formatDate, getStatusColor } from '../../lib/utils';
-import { Sale, SaleItem } from '../../types';
-import { Badge } from '../ui/badge';
-import { Card, CardHeader, CardTitle, CardContent } from '../ui/card';
+import { formatCurrency, formatDate, getStatusColor } from "../../lib/utils";
+import { Sale, SaleItem, SaleItemFormData } from "../../types";
+import { Badge } from "../ui/badge";
+import { Card, CardHeader, CardTitle, CardContent } from "../ui/card";
 
 interface SaleSummaryProps {
   sale: Sale;
 }
 
 export function SaleSummary({ sale }: SaleSummaryProps) {
-console.log(sale);
+  console.log("Sale completa:", sale);
   const items = sale.items;
   const saleData = sale;
 
-  console.log(saleData);
+  console.log("Items:", items);
+  console.log("Primer item:", items[0]);
 
   return (
     <div className="space-y-6">
@@ -21,7 +22,8 @@ console.log(sale);
           <CardTitle className="flex items-center justify-between">
             <span>Venta #{saleData.id}</span>
             <Badge className={getStatusColor(saleData.status)}>
-              {saleData.status.charAt(0).toUpperCase() + saleData.status.slice(1)}
+              {saleData.status.charAt(0).toUpperCase() +
+                saleData.status.slice(1)}
             </Badge>
           </CardTitle>
         </CardHeader>
@@ -29,31 +31,53 @@ console.log(sale);
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <h3 className="text-sm font-medium text-gray-500">Pasajero</h3>
-              <p className="mt-1 text-sm font-medium">{saleData.passengerName}</p>
+              <p className="mt-1 text-sm font-medium">
+                {saleData.passengerName}
+              </p>
             </div>
             <div>
               <h3 className="text-sm font-medium text-gray-500">ID/RUT</h3>
-              <p className="mt-1 text-sm font-medium">{saleData.clientId}</p>
+              <p className="mt-1 text-sm font-medium">
+                {saleData.client.clientId}
+              </p>
             </div>
             <div>
-              <h3 className="text-sm font-medium text-gray-500">Fecha de Creación</h3>
-              <p className="mt-1 text-sm font-medium">{formatDate(saleData.creationDate)}</p>
+              <h3 className="text-sm font-medium text-gray-500">
+                Fecha de Creación
+              </h3>
+              <p className="mt-1 text-sm font-medium">
+                {formatDate(saleData.creationDate)}
+              </p>
             </div>
             <div>
-              <h3 className="text-sm font-medium text-gray-500">Fecha de Viaje</h3>
-              <p className="mt-1 text-sm font-medium">{formatDate(saleData.travelDate)}</p>
+              <h3 className="text-sm font-medium text-gray-500">
+                Fecha de Viaje
+              </h3>
+              <p className="mt-1 text-sm font-medium">
+                {formatDate(saleData.travelDate)}
+              </p>
             </div>
             <div>
-              <h3 className="text-sm font-medium text-gray-500">Tipo de Venta</h3>
-              <p className="mt-1 text-sm font-medium capitalize">{saleData.saleType}</p>
+              <h3 className="text-sm font-medium text-gray-500">
+                Tipo de Venta
+              </h3>
+              <p className="mt-1 text-sm font-medium capitalize">
+                {saleData.saleType}
+              </p>
             </div>
             <div>
               <h3 className="text-sm font-medium text-gray-500">Región</h3>
-              <p className="mt-1 text-sm font-medium capitalize">{saleData.region}</p>
+              <p className="mt-1 text-sm font-medium capitalize">
+                {saleData.region}
+              </p>
             </div>
             <div>
-              <h3 className="text-sm font-medium text-gray-500">Tipo de Servicio</h3>
-              <p className="mt-1 text-sm font-medium capitalize">{saleData.serviceType}</p>
+              <h3 className="text-sm font-medium text-gray-500">
+                Tipo de Servicio
+              </h3>
+              <p className="mt-1 text-sm font-medium capitalize">
+                {saleData.serviceType}
+              </p>
             </div>
             <div>
               <h3 className="text-sm font-medium text-gray-500">Moneda</h3>
@@ -61,11 +85,15 @@ console.log(sale);
             </div>
             <div>
               <h3 className="text-sm font-medium text-gray-500">Vendedor</h3>
-              <p className="mt-1 text-sm font-medium">{saleData.seller.username}</p>
+              <p className="mt-1 text-sm font-medium">
+                {saleData.seller.email}
+              </p>
             </div>
             <div>
               <h3 className="text-sm font-medium text-gray-500">Pasajeros</h3>
-              <p className="mt-1 text-sm font-medium">{saleData.passengerCount}</p>
+              <p className="mt-1 text-sm font-medium">
+                {saleData.passengerCount}
+              </p>
             </div>
           </div>
         </CardContent>
@@ -73,12 +101,16 @@ console.log(sale);
 
       <Card>
         <CardHeader>
-            <CardTitle>Items ({items.length})</CardTitle>
+          <CardTitle>Items ({items.length})</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
-            {items.map((item) => (
-              <SaleItemCard key={item.id} item={item} />
+            {items.map((item, index) => (
+              <SaleItemCard
+                key={index}
+                item={item}
+                saleCurrency={saleData.currency}
+              />
             ))}
           </div>
         </CardContent>
@@ -92,7 +124,9 @@ console.log(sale);
           <div className="space-y-2">
             <div className="flex justify-between py-2 border-b">
               <span className="font-medium">Costo Total:</span>
-              <span>{formatCurrency(saleData.totalCost, saleData.currency)}</span>
+              <span>
+                {formatCurrency(saleData.totalCost, saleData.currency)}
+              </span>
             </div>
           </div>
         </CardContent>
@@ -102,35 +136,41 @@ console.log(sale);
 }
 
 interface SaleItemCardProps {
-  item: SaleItem;
+  item: SaleItemFormData;
+  saleCurrency: string;
 }
 
-function SaleItemCard({ item }: SaleItemCardProps) {
+function SaleItemCard({ item, saleCurrency }: SaleItemCardProps) {
+  const classificationName = item.classificationName || "N/A";
+  const supplierName = item.supplierName || "N/A";
+  const operatorName = item.operatorName || "N/A";
+
   return (
     <div className="border rounded-md p-4 bg-white hover:shadow-md transition-shadow">
       <div className="flex justify-between items-start">
         <div>
-          <h4 className="font-medium">{item.classification}</h4>
+          <h4 className="font-medium">{classificationName}</h4>
           <p className="text-sm text-gray-500 mt-1">{item.description}</p>
         </div>
         <Badge className={getStatusColor(item.status)}>
           {item.status.toUpperCase()}
         </Badge>
       </div>
-      
+
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4">
         <div>
           <h5 className="text-xs text-gray-500">Proveedor</h5>
-          <p className="text-sm">{item.provider}</p>
+          <p className="text-sm">{supplierName}</p>
         </div>
         <div>
           <h5 className="text-xs text-gray-500">Operador</h5>
-          <p className="text-sm">{item.operator}</p>
+          <p className="text-sm">{operatorName}</p>
         </div>
         <div>
           <h5 className="text-xs text-gray-500">Rango de Fecha</h5>
           <p className="text-sm">
-            {formatDate(item.dateIn)} - {formatDate(item.dateOut)}
+            {item.dateIn ? formatDate(item.dateIn) : "N/A"} -{" "}
+            {item.dateOut ? formatDate(item.dateOut) : "N/A"}
           </p>
         </div>
         <div>
@@ -138,27 +178,29 @@ function SaleItemCard({ item }: SaleItemCardProps) {
           <p className="text-sm">{item.passengerCount}</p>
         </div>
       </div>
-      
+
       <div className="flex justify-between mt-4 pt-2 border-t">
         <div>
           <h5 className="text-xs text-gray-500">Precio de Venta</h5>
           <p className="text-sm font-medium">
-            {formatCurrency(item.salePrice, item.saleCurrency)}
+            {formatCurrency(item.salePrice, saleCurrency)}
           </p>
         </div>
         <div>
           <h5 className="text-xs text-gray-500">Precio de Costo</h5>
           <p className="text-sm">
-            {formatCurrency(item.costPrice, item.costCurrency)}
+            {formatCurrency(item.costPrice, saleCurrency)}
           </p>
         </div>
         <div>
           <h5 className="text-xs text-gray-500">Código de Reserva</h5>
-          <p className="text-sm">{item.reservationCode || 'N/A'}</p>
+          <p className="text-sm">{item.reservationCode || "N/A"}</p>
         </div>
         <div>
           <h5 className="text-xs text-gray-500">Fecha de Pago</h5>
-          <p className="text-sm">{item.paymentDate ? formatDate(item.paymentDate) : 'Pending'}</p>
+          <p className="text-sm">
+            {item.paymentDate ? formatDate(item.paymentDate) : "Pending"}
+          </p>
         </div>
       </div>
     </div>

@@ -1,21 +1,32 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Supplier } from "../../types/supplier";
 
-interface SupplierSelectProps {
-  suppliers: Supplier[];
-  value: number; // Cambiado de string a number
-  onSelect: (supplier: Supplier) => void;
+interface SearchSelectProps<T> {
+  items: T[];
+  value: number;
+  onSelect: (item: T) => void;
   onCreateNew: () => void;
   error?: string;
+  label: string;
+  placeholder: string;
+  noResultsText: string;
+  createNewText: string;
+  getItemLabel: (item: T) => string;
+  getItemId: (item: T) => number;
 }
 
-export function SupplierSelect({
-  suppliers,
+export function SearchSelect<T>({
+  items,
   value,
   onSelect,
   onCreateNew,
   error,
-}: SupplierSelectProps) {
+  label,
+  placeholder,
+  noResultsText,
+  createNewText,
+  getItemLabel,
+  getItemId,
+}: SearchSelectProps<T>) {
   const [search, setSearch] = useState("");
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -30,15 +41,15 @@ export function SupplierSelect({
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const filtered = suppliers.filter((s) =>
-    s.name.toLowerCase().includes(search.toLowerCase())
+  const filtered = items.filter((item) =>
+    getItemLabel(item).toLowerCase().includes(search.toLowerCase())
   );
 
-  const selected = suppliers.find((s) => s.id === value);
+  const selected = items.find((item) => getItemId(item) === value);
 
   return (
     <div className="relative" ref={ref}>
-      <label className="block text-sm font-medium mb-1">Proveedor</label>
+      <label className="block text-sm font-medium mb-1">{label}</label>
       <div
         className={`w-full border rounded px-3 py-2 bg-white cursor-pointer ${
           error ? "border-danger-500" : "border-gray-300"
@@ -47,10 +58,10 @@ export function SupplierSelect({
       >
         {selected ? (
           <span>
-            {selected.name} ({selected.id})
+            {getItemLabel(selected)} ({getItemId(selected)})
           </span>
         ) : (
-          <span className="text-gray-400">Selecciona un proveedor...</span>
+          <span className="text-gray-400">{placeholder}</span>
         )}
       </div>
       {open && (
@@ -64,24 +75,24 @@ export function SupplierSelect({
           />
           <div>
             {filtered.length === 0 && (
-              <div className="px-3 py-2 text-gray-500">
-                No se encontraron proveedores
-              </div>
+              <div className="px-3 py-2 text-gray-500">{noResultsText}</div>
             )}
-            {filtered.map((supplier) => (
+            {filtered.map((item) => (
               <div
-                key={supplier.id}
+                key={getItemId(item)}
                 className={`px-3 py-2 hover:bg-blue-100 cursor-pointer ${
-                  value === supplier.id ? "bg-blue-50" : ""
+                  value === getItemId(item) ? "bg-blue-50" : ""
                 }`}
                 onClick={() => {
-                  onSelect(supplier);
+                  onSelect(item);
                   setOpen(false);
                   setSearch("");
                 }}
               >
-                <div className="font-medium">{supplier.name}</div>
-                <div className="text-xs text-gray-500">ID: {supplier.id}</div>
+                <div className="font-medium">{getItemLabel(item)}</div>
+                <div className="text-xs text-gray-500">
+                  ID: {getItemId(item)}
+                </div>
               </div>
             ))}
             <div
@@ -92,7 +103,7 @@ export function SupplierSelect({
                 onCreateNew();
               }}
             >
-              + Crear nuevo proveedor
+              + {createNewText}
             </div>
           </div>
         </div>

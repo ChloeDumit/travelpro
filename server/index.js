@@ -1,24 +1,28 @@
-import express from 'express';
-import cors from 'cors';
-import { config } from './config/index.js';
-import { errorHandler } from './middleware/error.js';
-import logger from './utils/logger.js';
-import authRoutes from './routes/auth.js';
-import userRoutes from './routes/users.js';
-import salesRoutes from './routes/sales.js';
-import clientsRoutes from './routes/clients.js';
-import suppliersRoutes from './routes/suppliers.js'
-import dotenv from 'dotenv';
+import express from "express";
+import cors from "cors";
+import { config } from "./config/index.js";
+import { errorHandler } from "./middleware/error.js";
+import logger from "./utils/logger.js";
+import authRoutes from "./routes/auth.js";
+import userRoutes from "./routes/users.js";
+import salesRoutes from "./routes/sales.js";
+import clientsRoutes from "./routes/clients.js";
+import suppliersRoutes from "./routes/suppliers.js";
+import operatorsRoutes from "./routes/operators.js";
+import classificationsRoutes from "./routes/classifications.js";
+import dotenv from "dotenv";
 dotenv.config();
 
 const app = express();
 
 // Middleware
 app.use(express.json());
-app.use(cors({
-  origin: process.env.FRONTEND_URL || '*',
-  credentials: true
-}));
+app.use(
+  cors({
+    origin: process.env.FRONTEND_URL || "*",
+    credentials: true,
+  })
+);
 
 // Request logging
 app.use((req, res, next) => {
@@ -27,11 +31,13 @@ app.use((req, res, next) => {
 });
 
 // Routes
-app.use('/api/auth', authRoutes);
-app.use('/api/users', userRoutes);
-app.use('/api/sales', salesRoutes);
-app.use('/api/clients', clientsRoutes);
-app.use('/api/suppliers', suppliersRoutes)
+app.use("/api/auth", authRoutes);
+app.use("/api/users", userRoutes);
+app.use("/api/sales", salesRoutes);
+app.use("/api/clients", clientsRoutes);
+app.use("/api/suppliers", suppliersRoutes);
+app.use("/api/operators", operatorsRoutes);
+app.use("/api/classifications", classificationsRoutes);
 
 // Error handling
 app.use(errorHandler);

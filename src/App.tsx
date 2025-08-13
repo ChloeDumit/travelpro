@@ -1,26 +1,36 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import { AuthProvider, useAuth } from './contexts/auth-context';
-import { Layout } from './components/layout/layout';
-import { LoginPage } from './pages/login';
-import { DashboardPage } from './pages/dashboard';
-import { SalesListPage } from './pages/sales/sales-list';
-import { SaleDetailPage } from './pages/sales/sale-detail';
-import { NewSalePage } from './pages/sales/new-sale';
-import { InvoicesListPage } from './pages/invoices/invoices-list';
-import { PaymentsListPage } from './pages/payments/payments-list';
-import { ClientsListPage } from './pages/clients/clients-list';
-import { NewClientPage } from './pages/clients/new-client';
-import { EditClientPage } from './pages/clients/edit-client';
-import { SaleEditPage } from './pages/sales/sale-edit';
-import { SuppliersListPage } from './pages/suppliers/suppliers-list';
-import { NewSupplierPage } from './pages/suppliers/new-supplier';
-import { EditSupplierPage } from './pages/suppliers/edit-supplier';
+import React from "react";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
+import { AuthProvider, useAuth } from "./contexts/auth-context";
+import { Layout } from "./components/layout/layout";
+import { LoginPage } from "./pages/login";
+import { DashboardPage } from "./pages/dashboard";
+import { SalesListPage } from "./pages/sales/sales-list";
+import { NewSalePage } from "./pages/sales/new-sale";
+import { SaleDetailPage } from "./pages/sales/sale-detail";
+import { SaleEditPage } from "./pages/sales/sale-edit";
+import { ClientsListPage } from "./pages/clients/clients-list";
+import { NewClientPage } from "./pages/clients/new-client";
+import { EditClientPage } from "./pages/clients/edit-client";
+import { SuppliersListPage } from "./pages/suppliers/suppliers-list";
+import { NewSupplierPage } from "./pages/suppliers/new-supplier";
+import { EditSupplierPage } from "./pages/suppliers/edit-supplier";
+import { OperatorsListPage } from "./pages/operators/operators-list";
+import { NewOperatorPage } from "./pages/operators/new-operator";
+import { EditOperatorPage } from "./pages/operators/edit-operator";
+import { ClassificationsListPage } from "./pages/classifications/classifications-list";
+import { NewClassificationPage } from "./pages/classifications/new-classification";
+import { EditClassificationPage } from "./pages/classifications/edit-classification";
+import { PaymentsListPage } from "./pages/payments/payments-list";
+import { InvoicesListPage } from "./pages/invoices/invoices-list";
 
-// Protected route component
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const { user, isLoading } = useAuth();
-  
+
   if (isLoading) {
     return (
       <div className="flex h-screen items-center justify-center">
@@ -28,11 +38,11 @@ function ProtectedRoute({ children }: { children: React.ReactNode }) {
       </div>
     );
   }
-  
+
   if (!user) {
     return <Navigate to="/login" replace />;
   }
-  
+
   return <>{children}</>;
 }
 
@@ -42,7 +52,16 @@ function App() {
       <Router>
         <Routes>
           <Route path="/login" element={<LoginPage />} />
-          
+
+          <Route
+            path="/"
+            element={
+              <ProtectedRoute>
+                <Navigate to="/dashboard" replace />
+              </ProtectedRoute>
+            }
+          />
+
           <Route
             path="/"
             element={
@@ -51,20 +70,34 @@ function App() {
               </ProtectedRoute>
             }
           >
-            <Route index element={<Navigate to="/dashboard" replace />} />
-            <Route path="dashboard" element={<DashboardPage />} />
-            <Route path="sales" element={<SalesListPage />} />
-            <Route path="sales/:id" element={<SaleDetailPage />} />
-            <Route path="sales/new" element={<NewSalePage />} />
-            <Route path="invoices" element={<InvoicesListPage />} />
-            <Route path="payments" element={<PaymentsListPage />} />
-            <Route path="clients" element={<ClientsListPage />} />
-            <Route path="clients/new" element={<NewClientPage />} />
-            <Route path="clients/:id/edit" element={<EditClientPage />} />
-            <Route path="suppliers" element={<SuppliersListPage />} />
-            <Route path="suppliers/new" element={<NewSupplierPage />} />
-            <Route path="suppliers/:id/edit" element={<EditSupplierPage />} />
-            <Route path="sales/:id/edit" element={<SaleEditPage />} />
+            <Route path="/dashboard" element={<DashboardPage />} />
+            <Route path="/sales" element={<SalesListPage />} />
+            <Route path="/sales/new" element={<NewSalePage />} />
+            <Route path="/sales/:id" element={<SaleDetailPage />} />
+            <Route path="/sales/:id/edit" element={<SaleEditPage />} />
+            <Route path="/clients" element={<ClientsListPage />} />
+            <Route path="/clients/new" element={<NewClientPage />} />
+            <Route path="/clients/:id/edit" element={<EditClientPage />} />
+            <Route path="/suppliers" element={<SuppliersListPage />} />
+            <Route path="/suppliers/new" element={<NewSupplierPage />} />
+            <Route path="/suppliers/:id/edit" element={<EditSupplierPage />} />
+            <Route path="/operators" element={<OperatorsListPage />} />
+            <Route path="/operators/new" element={<NewOperatorPage />} />
+            <Route path="/operators/:id/edit" element={<EditOperatorPage />} />
+            <Route
+              path="/classifications"
+              element={<ClassificationsListPage />}
+            />
+            <Route
+              path="/classifications/new"
+              element={<NewClassificationPage />}
+            />
+            <Route
+              path="/classifications/:id/edit"
+              element={<EditClassificationPage />}
+            />
+            <Route path="/payments" element={<PaymentsListPage />} />
+            <Route path="/invoices" element={<InvoicesListPage />} />
             <Route path="*" element={<Navigate to="/dashboard" replace />} />
           </Route>
         </Routes>

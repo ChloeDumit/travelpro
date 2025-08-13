@@ -1,49 +1,59 @@
-import express from 'express';
-import { PrismaClient } from '@prisma/client';
-import { authenticate, requireRole } from '../middleware/auth.js';
-import { AppError } from '../middleware/error.js';
-import { HTTP_STATUS, ERROR_MESSAGES, SUCCESS_MESSAGES, ROLES } from '../constants/index.js';
-import logger from '../utils/logger.js';
+import express from "express";
+import { PrismaClient } from "@prisma/client";
+import { authenticate, requireRole } from "../middleware/auth.js";
+import { AppError } from "../middleware/error.js";
+import {
+  HTTP_STATUS,
+  ERROR_MESSAGES,
+  SUCCESS_MESSAGES,
+  ROLES,
+} from "../constants/index.js";
+import logger from "../utils/logger.js";
 
 const router = express.Router();
 const prisma = new PrismaClient();
 
 // Get all users (admin and sales roles)
-router.get('/', authenticate, requireRole([ROLES.ADMIN, ROLES.SALES]), async (req, res, next) => {
-  try {
-    const users = await prisma.user.findMany({
-      select: {
-        id: true,
-        username: true,
-        email: true,
-        role: true,
-        createdAt: true,
-      },
-      where: {
-        companyId: req.user.companyId
-      }
-    });
+router.get(
+  "/",
+  authenticate,
+  requireRole([ROLES.ADMIN, ROLES.SALES]),
+  async (req, res, next) => {
+    try {
+      const users = await prisma.user.findMany({
+        select: {
+          id: true,
+          username: true,
+          email: true,
+          role: true,
+          createdAt: true,
+        },
+        where: {
+          companyId: req.user.companyId,
+        },
+      });
 
-    logger.info('Users list fetched');
-    res.status(HTTP_STATUS.OK).json({ users });
-  } catch (error) {
-    next(error);
+      logger.info("Users list fetched");
+      res.status(HTTP_STATUS.OK).json({ users });
+    } catch (error) {
+      next(error);
+    }
   }
-});
+);
 
 // Get current user
-router.get('/me', authenticate, async (req, res, next) => {
+router.get("/me", authenticate, async (req, res, next) => {
   try {
     const user = await prisma.user.findUnique({
-      where: { id: req.user.userId },
+      where: { id: parseInt(req.user.userId) },
       select: {
         id: true,
         username: true,
         email: true,
         role: true,
         createdAt: true,
-        companyId: true
-      }
+        companyId: true,
+      },
     });
 
     if (!user) {
@@ -57,7 +67,7 @@ router.get('/me', authenticate, async (req, res, next) => {
 });
 
 // Update user
-router.put('/me', authenticate, async (req, res, next) => {
+router.put("/me", authenticate, async (req, res, next) => {
   try {
     const { username, email } = req.body;
     const userId = req.user.userId;
@@ -71,14 +81,14 @@ router.put('/me', authenticate, async (req, res, next) => {
         email: true,
         role: true,
         updatedAt: true,
-        companyId: true
-      }
+        companyId: true,
+      },
     });
 
     logger.info(`User ${updatedUser.email} updated their profile`);
     res.status(HTTP_STATUS.OK).json({
       message: SUCCESS_MESSAGES.USER_UPDATED,
-      user: updatedUser
+      user: updatedUser,
     });
   } catch (error) {
     next(error);
@@ -86,24 +96,29 @@ router.put('/me', authenticate, async (req, res, next) => {
 });
 
 // Delete user (admin only)
-router.delete('/:id', authenticate, requireRole([ROLES.ADMIN]), async (req, res, next) => {
-  try {
-    const { id } = req.params;
+router.delete(
+  "/:id",
+  authenticate,
+  requireRole([ROLES.ADMIN]),
+  async (req, res, next) => {
+    try {
+      const { id } = req.params;
 
-    await prisma.user.delete({
-      where: { id, companyId: req.user.companyId}
-    });
+      await prisma.user.delete({
+        where: { id, companyId: req.user.companyId },
+      });
 
-    logger.info(`Admin deleted user ${id}`);
-    res.status(HTTP_STATUS.OK).json({
-      message: SUCCESS_MESSAGES.USER_DELETED
-    });
-  } catch (error) {
-    if (error.code === 'P2025') {
-      throw new AppError(ERROR_MESSAGES.NOT_FOUND, HTTP_STATUS.NOT_FOUND);
+      logger.info(`Admin deleted user ${id}`);
+      res.status(HTTP_STATUS.OK).json({
+        message: SUCCESS_MESSAGES.USER_DELETED,
+      });
+    } catch (error) {
+      if (error.code === "P2025") {
+        throw new AppError(ERROR_MESSAGES.NOT_FOUND, HTTP_STATUS.NOT_FOUND);
+      }
+      next(error);
     }
-    next(error);
   }
-});
+);
 
-export default router; 
+export default router;
