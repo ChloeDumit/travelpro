@@ -27,6 +27,11 @@ import { NewClassificationPage } from "./pages/classifications/new-classificatio
 import { EditClassificationPage } from "./pages/classifications/edit-classification";
 import { PaymentsListPage } from "./pages/payments/payments-list";
 import { InvoicesListPage } from "./pages/invoices/invoices-list";
+import {
+  SupplierPaymentsPage,
+  SupplierDetailPage,
+  NewPaymentPage,
+} from "./pages/supplier-payments";
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const { user, isLoading } = useAuth();
@@ -98,6 +103,15 @@ function App() {
             />
             <Route path="/payments" element={<PaymentsListPage />} />
             <Route path="/invoices" element={<InvoicesListPage />} />
+            <Route
+              path="/supplier-payments"
+              element={<SupplierPaymentsPage />}
+            />
+            <Route path="/supplier-payments/new" element={<NewPaymentPage />} />
+            <Route
+              path="/supplier-payments/supplier/:supplierId"
+              element={<SupplierDetailPage />}
+            />
             <Route path="*" element={<Navigate to="/dashboard" replace />} />
           </Route>
         </Routes>

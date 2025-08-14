@@ -135,7 +135,7 @@ export function SaleForm({
     try {
       const response = await clientsService.getAll();
       console.log(response);
-      setClients(response.data?.clients || []);
+      setClients(response.data || []);
     } catch (error) {
       console.error("Error fetching clients:", error);
     }
@@ -452,7 +452,7 @@ export function SaleForm({
                 const created = response.data.client;
                 // Add new client to list and select it
                 setClients((prev) => [...prev, created]);
-                form.setValue("clientId", created.clientId);
+                form.setValue("clientId", created.id);
                 form.setValue("passengerName", created.name);
               }
               setShowClientModal(false);

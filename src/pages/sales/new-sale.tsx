@@ -22,8 +22,20 @@ export function NewSalePage() {
 
     try {
       console.log(saleData, items);
-      const sale = await salesService.createSale(saleData, items);
-      navigate(`/sales/${sale.sale.id}`);
+      const sale = await salesService.create({
+        saleData: {
+          ...saleData,
+          client: { id: saleData.client?.id || "" },
+        },
+        items: items.map((item) => ({
+          ...item,
+          classificationId: item.classificationId?.toString(),
+          supplierId: item.supplierId?.toString(),
+          operatorId: item.operatorId?.toString(),
+          paymentDate: item.paymentDate?.toString(),
+        })),
+      });
+      navigate(`/sales/${sale.data?.sale.id}`);
     } catch (err) {
       setError("Error al crear la venta");
       console.error("Error creating sale:", err);

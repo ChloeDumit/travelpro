@@ -18,14 +18,23 @@ export function useAuthState() {
     }
   }, [isAuthenticated, refreshUser]);
 
+  const hasRole = useCallback(
+    (role: User["role"]) => user?.role === role,
+    [user?.role]
+  );
+
+  const hasAnyRole = useCallback(
+    (roles: User["role"][]) => roles.includes(user?.role as User["role"]),
+    [user?.role]
+  );
+
   return {
     user,
     isLoading,
     isAuthenticated,
     isInitialized,
     checkAuth,
-    hasRole: (role: User["role"]) => user?.role === role,
-    hasAnyRole: (roles: User["role"][]) =>
-      roles.includes(user?.role as User["role"]),
+    hasRole,
+    hasAnyRole,
   };
 }

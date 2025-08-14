@@ -117,16 +117,8 @@ export function Sidebar() {
           </SidebarLink> */}
         </nav>
 
-        {hasAnyRole(["admin", "finance"]) && (
+        {hasRole("admin") && (
           <>
-            {/* <SidebarLink to="/invoices">
-                <FileText size={20} />
-                {!collapsed && <span>Invoices</span>}
-              </SidebarLink>
-              <SidebarLink to="/payments">
-                <CreditCard size={20} />
-                {!collapsed && <span>Payments</span>}
-              </SidebarLink> */}
             <SidebarLink to="/supplier-payments">
               <DollarSign size={20} />
               {!collapsed && <span>Pagos a Proveedores</span>}

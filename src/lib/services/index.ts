@@ -7,3 +7,4 @@ export * from "./suppliers.service";
 export * from "./operators.service";
 export * from "./classifications.service";
 export * from "./payments.service";
+export * from "./supplier-payments.service";

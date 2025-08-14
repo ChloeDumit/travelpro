@@ -78,6 +78,7 @@ model Company {
   suppliers Supplier[]
   operator Operator[]
   classification Classification[]
+  supplierPayments SupplierPayment[]
 }
 
 model User {
@@ -126,7 +127,7 @@ model Sale {
   salePrice        Float
   invoices         Invoice[]
   payments         Payment[]
-  supplierPayments SupplierPayment[]
+  supplierPayments SupplierPayment[] @relation("SupplierPaymentSales")
 }
 
 model SaleItem {
@@ -172,22 +173,29 @@ model Payment {
 
 model SupplierPayment {
   id              Int      @id @default(autoincrement())
-  operator        String
-  date            DateTime @default(now())
-  operationNumber String   @unique
+  company         Company  @relation(fields: [companyId], references: [id])
+  companyId       Int
+  supplier        Supplier @relation(fields: [supplierId], references: [id])
+  supplierId      Int
   amount          Float
   currency        Currency
+  paymentDate     DateTime @default(now())
+  description     String
   paymentMethod   String
-  relatedSales    Sale[] // Many-to-many relation with sales
+  reference       String?
+  relatedSales    Sale[]   @relation("SupplierPaymentSales")
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
 }
 
 // For these models, I assume they do not need company scope unless you want to add it:
 model Supplier {
-  id         Int         @id @default(autoincrement())
+  id         Int               @id @default(autoincrement())
   name       String
   saleItems  SaleItem[]
-  company    Company     @relation(fields: [companyId], references: [id])
+  company    Company           @relation(fields: [companyId], references: [id])
   companyId  Int
+  payments   SupplierPayment[]
 }
 
 model Operator {

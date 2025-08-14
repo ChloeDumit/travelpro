@@ -5,7 +5,6 @@ interface SupplierSelectProps {
   suppliers: Supplier[];
   value: number; // Cambiado de string a number
   onSelect: (supplier: Supplier) => void;
-  onCreateNew: () => void;
   error?: string;
 }
 
@@ -13,7 +12,6 @@ export function SupplierSelect({
   suppliers,
   value,
   onSelect,
-  onCreateNew,
   error,
 }: SupplierSelectProps) {
   const [search, setSearch] = useState("");
@@ -84,16 +82,6 @@ export function SupplierSelect({
                 <div className="text-xs text-gray-500">ID: {supplier.id}</div>
               </div>
             ))}
-            <div
-              className="px-3 py-2 text-blue-600 hover:bg-blue-50 cursor-pointer border-t border-gray-200"
-              onClick={() => {
-                setOpen(false);
-                setSearch("");
-                onCreateNew();
-              }}
-            >
-              + Crear nuevo proveedor
-            </div>
           </div>
         </div>
       )}

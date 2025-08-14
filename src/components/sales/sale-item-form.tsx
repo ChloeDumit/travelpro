@@ -109,9 +109,9 @@ export function SaleItemForm({
 
   const getSuppliers = async () => {
     try {
-      const response = await suppliersService.getAllSuppliers();
+      const response = await suppliersService.getAll();
       console.log("Suppliers response:", response);
-      setSuppliers(Array.isArray(response) ? response : []);
+      setSuppliers(Array.isArray(response.data) ? response.data : []);
     } catch (error) {
       console.error("Error fetching suppliers:", error);
     }
@@ -119,9 +119,9 @@ export function SaleItemForm({
 
   const getOperators = async () => {
     try {
-      const response = await operatorsService.getAllOperators();
+      const response = await operatorsService.getAll();
       console.log("Operators response:", response);
-      setOperators(Array.isArray(response) ? response : []);
+      setOperators(Array.isArray(response.data) ? response.data : []);
     } catch (error) {
       console.error("Error fetching operators:", error);
     }
@@ -129,9 +129,9 @@ export function SaleItemForm({
 
   const getClassifications = async () => {
     try {
-      const response = await classificationsService.getAllClassifications();
+      const response = await classificationsService.getAll();
       console.log("Classifications response:", response);
-      setClassifications(Array.isArray(response) ? response : []);
+      setClassifications(Array.isArray(response.data) ? response.data : []);
     } catch (error) {
       console.error("Error fetching classifications:", error);
     }
@@ -242,12 +242,10 @@ export function SaleItemForm({
               onSelect={(classification) => {
                 setValue("classificationId", classification.id);
               }}
-              onCreateNew={() => setShowClassificationModal(true)}
               error={errors.classificationId?.message}
               label="Clasificación"
               placeholder="Selecciona una clasificación..."
               noResultsText="No se encontraron clasificaciones"
-              createNewText="Crear nueva clasificación"
               getItemLabel={(classification) => classification.name}
               getItemId={(classification) => classification.id}
             />
@@ -257,12 +255,10 @@ export function SaleItemForm({
               onSelect={(supplier) => {
                 setValue("supplierId", supplier.id);
               }}
-              onCreateNew={() => setShowSupplierModal(true)}
               error={errors.supplierId?.message}
               label="Proveedor"
               placeholder="Selecciona un proveedor..."
               noResultsText="No se encontraron proveedores"
-              createNewText="Crear nuevo proveedor"
               getItemLabel={(supplier) => supplier.name}
               getItemId={(supplier) => supplier.id}
             />
@@ -272,12 +268,10 @@ export function SaleItemForm({
               onSelect={(operator) => {
                 setValue("operatorId", operator.id);
               }}
-              onCreateNew={() => setShowOperatorModal(true)}
               error={errors.operatorId?.message}
               label="Operador"
               placeholder="Selecciona un operador..."
               noResultsText="No se encontraron operadores"
-              createNewText="Crear nuevo operador"
               getItemLabel={(operator) => operator.name}
               getItemId={(operator) => operator.id}
             />
@@ -379,196 +373,6 @@ export function SaleItemForm({
                 ? "Guardar Cambios"
                 : "Agregar Item"}
             </Button>
-          </div>
-        </form>
-      </Modal>
-
-      {/* Modal para crear nueva clasificación */}
-      <Modal
-        isOpen={showClassificationModal}
-        onClose={() => setShowClassificationModal(false)}
-        title="Crear nueva clasificación"
-      >
-        <form
-          onSubmit={async (e) => {
-            e.preventDefault();
-            setNewClassificationLoading(true);
-            setClassificationFormError(null);
-            try {
-              const created = await classificationsService.createClassification(
-                classificationForm
-              );
-              setClassifications((prev) => [...prev, created]);
-              setValue("classificationId", created.id);
-              setShowClassificationModal(false);
-              setClassificationForm({ name: "" });
-            } catch (err: unknown) {
-              const errorMessage =
-                err instanceof Error
-                  ? err.message
-                  : "Error al crear clasificación";
-              setClassificationFormError(errorMessage);
-            } finally {
-              setNewClassificationLoading(false);
-            }
-          }}
-          className="space-y-4"
-        >
-          <div>
-            <label className="block text-sm font-medium">Nombre</label>
-            <input
-              className="w-full border rounded px-2 py-1"
-              value={classificationForm.name}
-              onChange={(e) =>
-                setClassificationForm((f) => ({ ...f, name: e.target.value }))
-              }
-              required
-            />
-          </div>
-          {classificationFormError && (
-            <div className="text-red-500 text-sm">
-              {classificationFormError}
-            </div>
-          )}
-          <div className="flex justify-end gap-2">
-            <button
-              type="button"
-              className="px-4 py-2 border rounded"
-              onClick={() => setShowClassificationModal(false)}
-            >
-              Cancelar
-            </button>
-            <button
-              type="submit"
-              className="px-4 py-2 bg-blue-600 text-white rounded"
-              disabled={newClassificationLoading}
-            >
-              {newClassificationLoading ? "Creando..." : "Crear"}
-            </button>
-          </div>
-        </form>
-      </Modal>
-
-      {/* Modal para crear nuevo proveedor */}
-      <Modal
-        isOpen={showSupplierModal}
-        onClose={() => setShowSupplierModal(false)}
-        title="Crear nuevo proveedor"
-      >
-        <form
-          onSubmit={async (e) => {
-            e.preventDefault();
-            setNewSupplierLoading(true);
-            setSupplierFormError(null);
-            try {
-              const created = await suppliersService.createSupplier(
-                supplierForm
-              );
-              setSuppliers((prev) => [...prev, created]);
-              setValue("supplierId", created.id);
-              setShowSupplierModal(false);
-              setSupplierForm({ name: "" });
-            } catch (err: unknown) {
-              const errorMessage =
-                err instanceof Error ? err.message : "Error al crear proveedor";
-              setSupplierFormError(errorMessage);
-            } finally {
-              setNewSupplierLoading(false);
-            }
-          }}
-          className="space-y-4"
-        >
-          <div>
-            <label className="block text-sm font-medium">Nombre</label>
-            <input
-              className="w-full border rounded px-2 py-1"
-              value={supplierForm.name}
-              onChange={(e) =>
-                setSupplierForm((f) => ({ ...f, name: e.target.value }))
-              }
-              required
-            />
-          </div>
-          {supplierFormError && (
-            <div className="text-red-500 text-sm">{supplierFormError}</div>
-          )}
-          <div className="flex justify-end gap-2">
-            <button
-              type="button"
-              className="px-4 py-2 border rounded"
-              onClick={() => setShowSupplierModal(false)}
-            >
-              Cancelar
-            </button>
-            <button
-              type="submit"
-              className="px-4 py-2 bg-blue-600 text-white rounded"
-              disabled={newSupplierLoading}
-            >
-              {newSupplierLoading ? "Creando..." : "Crear"}
-            </button>
-          </div>
-        </form>
-      </Modal>
-
-      {/* Modal para crear nuevo operador */}
-      <Modal
-        isOpen={showOperatorModal}
-        onClose={() => setShowOperatorModal(false)}
-        title="Crear nuevo operador"
-      >
-        <form
-          onSubmit={async (e) => {
-            e.preventDefault();
-            setNewOperatorLoading(true);
-            setOperatorFormError(null);
-            try {
-              const created = await operatorsService.createOperator(
-                operatorForm
-              );
-              setOperators((prev) => [...prev, created]);
-              setValue("operatorId", created.id);
-              setShowOperatorModal(false);
-              setOperatorForm({ name: "" });
-            } catch (err: unknown) {
-              const errorMessage =
-                err instanceof Error ? err.message : "Error al crear operador";
-              setOperatorFormError(errorMessage);
-            } finally {
-              setNewOperatorLoading(false);
-            }
-          }}
-          className="space-y-4"
-        >
-          <div>
-            <label className="block text-sm font-medium">Nombre</label>
-            <input
-              className="w-full border rounded px-2 py-1"
-              value={operatorForm.name}
-              onChange={(e) =>
-                setOperatorForm((f) => ({ ...f, name: e.target.value }))
-              }
-              required
-            />
-          </div>
-          {operatorFormError && (
-            <div className="text-red-500 text-sm">{operatorFormError}</div>
-          )}
-          <div className="flex justify-end gap-2">
-            <button
-              type="button"
-              className="px-4 py-2 border rounded"
-              onClick={() => setShowOperatorModal(false)}
-            >
-              Cancelar
-            </button>
-            <button
-              type="submit"
-              className="px-4 py-2 bg-blue-600 text-white rounded"
-              disabled={newOperatorLoading}
-            >
-              {newOperatorLoading ? "Creando..." : "Crear"}
-            </button>
           </div>
         </form>
       </Modal>

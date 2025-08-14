@@ -4,12 +4,12 @@ interface SearchSelectProps<T> {
   items: T[];
   value: number;
   onSelect: (item: T) => void;
-  onCreateNew: () => void;
+  onCreateNew?: () => void;
   error?: string;
   label: string;
   placeholder: string;
   noResultsText: string;
-  createNewText: string;
+  createNewText?: string;
   getItemLabel: (item: T) => string;
   getItemId: (item: T) => number;
 }
@@ -95,16 +95,18 @@ export function SearchSelect<T>({
                 </div>
               </div>
             ))}
-            <div
-              className="px-3 py-2 text-blue-600 hover:bg-blue-50 cursor-pointer border-t border-gray-200"
-              onClick={() => {
-                setOpen(false);
-                setSearch("");
-                onCreateNew();
-              }}
-            >
-              + {createNewText}
-            </div>
+            {onCreateNew && createNewText && (
+              <div
+                className="px-3 py-2 text-blue-600 hover:bg-blue-50 cursor-pointer border-t border-gray-200"
+                onClick={() => {
+                  setOpen(false);
+                  setSearch("");
+                  onCreateNew();
+                }}
+              >
+                + {createNewText}
+              </div>
+            )}
           </div>
         </div>
       )}
