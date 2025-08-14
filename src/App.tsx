@@ -66,7 +66,7 @@ function App() {
             path="/"
             element={
               <ProtectedRoute>
-                <Layout userRole="admin" />
+                <Layout />
               </ProtectedRoute>
             }
           >

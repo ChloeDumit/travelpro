@@ -1,10 +1,10 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { ArrowLeft } from 'lucide-react';
-import { Button } from '../../components/ui/button';
-import { ClientForm } from '../../components/clients/client-form';
-import { ClientFormData } from '../../types';
-import { clientsService } from '../../lib/services/clients';
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { ArrowLeft } from "lucide-react";
+import { Button } from "../../components/ui/button";
+import { ClientForm } from "../../components/clients/client-form";
+import { ClientFormData } from "../../types";
+import { clientsService } from "../../lib/services/clients.service";
 
 export function NewClientPage() {
   const navigate = useNavigate();
@@ -16,11 +16,15 @@ export function NewClientPage() {
     setError(null);
 
     try {
-      await clientsService.createClient(data);
-      navigate('/clients');
+      await clientsService.create({
+        name: data.name,
+        email: data.email || "",
+        address: data.address || "",
+      });
+      navigate("/clients");
     } catch (err) {
-      setError('Error creating client');
-      console.error('Error creating client:', err);
+      setError("Error creating client");
+      console.error("Error creating client:", err);
     } finally {
       setLoading(false);
     }
@@ -30,7 +34,11 @@ export function NewClientPage() {
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <h2 className="text-lg font-medium">Nuevo Cliente</h2>
-        <Button variant="outline" size="sm" onClick={() => navigate('/clients')}>
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => navigate("/clients")}
+        >
           <ArrowLeft className="mr-2 h-4 w-4" />
           Volver a Clientes
         </Button>
@@ -42,7 +50,10 @@ export function NewClientPage() {
         </div>
       )}
 
-      <ClientForm onSubmit={handleSubmit} submitLabel={loading ? 'Creando...' : 'Crear Cliente'} />
+      <ClientForm
+        onSubmit={handleSubmit}
+        submitLabel={loading ? "Creando..." : "Crear Cliente"}
+      />
     </div>
   );
-} 
+}

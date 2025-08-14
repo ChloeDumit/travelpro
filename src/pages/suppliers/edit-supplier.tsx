@@ -1,10 +1,10 @@
-import { useState, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import { ArrowLeft } from 'lucide-react';
-import { Button } from '../../components/ui/button';
-import { SupplierForm } from '../../components/suppliers/supplier-form';
-import { SupplierFormData } from '../../types';
-import { suppliersService } from '../../lib/services/suppliers'
+import { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { ArrowLeft } from "lucide-react";
+import { Button } from "../../components/ui/button";
+import { SupplierForm } from "../../components/suppliers/supplier-form";
+import { SupplierFormData } from "../../types";
+import { suppliersService } from "../../lib/services/suppliers.service";
 
 export function EditSupplierPage() {
   const navigate = useNavigate();
@@ -20,14 +20,14 @@ export function EditSupplierPage() {
 
   const loadSupplier = async () => {
     if (!id) return;
-    
+
     try {
       setLoading(true);
-      const response = await suppliersService.getSupplierById(id);
-      setSupplier(response);
+      const response = await suppliersService.getById(id);
+      setSupplier(response.data || null);
     } catch (err) {
-      setError('Error loading supplier');
-      console.error('Error loading supplier:', err);
+      setError("Error loading supplier");
+      console.error("Error loading supplier:", err);
     } finally {
       setLoading(false);
     }
@@ -35,16 +35,16 @@ export function EditSupplierPage() {
 
   const handleSubmit = async (data: SupplierFormData) => {
     if (!id) return;
-    
+
     setSaving(true);
     setError(null);
 
     try {
-      await suppliersService.updateSupplier(id, data);
-      navigate('/suppliers');
+      await suppliersService.update(id, data);
+      navigate("/suppliers");
     } catch (err) {
-      setError('Error updating supplier');
-      console.error('Error updating supplier:', err);
+      setError("Error updating supplier");
+      console.error("Error updating supplier:", err);
     } finally {
       setSaving(false);
     }
@@ -70,7 +70,11 @@ export function EditSupplierPage() {
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <h2 className="text-lg font-medium">Editar Proveedor</h2>
-        <Button variant="outline" size="sm" onClick={() => navigate('/suppliers')}>
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => navigate("/suppliers")}
+        >
           <ArrowLeft className="mr-2 h-4 w-4" />
           Volver a Proveedores
         </Button>
@@ -82,10 +86,10 @@ export function EditSupplierPage() {
         </div>
       )}
 
-      <SupplierForm 
-        onSubmit={handleSubmit} 
+      <SupplierForm
+        onSubmit={handleSubmit}
         initialData={supplier}
-        submitLabel={saving ? 'Guardando...' : 'Guardar Cambios'} 
+        submitLabel={saving ? "Guardando..." : "Guardar Cambios"}
       />
     </div>
   );

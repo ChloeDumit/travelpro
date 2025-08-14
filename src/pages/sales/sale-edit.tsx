@@ -4,7 +4,7 @@ import { ArrowLeft } from 'lucide-react';
 import { Button } from '../../components/ui/button';
 import { SaleForm } from '../../components/sales/sale-form';
 import { Sale, SaleFormData, SaleItemFormData } from '../../types';
-import { salesService } from '../../lib/services/sales';
+import { salesService } from '../../lib/services/sales.service';
 import { Client } from '../../types/client';
 
 export function SaleEditPage() {

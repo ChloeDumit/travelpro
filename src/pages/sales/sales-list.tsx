@@ -6,7 +6,7 @@ import { Badge } from "../../components/ui/badge";
 import { Card } from "../../components/ui/card";
 import { formatCurrency, formatDate, getStatusColor } from "../../lib/utils";
 import { Sale, SaleStatus } from "../../types";
-import { salesService } from "../../lib/services/sales";
+import { salesService } from "../../lib/services/sales.service";
 import { useAuth } from "../../contexts/auth-context";
 
 export function SalesListPage() {
@@ -22,11 +22,9 @@ export function SalesListPage() {
     const fetchSales = async () => {
       try {
         const isAdmin = user?.role === "admin";
-        const service = isAdmin
-          ? salesService.getAllSales
-          : salesService.getMySales;
+        const service = isAdmin ? salesService.getAll : salesService.getMySales;
         const response = await service();
-        setSales(response.sales);
+        setSales(response.data?.sales || []);
       } catch (err) {
         setError("Failed to fetch sales");
         console.error("Error fetching sales:", err);

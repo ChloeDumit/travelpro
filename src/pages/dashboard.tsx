@@ -27,7 +27,7 @@ import {
   CardTitle,
 } from "../components/ui/card";
 import { Button } from "../components/ui/button";
-import { salesService } from "../lib/services/sales";
+import { salesService } from "../lib/services/sales.service";
 import { useAuth } from "../contexts/auth-context";
 
 interface SalesStats {
@@ -93,21 +93,21 @@ export function DashboardPage() {
       try {
         const [totalSalesData, statsData, statsByTypeData, departuresData] =
           await Promise.all([
-            salesService.getTotalSales(),
-            salesService.getSalesStats(),
-            salesService.getSalesStatsByType(),
+            salesService.getTotal(),
+            salesService.getStats(),
+            salesService.getStatsByType(),
             salesService.getUpcomingDepartures(),
           ]);
 
-        console.log("totalSales", totalSalesData);
+        console.log("totalSales", totalSalesData.data?.total);
         console.log("salesStats", statsData);
         console.log("salesStatsByType", statsByTypeData);
         console.log("upcomingDepartures", departuresData);
 
-        setTotalSales(totalSalesData || 0);
-        setSalesStats(statsData);
-        setSalesStatsByType(statsByTypeData);
-        setUpcomingDepartures(departuresData.departures || []);
+        setTotalSales(totalSalesData.data?.total || 0);
+        setSalesStats(statsData.data || null);
+        setSalesStatsByType(statsByTypeData.data || null);
+        setUpcomingDepartures(departuresData.data?.departures || []);
       } catch (err) {
         console.error("Error fetching dashboard data:", err);
         setError("Failed to fetch dashboard data");
@@ -162,12 +162,6 @@ export function DashboardPage() {
       case "view-clients":
         window.location.href = "/clients";
         break;
-      case "manage-users":
-        window.location.href = "/users";
-        break;
-      case "reports":
-        window.location.href = "/reports";
-        break;
       default:
         break;
     }
@@ -214,18 +208,6 @@ export function DashboardPage() {
           label: "Gestionar Clientes",
           color: "text-orange-600",
         },
-        {
-          action: "manage-users",
-          icon: <Shield className="h-8 w-8 text-red-600 mb-2" />,
-          label: "Gestionar Usuarios",
-          color: "text-red-600",
-        },
-        {
-          action: "reports",
-          icon: <PieChart className="h-8 w-8 text-indigo-600 mb-2" />,
-          label: "Reportes",
-          color: "text-indigo-600",
-        },
       ];
     }
 
@@ -248,35 +230,6 @@ export function DashboardPage() {
           <h1 className="text-3xl font-bold text-gray-900">
             {getWelcomeMessage()}
           </h1>
-        </div>
-        <div className="flex gap-3">
-          {isAdmin && (
-            <Button
-              onClick={() => handleQuickAction("new-sale")}
-              className="bg-blue-600 hover:bg-blue-700"
-            >
-              <Plus className="h-4 w-4 mr-2" />
-              Nueva Venta
-            </Button>
-          )}
-          {isAdmin && (
-            <Button
-              onClick={() => handleQuickAction("new-client")}
-              variant="outline"
-            >
-              <UserPlus className="h-4 w-4 mr-2" />
-              Nuevo Cliente
-            </Button>
-          )}
-          {isSales && (
-            <Button
-              onClick={() => handleQuickAction("new-sale")}
-              className="bg-blue-600 hover:bg-blue-700"
-            >
-              <Plus className="h-4 w-4 mr-2" />
-              Nueva Venta
-            </Button>
-          )}
         </div>
       </div>
 
@@ -305,7 +258,7 @@ export function DashboardPage() {
         </CardContent>
       </Card>
 
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         <Card className="hover:shadow-lg transition-shadow border-l-4 border-l-blue-500">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
             <CardTitle className="text-sm font-medium text-gray-500">
@@ -376,75 +329,7 @@ export function DashboardPage() {
             )}
           </CardContent>
         </Card>
-
-        <Card className="hover:shadow-lg transition-shadow border-l-4 border-l-orange-500">
-          <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-medium text-gray-500">
-              {isAdmin ? "Ventas Pendientes" : "Mis Pendientes"}
-            </CardTitle>
-            <CreditCard className="h-4 w-4 text-orange-500" />
-          </CardHeader>
-          <CardContent>
-            {loading ? (
-              <div className="text-2xl font-bold">Cargando...</div>
-            ) : (
-              <>
-                <div className="text-2xl font-bold text-orange-600">
-                  {salesStats?.salesByStatus.draft || 0}
-                </div>
-                <p className="text-xs text-gray-500 mt-1">
-                  {isAdmin
-                    ? "Ventas en borrador esperando confirmación"
-                    : "Mis ventas en borrador"}
-                </p>
-              </>
-            )}
-          </CardContent>
-        </Card>
       </div>
-
-      {/* Admin-specific section */}
-      {isAdmin && (
-        <Card className="bg-gradient-to-r from-purple-50 to-pink-50 border-purple-200">
-          <CardHeader>
-            <CardTitle className="text-purple-900 flex items-center">
-              <Shield className="h-5 w-5 mr-2" />
-              Panel de Administración
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="text-center p-4 bg-white rounded-lg">
-                <UserCheck className="h-8 w-8 text-blue-600 mx-auto mb-2" />
-                <p className="text-sm font-medium text-gray-700">
-                  Gestión de Usuarios
-                </p>
-                <p className="text-xs text-gray-500">
-                  Administrar roles y permisos
-                </p>
-              </div>
-              <div className="text-center p-4 bg-white rounded-lg">
-                <PieChart className="h-8 w-8 text-green-600 mx-auto mb-2" />
-                <p className="text-sm font-medium text-gray-700">
-                  Reportes Avanzados
-                </p>
-                <p className="text-xs text-gray-500">
-                  Análisis detallado de ventas
-                </p>
-              </div>
-              <div className="text-center p-4 bg-white rounded-lg">
-                <Activity className="h-8 w-8 text-purple-600 mx-auto mb-2" />
-                <p className="text-sm font-medium text-gray-700">
-                  Métricas del Sistema
-                </p>
-                <p className="text-xs text-gray-500">
-                  Rendimiento y estadísticas
-                </p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      )}
 
       {/* Sales-specific section */}
       {isSales && (

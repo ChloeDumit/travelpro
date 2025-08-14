@@ -1,19 +1,19 @@
-import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Plus, Search, Filter, Download, Trash2, Pencil } from 'lucide-react';
-import { Button } from '../../components/ui/button';
-import { Card } from '../../components/ui/card';
-import { Input } from '../../components/ui/input';
-import { clientsService } from '../../lib/services/clients';
-import { Client } from '../../types/client';
-import { ConfirmModal } from '../../components/ui/confirm-modal';
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { Plus, Search, Trash2, Pencil } from "lucide-react";
+import { Button } from "../../components/ui/button";
+import { Card } from "../../components/ui/card";
+import { Input } from "../../components/ui/input";
+import { clientsService } from "../../lib/services/clients.service";
+import { Client } from "../../types/client";
+import { ConfirmModal } from "../../components/ui/confirm-modal";
 
 export function ClientsListPage() {
   const navigate = useNavigate();
   const [clients, setClients] = useState<Client[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
   const [clientToDelete, setClientToDelete] = useState<Client | null>(null);
   const [isDeleting, setIsDeleting] = useState(false);
 
@@ -24,11 +24,11 @@ export function ClientsListPage() {
   const loadClients = async () => {
     try {
       setLoading(true);
-      const response = await clientsService.getAllClients();
-      setClients(response.clients || response);
+      const response = await clientsService.getAll();
+      setClients(response.data || []);
     } catch (err) {
-      setError('Error loading clients');
-      console.error('Error loading clients:', err);
+      setError("Error loading clients");
+      console.error("Error loading clients:", err);
     } finally {
       setLoading(false);
     }
@@ -39,28 +39,29 @@ export function ClientsListPage() {
 
     try {
       setIsDeleting(true);
-      await clientsService.deleteClient(clientToDelete.id);
-      setClients(clients.filter(c => c.id !== clientToDelete.id));
+      await clientsService.delete(clientToDelete.id);
+      setClients(clients.filter((c) => c.id !== clientToDelete.id));
       setClientToDelete(null);
     } catch (err) {
-      setError('Error deleting client');
-      console.error('Error deleting client:', err);
+      setError("Error deleting client");
+      console.error("Error deleting client:", err);
     } finally {
       setIsDeleting(false);
     }
   };
 
-  const filteredClients = clients.filter(client => 
-    client.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    client.clientId.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    client.email.toLowerCase().includes(searchQuery.toLowerCase())
+  const filteredClients = clients.filter(
+    (client) =>
+      client.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      client.clientId.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      client.email.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <h2 className="text-lg font-medium">Clientes</h2>
-        <Button onClick={() => navigate('/clients/new')}>
+        <Button onClick={() => navigate("/clients/new")}>
           <Plus className="mr-2 h-4 w-4" />
           Nuevo Cliente
         </Button>
@@ -93,16 +94,16 @@ export function ClientsListPage() {
       ) : (
         <div className="grid gap-4">
           {filteredClients.map((client) => (
-            <Card
-              key={client.id}
-              className="p-4"
-              
-            >
+            <Card key={client.id} className="p-4">
               <div className="flex flex-col md:flex-row justify-between gap-4">
                 <div className="flex-1">
                   <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-4">
                     <h3 className="text-lg font-medium">{client.name}</h3>
-                    {client.clientId && <span className="text-sm text-gray-500">ID: {client.clientId}</span>}
+                    {client.clientId && (
+                      <span className="text-sm text-gray-500">
+                        ID: {client.clientId}
+                      </span>
+                    )}
                   </div>
                   <div className="mt-2">
                     <p className="text-sm text-gray-600">{client.email}</p>
@@ -118,8 +119,7 @@ export function ClientsListPage() {
                       navigate(`/clients/${client.id}/edit`);
                     }}
                   >
-                      <Pencil className="h-4 w-4" />
-                    
+                    <Pencil className="h-4 w-4" />
                   </Button>
                   <Button
                     variant="danger"

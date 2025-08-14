@@ -9,7 +9,7 @@ import {
   CardContent,
 } from "../../components/ui/card";
 import { Operator } from "../../types";
-import { operatorsService } from "../../lib/services/operators";
+import { operatorsService } from "../../lib/services/operators.service";
 import { ConfirmModal } from "../../components/ui/confirm-modal";
 
 export function OperatorsListPage() {
@@ -29,8 +29,8 @@ export function OperatorsListPage() {
   const fetchOperators = async () => {
     try {
       setLoading(true);
-      const data = await operatorsService.getAllOperators();
-      setOperators(data);
+      const data = await operatorsService.getAll();
+      setOperators(data.data || []);
     } catch (err) {
       setError("Error al cargar operadores");
       console.error("Error fetching operators:", err);
@@ -43,7 +43,7 @@ export function OperatorsListPage() {
     if (!operatorToDelete) return;
 
     try {
-      await operatorsService.deleteOperator(operatorToDelete.id);
+      await operatorsService.delete(operatorToDelete.id.toString());
       setOperators(operators.filter((op) => op.id !== operatorToDelete.id));
       setDeleteModalOpen(false);
       setOperatorToDelete(null);
@@ -119,7 +119,7 @@ export function OperatorsListPage() {
         }}
         onConfirm={handleDelete}
         title="Eliminar Operador"
-        message={`¿Estás seguro de que quieres eliminar el operador "${operatorToDelete?.name}"?`}
+        description={`¿Estás seguro de que quieres eliminar el operador "${operatorToDelete?.name}"?`}
       />
     </div>
   );

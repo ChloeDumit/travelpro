@@ -4,7 +4,7 @@ import { ArrowLeft } from 'lucide-react';
 import { Button } from '../../components/ui/button';
 import { ClientForm } from '../../components/clients/client-form';
 import { ClientFormData } from '../../types';
-import { clientsService } from '../../lib/services/clients';
+import { clientsService } from '../../lib/services/clients.service';
 
 export function EditClientPage() {
   const navigate = useNavigate();

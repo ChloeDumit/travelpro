@@ -1,10 +1,10 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { ArrowLeft } from 'lucide-react';
-import { Button } from '../../components/ui/button';
-import { SupplierForm } from '../../components/suppliers/supplier-form';
-import { SupplierFormData } from '../../types';
-import { suppliersService } from '../../lib/services/suppliers'
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { ArrowLeft } from "lucide-react";
+import { Button } from "../../components/ui/button";
+import { SupplierForm } from "../../components/suppliers/supplier-form";
+import { SupplierFormData } from "../../types";
+import { suppliersService } from "../../lib/services/suppliers.service";
 
 export function NewSupplierPage() {
   const navigate = useNavigate();
@@ -16,11 +16,17 @@ export function NewSupplierPage() {
     setError(null);
 
     try {
-      await suppliersService.createSupplier(data);
-      navigate('/suppliers');
+      await suppliersService.create({
+        name: data.name,
+        email: "",
+        phone: "",
+        address: "",
+        notes: "",
+      });
+      navigate("/suppliers");
     } catch (err) {
-      setError('Error creating supplier');
-      console.error('Error creating supplier:', err);
+      setError("Error creating supplier");
+      console.error("Error creating supplier:", err);
     } finally {
       setLoading(false);
     }
@@ -30,7 +36,11 @@ export function NewSupplierPage() {
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <h2 className="text-lg font-medium">Nuevo Proveedor</h2>
-        <Button variant="outline" size="sm" onClick={() => navigate('/suppliers')}>
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => navigate("/suppliers")}
+        >
           <ArrowLeft className="mr-2 h-4 w-4" />
           Volver a Proveedores
         </Button>
@@ -42,7 +52,10 @@ export function NewSupplierPage() {
         </div>
       )}
 
-      <SupplierForm onSubmit={handleSubmit} submitLabel={loading ? 'Creando...' : 'Crear Proveedor'} />
+      <SupplierForm
+        onSubmit={handleSubmit}
+        submitLabel={loading ? "Creando..." : "Crear Proveedor"}
+      />
     </div>
   );
-} 
+}

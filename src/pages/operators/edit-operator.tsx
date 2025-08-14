@@ -4,7 +4,7 @@ import { ArrowLeft } from "lucide-react";
 import { Button } from "../../components/ui/button";
 import { OperatorForm } from "../../components/operators/operator-form";
 import { OperatorFormData, Operator } from "../../types";
-import { operatorsService } from "../../lib/services/operators";
+import { operatorsService } from "../../lib/services/operators.service";
 
 export function EditOperatorPage() {
   const navigate = useNavigate();
@@ -21,8 +21,8 @@ export function EditOperatorPage() {
 
   const fetchOperator = async () => {
     try {
-      const data = await operatorsService.getOperatorById(parseInt(id || "0"));
-      setOperator(data);
+      const data = await operatorsService.getById(id || "0");
+      setOperator(data.data || null);
     } catch (err) {
       setError("Error al cargar operador");
       console.error("Error fetching operator:", err);
@@ -36,7 +36,7 @@ export function EditOperatorPage() {
     setError(null);
 
     try {
-      await operatorsService.updateOperator(parseInt(id), data);
+      await operatorsService.update(id, data);
       navigate("/operators");
     } catch (err) {
       setError("Error al actualizar operador");

@@ -3,7 +3,7 @@ import { Button } from '../ui/button';
 import { Input } from '../ui/input';
 import { Select } from '../ui/select';
 import { Modal } from '../ui/modal';
-import { paymentsService } from '../../lib/services/payments';
+import { paymentsService } from '../../lib/services/payments.service';
 import { Payment } from '../../types';
 
 interface PaymentFormProps {

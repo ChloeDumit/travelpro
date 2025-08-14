@@ -4,7 +4,7 @@ import { ArrowLeft } from "lucide-react";
 import { Button } from "../../components/ui/button";
 import { ClassificationForm } from "../../components/classifications/classification-form";
 import { ClassificationFormData } from "../../types";
-import { classificationsService } from "../../lib/services/classifications";
+import { classificationsService } from "../../lib/services/classifications.service";
 
 export function NewClassificationPage() {
   const navigate = useNavigate();

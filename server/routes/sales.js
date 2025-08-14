@@ -402,7 +402,10 @@ router.get(
     const isAdmin = req.user.role === ROLES.ADMIN;
     const where = isAdmin
       ? { companyId: req.user.companyId }
-      : { companyId: req.user.companyId, sellerId: req.user.userId };
+      : {
+          companyId: req.user.companyId,
+          seller: { id: parseInt(req.user.userId) },
+        };
     try {
       const totalSales = await prisma.sale.aggregate({
         _sum: {

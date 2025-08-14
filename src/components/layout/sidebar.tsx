@@ -4,26 +4,17 @@ import { cn } from "../../lib/utils";
 import {
   Home,
   PanelRight,
-  Users,
   ShoppingBag,
   FileText,
-  CreditCard,
-  Settings,
   DollarSign,
   Briefcase,
   Menu,
-  X,
   LogOut,
   Users2,
-  Car,
   ShoppingCart,
 } from "lucide-react";
-import { UserRole } from "../../types";
+import { useAuthState } from "../../hooks/useAuthState";
 import { useAuth } from "../../contexts/auth-context";
-
-interface SidebarProps {
-  userRole: UserRole;
-}
 
 const SidebarLink = React.forwardRef<
   HTMLAnchorElement,
@@ -47,7 +38,8 @@ const SidebarLink = React.forwardRef<
 ));
 SidebarLink.displayName = "SidebarLink";
 
-export function Sidebar({ userRole }: SidebarProps) {
+export function Sidebar() {
+  const { hasRole, hasAnyRole } = useAuthState();
   const [collapsed, setCollapsed] = useState(false);
   const { logout } = useAuth();
 
@@ -87,7 +79,7 @@ export function Sidebar({ userRole }: SidebarProps) {
             {!collapsed && <span>Inicio</span>}
           </SidebarLink>
 
-          {(userRole === "admin" || userRole === "sales") && (
+          {hasAnyRole(["admin", "sales"]) && (
             <>
               <SidebarLink to="/sales">
                 <ShoppingBag size={20} />
@@ -100,24 +92,7 @@ export function Sidebar({ userRole }: SidebarProps) {
             </>
           )}
 
-          {/* {(userRole === 'admin' || userRole === 'finance') && (
-            <>
-              <SidebarLink to="/invoices">
-                <FileText size={20} />
-                {!collapsed && <span>Invoices</span>}
-              </SidebarLink>
-              <SidebarLink to="/payments">
-                <CreditCard size={20} />
-                {!collapsed && <span>Payments</span>}
-              </SidebarLink>
-              <SidebarLink to="/supplier-payments">
-                <DollarSign size={20} />
-                {!collapsed && <span>Supplier Payments</span>}
-              </SidebarLink>
-            </>
-          )} */}
-
-          {userRole === "admin" && (
+          {hasRole("admin") && (
             <>
               <SidebarLink to="/suppliers">
                 <ShoppingCart size={20} />
@@ -141,6 +116,23 @@ export function Sidebar({ userRole }: SidebarProps) {
             {!collapsed && <span>Settings</span>}
           </SidebarLink> */}
         </nav>
+
+        {hasAnyRole(["admin", "finance"]) && (
+          <>
+            {/* <SidebarLink to="/invoices">
+                <FileText size={20} />
+                {!collapsed && <span>Invoices</span>}
+              </SidebarLink>
+              <SidebarLink to="/payments">
+                <CreditCard size={20} />
+                {!collapsed && <span>Payments</span>}
+              </SidebarLink> */}
+            <SidebarLink to="/supplier-payments">
+              <DollarSign size={20} />
+              {!collapsed && <span>Pagos a Proveedores</span>}
+            </SidebarLink>
+          </>
+        )}
       </div>
 
       <div className="border-t p-3">

@@ -5,23 +5,47 @@ import { z } from "zod";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Select } from "../ui/select";
-import {
-  saleTypeOptions,
-  regionOptions,
-  serviceTypeOptions,
-  currencyOptions,
-} from "../../types/sales";
 import { Card, CardHeader, CardTitle, CardContent } from "../ui/card";
 import { Pencil, Plus, Trash2 } from "lucide-react";
 import { SaleItemForm } from "./sale-item-form";
 import { SaleItemFormData, User, ClientFormData, Sale } from "../../types";
-import { usersService } from "../../lib/services/users";
-import { clientsService } from "../../lib/services/clients";
+import { usersService } from "../../lib/services/users.service";
+import { clientsService } from "../../lib/services/clients.service";
 import { Client } from "../../types/client";
 import { Modal } from "../ui/modal";
 import { ClientSelect } from "./client-select";
 import { UserSelect } from "./user-select";
 import { useAuth } from "../../contexts/auth-context";
+
+// Definir las opciones localmente para evitar conflictos de importación
+const saleTypeOptions = [
+  { value: "individual", label: "Individual" },
+  { value: "corporate", label: "Corporativo" },
+  { value: "sports", label: "Deportivo" },
+  { value: "group", label: "Grupo" },
+] as const;
+
+const regionOptions = [
+  { value: "national", label: "Nacional" },
+  { value: "international", label: "Internacional" },
+  { value: "regional", label: "Regional" },
+] as const;
+
+const serviceTypeOptions = [
+  { value: "flight", label: "Vuelo" },
+  { value: "hotel", label: "Hotel" },
+  { value: "package", label: "Paquete" },
+  { value: "transfer", label: "Transfer" },
+  { value: "excursion", label: "Excursión" },
+  { value: "insurance", label: "Seguro" },
+  { value: "other", label: "Otro" },
+] as const;
+
+const currencyOptions = [
+  { value: "USD", label: "USD" },
+  { value: "EUR", label: "EUR" },
+  { value: "local", label: "Moneda Local" },
+] as const;
 
 const saleFormSchema = z.object({
   passengerName: z.string().min(1, "El nombre del pasajero es requerido"),
@@ -71,11 +95,14 @@ export function SaleForm({
   const [clients, setClients] = useState<Client[]>([]);
   const [showClientModal, setShowClientModal] = useState(false);
   const [newClientLoading, setNewClientLoading] = useState(false);
-  const [clientForm, setClientForm] = useState<ClientFormData>({
+  const [clientForm, setClientForm] = useState<
+    ClientFormData & { phone: string }
+  >({
     name: "",
     clientId: "",
     email: "",
     address: "",
+    phone: "",
   });
   const [clientFormError, setClientFormError] = useState<string | null>(null);
   const [selectedClient, setSelectedClient] = useState<Client | null>(null);
@@ -97,8 +124,8 @@ export function SaleForm({
 
   const getUsers = async () => {
     try {
-      const response = await usersService.getAllUsers();
-      setUsers(response.users);
+      const response = await usersService.getAll();
+      setUsers(response.data?.users || []);
     } catch (error) {
       console.error("Error fetching users:", error);
     }
@@ -106,9 +133,9 @@ export function SaleForm({
 
   const getClients = async () => {
     try {
-      const response = await clientsService.getAllClients();
+      const response = await clientsService.getAll();
       console.log(response);
-      setClients(response.clients || response);
+      setClients(response.data?.clients || []);
     } catch (error) {
       console.error("Error fetching clients:", error);
     }
@@ -158,9 +185,6 @@ export function SaleForm({
             costPrice: item.costPrice,
             reservationCode: item.reservationCode || "",
             paymentDate: item.paymentDate || null,
-            supplier: item.supplier || [],
-            operator: item.operator || [],
-            classification: item.classification || [],
           })
         );
         setItems(formattedItems);
@@ -418,13 +442,27 @@ export function SaleForm({
             setNewClientLoading(true);
             setClientFormError(null);
             try {
-              const created = await clientsService.createClient(clientForm);
-              // Add new client to list and select it
-              setClients((prev) => [...prev, created]);
-              form.setValue("clientId", created.clientId);
-              form.setValue("passengerName", created.name);
+              const response = await clientsService.create({
+                name: clientForm.name,
+                email: clientForm.email || "",
+                phone: clientForm.phone,
+                address: clientForm.address,
+              });
+              if (response.data?.client) {
+                const created = response.data.client;
+                // Add new client to list and select it
+                setClients((prev) => [...prev, created]);
+                form.setValue("clientId", created.clientId);
+                form.setValue("passengerName", created.name);
+              }
               setShowClientModal(false);
-              setClientForm({ name: "", clientId: "", email: "", address: "" });
+              setClientForm({
+                name: "",
+                clientId: "",
+                email: "",
+                address: "",
+                phone: "",
+              });
             } catch (err: unknown) {
               const errorMessage =
                 err instanceof Error ? err.message : "Error al crear cliente";
@@ -466,6 +504,18 @@ export function SaleForm({
                 setClientForm((f) => ({ ...f, email: e.target.value }))
               }
               type="email"
+              required
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium">Teléfono</label>
+            <input
+              className="w-full border rounded px-2 py-1"
+              value={clientForm.phone}
+              onChange={(e) =>
+                setClientForm((f) => ({ ...f, phone: e.target.value }))
+              }
+              type="tel"
               required
             />
           </div>

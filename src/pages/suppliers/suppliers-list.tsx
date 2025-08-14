@@ -1,20 +1,22 @@
-import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Plus, Search,  Trash2, Pencil } from 'lucide-react';
-import { Button } from '../../components/ui/button';
-import { Card } from '../../components/ui/card';
-import { Input } from '../../components/ui/input';
-import { suppliersService } from '../../lib/services/suppliers';
-import { Supplier } from '../../types/supplier';
-import { ConfirmModal } from '../../components/ui/confirm-modal';
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { Plus, Search, Trash2, Pencil } from "lucide-react";
+import { Button } from "../../components/ui/button";
+import { Card } from "../../components/ui/card";
+import { Input } from "../../components/ui/input";
+import { suppliersService } from "../../lib/services/suppliers.service";
+import { Supplier } from "../../types/supplier";
+import { ConfirmModal } from "../../components/ui/confirm-modal";
 
 export function SuppliersListPage() {
   const navigate = useNavigate();
   const [suppliers, setSuppliers] = useState<Supplier[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [supplierToDelete, setSupplierToDelete] = useState<Supplier | null>(null);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [supplierToDelete, setSupplierToDelete] = useState<Supplier | null>(
+    null
+  );
   const [isDeleting, setIsDeleting] = useState(false);
 
   useEffect(() => {
@@ -24,11 +26,11 @@ export function SuppliersListPage() {
   const loadSuppliers = async () => {
     try {
       setLoading(true);
-      const response = await suppliersService.getAllSuppliers();
-      setSuppliers(response.suppliers || response);
+      const response = await suppliersService.getAll();
+      setSuppliers(response.data || []);
     } catch (err) {
-      setError('Error loading suppliers');
-      console.error('Error loading suppliers:', err);
+      setError("Error loading suppliers");
+      console.error("Error loading suppliers:", err);
     } finally {
       setLoading(false);
     }
@@ -39,26 +41,26 @@ export function SuppliersListPage() {
 
     try {
       setIsDeleting(true);
-      await suppliersService.deleteSupplier(supplierToDelete.id);
-      setSuppliers(suppliers.filter(c => c.id !== supplierToDelete.id));
+      await suppliersService.delete(supplierToDelete.id.toString());
+      setSuppliers(suppliers.filter((c) => c.id !== supplierToDelete.id));
       setSupplierToDelete(null);
     } catch (err) {
-      setError('Error deleting supplier');
-      console.error('Error deleting supplier:', err);
+      setError("Error deleting supplier");
+      console.error("Error deleting supplier:", err);
     } finally {
       setIsDeleting(false);
     }
   };
 
-  const filteredSuppliers = suppliers.filter(supplier => 
-    supplier.name.toLowerCase().includes(searchQuery.toLowerCase()) 
+  const filteredSuppliers = suppliers.filter((supplier) =>
+    supplier.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <h2 className="text-lg font-medium">Proveedores</h2>
-        <Button onClick={() => navigate('/suppliers/new')}>
+        <Button onClick={() => navigate("/suppliers/new")}>
           <Plus className="mr-2 h-4 w-4" />
           Nuevo Proveedor
         </Button>
@@ -91,10 +93,7 @@ export function SuppliersListPage() {
       ) : (
         <div className="grid gap-4">
           {filteredSuppliers.map((supplier) => (
-            <Card
-              key={supplier.id}
-              className="p-4"
-            >
+            <Card key={supplier.id} className="p-4">
               <div className="flex flex-col md:flex-row justify-between gap-4">
                 <div className="flex-1">
                   <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-4">
@@ -110,8 +109,7 @@ export function SuppliersListPage() {
                       navigate(`/suppliers/${supplier.id}/edit`);
                     }}
                   >
-                      <Pencil className="h-4 w-4" />
-                    
+                    <Pencil className="h-4 w-4" />
                   </Button>
                   <Button
                     variant="danger"

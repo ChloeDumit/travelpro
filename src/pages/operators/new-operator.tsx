@@ -4,7 +4,7 @@ import { ArrowLeft } from "lucide-react";
 import { Button } from "../../components/ui/button";
 import { OperatorForm } from "../../components/operators/operator-form";
 import { OperatorFormData } from "../../types";
-import { operatorsService } from "../../lib/services/operators";
+import { operatorsService } from "../../lib/services/operators.service";
 
 export function NewOperatorPage() {
   const navigate = useNavigate();

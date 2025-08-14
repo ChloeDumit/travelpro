@@ -1,12 +1,19 @@
-import  { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import { ArrowLeft, CreditCard, Ban, Check, Printer, Pencil } from 'lucide-react';
-import { Button } from '../../components/ui/button';
-import { SaleSummary } from '../../components/sales/sale-summary';
-import { PaymentForm } from '../../components/sales/payment-form';
-import { PaymentHistory } from '../../components/sales/payment-history';
-import { Sale, Payment } from '../../types';
-import { salesService } from '../../lib/services/sales';
+import { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import {
+  ArrowLeft,
+  CreditCard,
+  Ban,
+  Check,
+  Printer,
+  Pencil,
+} from "lucide-react";
+import { Button } from "../../components/ui/button";
+import { SaleSummary } from "../../components/sales/sale-summary";
+import { PaymentForm } from "../../components/sales/payment-form";
+import { PaymentHistory } from "../../components/sales/payment-history";
+import { Sale, Payment } from "../../types";
+import { salesService } from "../../lib/services/sales.service";
 
 export function SaleDetailPage() {
   const { id } = useParams<{ id: string }>();
@@ -20,11 +27,11 @@ export function SaleDetailPage() {
     const fetchSale = async () => {
       if (!id) return;
       try {
-        const saleData = await salesService.getSaleById(id);
-        setSale(saleData);
+        const saleData = await salesService.getById(id);
+        setSale(saleData.data || null);
       } catch (err) {
-        setError('Failed to fetch sale details');
-        console.error('Error fetching sale:', err);
+        setError("Failed to fetch sale details");
+        console.error("Error fetching sale:", err);
       } finally {
         setLoading(false);
       }
@@ -32,21 +39,22 @@ export function SaleDetailPage() {
     fetchSale();
   }, [id]);
 
-  const handleStatusUpdate = async (status: 'completed' | 'cancelled') => {
+  const handleStatusUpdate = async (status: "completed" | "cancelled") => {
     if (!id) return;
 
     try {
-      const updatedSale = await salesService.updateSaleStatus(id, status);
-      setSale(updatedSale.sale);
-  
+      const updatedSale = await salesService.update(id, { status });
+      setSale(updatedSale.data?.sale || null);
     } catch (err) {
-      console.error('Error updating sale status:', err);
+      console.error("Error updating sale status:", err);
     }
   };
 
   const handlePaymentAdded = (payment: Payment) => {
     if (sale) {
-      setSale(prev => prev ? { ...prev, payments: [payment, ...(prev.payments || [])] } : null);
+      setSale((prev) =>
+        prev ? { ...prev, payments: [payment, ...(prev.payments || [])] } : null
+      );
     }
   };
 
@@ -61,7 +69,7 @@ export function SaleDetailPage() {
   }
 
   if (error || !sale) {
-    return <div className="text-red-500">{error || 'Sale not found'}</div>;
+    return <div className="text-red-500">{error || "Sale not found"}</div>;
   }
 
   const totalSale = calculateTotalSale(sale);
@@ -70,56 +78,56 @@ export function SaleDetailPage() {
   return (
     <div className="space-y-6">
       <div className="flex gap-2 ">
-            <Button variant="outline" size="sm" onClick={() => navigate('/sales')}>
-              <ArrowLeft className="mr-2 h-4 w-4" />
-              Back
-            </Button>
-          </div>
+        <Button variant="outline" size="sm" onClick={() => navigate("/sales")}>
+          <ArrowLeft className="mr-2 h-4 w-4" />
+          Back
+        </Button>
+      </div>
 
       <div className="flex flex-wrap gap-2 justify-end">
-        <Button 
-          variant="outline" 
+        <Button
+          variant="outline"
           size="sm"
           onClick={() => setShowPaymentForm(true)}
         >
           <CreditCard className="mr-2 h-4 w-4" />
           Registrar Pago
         </Button>
-        {sale.status !== 'completed' && (
+        {sale.status !== "completed" && (
           <>
-          <Button 
-            variant="success" 
-            size="sm"
-            onClick={() => handleStatusUpdate('completed')}
-          >
-            <Check className="mr-2 h-4 w-4" />
-            Completar Venta
-          </Button>
-          <Button 
-            variant="outline" 
-            size="sm"
-            onClick={() => navigate(`/sales/${id}/edit`)}
-          >
-            <Pencil  className="mr-2 h-4 w-4" />
-            Editar Venta
-          </Button>
+            <Button
+              variant="success"
+              size="sm"
+              onClick={() => handleStatusUpdate("completed")}
+            >
+              <Check className="mr-2 h-4 w-4" />
+              Completar Venta
+            </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => navigate(`/sales/${id}/edit`)}
+            >
+              <Pencil className="mr-2 h-4 w-4" />
+              Editar Venta
+            </Button>
           </>
         )}
-        {sale.status !== 'cancelled' && sale.status !== 'completed' && (
-          <Button 
-            variant="danger" 
+        {sale.status !== "cancelled" && sale.status !== "completed" && (
+          <Button
+            variant="danger"
             size="sm"
-            onClick={() => handleStatusUpdate('cancelled')}
+            onClick={() => handleStatusUpdate("cancelled")}
           >
             <Ban className="mr-2 h-4 w-4" />
             Cancelar Venta
           </Button>
         )}
-        {sale.status === 'completed' && (
-            <Button 
-            variant="outline" 
+        {sale.status === "completed" && (
+          <Button
+            variant="outline"
             size="sm"
-            onClick={() => console.log('Generar Factura')}
+            onClick={() => console.log("Generar Factura")}
           >
             <Printer className="mr-2 h-4 w-4" />
             Generar Factura
@@ -129,10 +137,10 @@ export function SaleDetailPage() {
 
       <SaleSummary sale={sale} />
 
-      <PaymentHistory 
-        payments={payments} 
-        totalSale={totalSale} 
-        currency={sale.currency} 
+      <PaymentHistory
+        payments={payments}
+        totalSale={totalSale}
+        currency={sale.currency}
       />
 
       <PaymentForm

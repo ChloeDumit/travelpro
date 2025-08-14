@@ -33,5 +33,8 @@ app.get("/api/users/me", authenticate, async (req, res) => {
 app.use("/api/sales", salesRouter);
 app.use("/api/users", usersRouter);
 app.use("api/suppliers", suppliersRouter);
+app.use("/api/clients", clientsRouter);
+app.use("/api/classifications", classificationsRouter);
+app.use("/api/operators", operatorsRouter);
 
 module.exports = router;

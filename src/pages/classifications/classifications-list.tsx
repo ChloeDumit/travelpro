@@ -9,7 +9,7 @@ import {
   CardContent,
 } from "../../components/ui/card";
 import { Classification } from "../../types";
-import { classificationsService } from "../../lib/services/classifications";
+import { classificationsService } from "../../lib/services/classifications.service";
 import { ConfirmModal } from "../../components/ui/confirm-modal";
 
 export function ClassificationsListPage() {
@@ -28,8 +28,8 @@ export function ClassificationsListPage() {
   const fetchClassifications = async () => {
     try {
       setLoading(true);
-      const data = await classificationsService.getAllClassifications();
-      setClassifications(data);
+      const data = await classificationsService.getAll();
+      setClassifications(data.data || []);
     } catch (err) {
       setError("Error al cargar clasificaciones");
       console.error("Error fetching classifications:", err);
@@ -42,9 +42,7 @@ export function ClassificationsListPage() {
     if (!classificationToDelete) return;
 
     try {
-      await classificationsService.deleteClassification(
-        classificationToDelete.id
-      );
+      await classificationsService.delete(classificationToDelete.id.toString());
       setClassifications(
         classifications.filter((c) => c.id !== classificationToDelete.id)
       );
@@ -124,7 +122,7 @@ export function ClassificationsListPage() {
         }}
         onConfirm={handleDelete}
         title="Eliminar Clasificación"
-        message={`¿Estás seguro de que quieres eliminar la clasificación "${classificationToDelete?.name}"?`}
+        description={`¿Estás seguro de que quieres eliminar la clasificación "${classificationToDelete?.name}"?`}
       />
     </div>
   );

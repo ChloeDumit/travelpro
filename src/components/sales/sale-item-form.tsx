@@ -16,9 +16,9 @@ import { Select } from "../ui/select";
 import { Button } from "../ui/button";
 import { Modal } from "../ui/modal";
 import { SearchSelect } from "../ui/search-select";
-import { suppliersService } from "../../lib/services/suppliers";
-import { operatorsService } from "../../lib/services/operators";
-import { classificationsService } from "../../lib/services/classifications";
+import { suppliersService } from "../../lib/services/suppliers.service";
+import { operatorsService } from "../../lib/services/operators.service";
+import { classificationsService } from "../../lib/services/classifications.service";
 
 const saleItemFormSchema = z.object({
   classificationId: z.number().min(1, "La clasificación es requerida"),
