@@ -61,7 +61,7 @@ export function Sidebar() {
       <div className="flex h-16 items-center justify-between border-b px-4">
         {!collapsed && (
           <Link to="/dashboard">
-            <h2 className="text-xl font-bold text-primary-900">TravelPro</h2>
+            <h2 className="text-xl font-bold text-primary-900">TripsOffice</h2>
           </Link>
         )}
         <button

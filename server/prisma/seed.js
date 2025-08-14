@@ -9,18 +9,18 @@ async function main() {
 
   // Crear compañía primero
   const company = await prisma.company.upsert({
-    where: { name: "TravelPro" },
+    where: { name: "TripsOffice" },
     update: {},
     create: {
-      name: "TravelPro",
+      name: "TripsOffice",
     },
   });
 
   const admin = await prisma.user.upsert({
-    where: { email: "admin@travelpro.com" },
+    where: { email: "admin@tripsoffice.com" },
     update: {},
     create: {
-      email: "admin@travelpro.com",
+      email: "admin@tripsoffice.com",
       username: "admin",
       password: hashedPassword,
       role: "admin",
@@ -31,10 +31,10 @@ async function main() {
   });
 
   const sales = await prisma.user.upsert({
-    where: { email: "sales@travelpro.com" },
+    where: { email: "sales@tripsoffice.com" },
     update: {},
     create: {
-      email: "sales@travelpro.com",
+      email: "sales@tripsoffice.com",
       username: "sales",
       password: salesPassword,
       role: "sales",

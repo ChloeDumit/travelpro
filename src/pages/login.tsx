@@ -55,13 +55,12 @@ export function LoginPage() {
         <div className="inline-flex items-center justify-center h-16 w-16 rounded-full bg-white mb-4">
           <Plane size={32} className="text-primary-700" />
         </div>
-        <h1 className="text-3xl font-bold text-white">TravelPro Backoffice</h1>
-        <p className="text-primary-100 mt-2">Travel agency management system</p>
+        <h1 className="text-3xl font-bold text-white">TripsOffice</h1>
       </div>
 
       <Card className="w-full max-w-md animate-fade-in">
         <CardHeader>
-          <CardTitle className="text-center">Login to your account</CardTitle>
+          <CardTitle className="text-center">Inicio de sesión</CardTitle>
         </CardHeader>
         <form onSubmit={handleSubmit(onSubmit)}>
           <CardContent className="space-y-4">
@@ -86,35 +85,10 @@ export function LoginPage() {
               {...register("password")}
               error={errors.password?.message}
             />
-
-            <div className="flex items-center justify-between">
-              <div className="flex items-center">
-                <input
-                  id="remember-me"
-                  name="remember-me"
-                  type="checkbox"
-                  className="h-4 w-4 rounded border-gray-300 text-primary-600 focus:ring-primary-500"
-                />
-                <label
-                  htmlFor="remember-me"
-                  className="ml-2 block text-sm text-gray-700"
-                >
-                  Remember me
-                </label>
-              </div>
-              <div className="text-sm">
-                <a
-                  href="#"
-                  className="font-medium text-primary-600 hover:text-primary-500"
-                >
-                  Forgot your password?
-                </a>
-              </div>
-            </div>
           </CardContent>
           <CardFooter>
             <Button type="submit" className="w-full" disabled={isSubmitting}>
-              {isSubmitting ? "Signing in..." : "Sign in"}
+              {isSubmitting ? "Iniciando sesión..." : "Iniciar sesión"}
             </Button>
           </CardFooter>
         </form>
@@ -124,11 +98,11 @@ export function LoginPage() {
         Demo logins:
         <br />
         <code className="bg-primary-700/50 px-2 py-1 rounded text-white">
-          admin@travelpro.com / admin123
+          admin@tripsoffice.com / admin123
         </code>
         <br />
         <code className="bg-primary-700/50 px-2 py-1 rounded text-white">
-          sales@travelpro.com / sales123
+          sales@tripsoffice.com / sales123
         </code>
         <br />
       </p>
