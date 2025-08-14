@@ -59,7 +59,7 @@ export function SalesListPage() {
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
-        <h2 className="text-lg font-medium">Ventas</h2>
+        <h1 className="text-lg font-medium">Ventas</h1>
         <Button
           variant="default"
           size="sm"

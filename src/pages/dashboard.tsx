@@ -29,6 +29,7 @@ import {
 import { Button } from "../components/ui/button";
 import { salesService } from "../lib/services/sales.service";
 import { useAuth } from "../contexts/auth-context";
+import { useNavigate } from "react-router-dom";
 
 interface SalesStats {
   totalSales: number;
@@ -74,6 +75,7 @@ interface UpcomingDeparture {
 }
 
 export function DashboardPage() {
+  const navigate = useNavigate();
   const { user } = useAuth();
   const [totalSales, setTotalSales] = useState(0);
   const [salesStats, setSalesStats] = useState<SalesStats | null>(null);
@@ -151,16 +153,16 @@ export function DashboardPage() {
   const handleQuickAction = (action: string) => {
     switch (action) {
       case "new-sale":
-        window.location.href = "/sales/new";
+        navigate("/sales/new");
         break;
       case "new-client":
-        window.location.href = "/clients/new";
+        navigate("/clients/new");
         break;
       case "view-sales":
-        window.location.href = "/sales";
+        navigate("/sales");
         break;
       case "view-clients":
-        window.location.href = "/clients";
+        navigate("/clients");
         break;
       default:
         break;
@@ -380,12 +382,6 @@ export function DashboardPage() {
             <div className="space-y-4">
               {salesStats ? (
                 [
-                  {
-                    name: "Borrador",
-                    count: salesStats.salesByStatus.draft || 0,
-                    status: "draft",
-                    color: "bg-gray-500",
-                  },
                   {
                     name: "Confirmada",
                     count: salesStats.salesByStatus.confirmed || 0,

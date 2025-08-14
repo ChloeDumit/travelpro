@@ -59,7 +59,7 @@ export function SuppliersListPage() {
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
-        <h2 className="text-lg font-medium">Proveedores</h2>
+        <h1 className="text-lg font-medium">Proveedores</h1>
         <Button onClick={() => navigate("/suppliers/new")}>
           <Plus className="mr-2 h-4 w-4" />
           Nuevo Proveedor
@@ -108,16 +108,18 @@ export function SuppliersListPage() {
                       e.stopPropagation();
                       navigate(`/suppliers/${supplier.id}/edit`);
                     }}
+                    className="hover:bg-blue-500 hover:text-white"
                   >
                     <Pencil className="h-4 w-4" />
                   </Button>
                   <Button
-                    variant="danger"
+                    variant="outline"
                     size="sm"
                     onClick={(e) => {
                       e.stopPropagation();
                       setSupplierToDelete(supplier);
                     }}
+                    className="hover:bg-red-500 hover:text-white"
                   >
                     <Trash2 className="h-4 w-4" />
                   </Button>

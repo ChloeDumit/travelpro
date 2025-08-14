@@ -23,10 +23,8 @@ export function EditClassificationPage() {
 
   const fetchClassification = async () => {
     try {
-      const data = await classificationsService.getClassificationById(
-        parseInt(id)
-      );
-      setClassification(data);
+      const data = await classificationsService.getById(id || "");
+      setClassification(data.data || null);
     } catch (err) {
       setError("Error al cargar clasificación");
       console.error("Error fetching classification:", err);
@@ -40,7 +38,9 @@ export function EditClassificationPage() {
     setError(null);
 
     try {
-      await classificationsService.updateClassification(parseInt(id), data);
+      await classificationsService.update(id, {
+        name: data.name,
+      });
       navigate("/classifications");
     } catch (err) {
       setError("Error al actualizar clasificación");

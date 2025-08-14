@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Plus, Edit, Trash2 } from "lucide-react";
+import { Plus, Edit, Trash2, Search } from "lucide-react";
 import { Button } from "../../components/ui/button";
 import {
   Card,
@@ -11,6 +11,7 @@ import {
 import { Operator } from "../../types";
 import { operatorsService } from "../../lib/services/operators.service";
 import { ConfirmModal } from "../../components/ui/confirm-modal";
+import { Input } from "../../components/ui/input";
 
 export function OperatorsListPage() {
   const navigate = useNavigate();
@@ -21,6 +22,7 @@ export function OperatorsListPage() {
   const [operatorToDelete, setOperatorToDelete] = useState<Operator | null>(
     null
   );
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     fetchOperators();
@@ -67,60 +69,87 @@ export function OperatorsListPage() {
     );
   }
 
+  const filteredOperators = operators.filter((operator) =>
+    operator.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
-        <h1 className="text-2xl font-bold">Operadores</h1>
+        <h1 className="text-lg font-medium">Operadores</h1>
         <Button onClick={() => navigate("/operators/new")}>
           <Plus className="mr-2 h-4 w-4" />
           Nuevo Operador
         </Button>
       </div>
 
-      <div className="grid gap-4">
-        {operators.map((operator) => (
-          <Card key={operator.id}>
-            <CardHeader>
-              <CardTitle className="flex justify-between items-center">
-                <span>{operator.name}</span>
-                <div className="flex gap-2">
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => navigate(`/operators/${operator.id}/edit`)}
-                  >
-                    <Edit className="h-4 w-4" />
-                  </Button>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => {
-                      setOperatorToDelete(operator);
-                      setDeleteModalOpen(true);
-                    }}
-                  >
-                    <Trash2 className="h-4 w-4" />
-                  </Button>
-                </div>
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-sm text-gray-600">ID: {operator.id}</p>
-            </CardContent>
-          </Card>
-        ))}
+      <div className="flex gap-4 items-center">
+        <div className="relative flex-1">
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+          <Input
+            placeholder="Buscar operadores..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="pl-10"
+          />
+        </div>
       </div>
 
-      <ConfirmModal
-        isOpen={deleteModalOpen}
-        onClose={() => {
-          setDeleteModalOpen(false);
-          setOperatorToDelete(null);
-        }}
-        onConfirm={handleDelete}
-        title="Eliminar Operador"
-        description={`¿Estás seguro de que quieres eliminar el operador "${operatorToDelete?.name}"?`}
-      />
+      {loading ? (
+        <div className="text-center py-8">Cargando operadores...</div>
+      ) : filteredOperators.length === 0 ? (
+        <div className="text-center py-8 text-gray-500">
+          No se encontraron operadores
+        </div>
+      ) : (
+        <div>
+          <div className="grid gap-4">
+            {filteredOperators.map((operator) => (
+              <Card key={operator.id}>
+                <CardHeader>
+                  <CardTitle className="flex justify-between items-center">
+                    <h3 className="text-lg font-medium">{operator.name}</h3>
+                    <div className="flex gap-2">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() =>
+                          navigate(`/operators/${operator.id}/edit`)
+                        }
+                        className="hover:bg-blue-500 hover:text-white"
+                      >
+                        <Edit className="h-4 w-4" />
+                      </Button>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => {
+                          setOperatorToDelete(operator);
+                          setDeleteModalOpen(true);
+                        }}
+                        className="hover:bg-red-500 hover:text-white"
+                      >
+                        <Trash2 className="h-4 w-4" />
+                      </Button>
+                    </div>
+                  </CardTitle>
+                </CardHeader>
+              </Card>
+            ))}
+          </div>
+
+          <ConfirmModal
+            isOpen={deleteModalOpen}
+            onClose={() => {
+              setDeleteModalOpen(false);
+              setOperatorToDelete(null);
+            }}
+            onConfirm={handleDelete}
+            title="Eliminar Operador"
+            description={`¿Estás seguro de que quieres eliminar el operador "${operatorToDelete?.name}"?`}
+          />
+        </div>
+      )}
     </div>
   );
 }

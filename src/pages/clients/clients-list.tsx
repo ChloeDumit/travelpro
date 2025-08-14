@@ -60,7 +60,7 @@ export function ClientsListPage() {
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
-        <h2 className="text-lg font-medium">Clientes</h2>
+        <h1 className="text-lg font-medium">Clientes</h1>
         <Button onClick={() => navigate("/clients/new")}>
           <Plus className="mr-2 h-4 w-4" />
           Nuevo Cliente
@@ -118,16 +118,18 @@ export function ClientsListPage() {
                       e.stopPropagation();
                       navigate(`/clients/${client.id}/edit`);
                     }}
+                    className="hover:bg-blue-500 hover:text-white"
                   >
                     <Pencil className="h-4 w-4" />
                   </Button>
                   <Button
-                    variant="danger"
+                    variant="outline"
                     size="sm"
                     onClick={(e) => {
                       e.stopPropagation();
                       setClientToDelete(client);
                     }}
+                    className="hover:bg-red-500 hover:text-white"
                   >
                     <Trash2 className="h-4 w-4" />
                   </Button>

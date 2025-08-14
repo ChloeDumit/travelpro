@@ -16,7 +16,9 @@ export function NewClassificationPage() {
     setError(null);
 
     try {
-      await classificationsService.createClassification(data);
+      await classificationsService.create({
+        name: data.name,
+      });
       navigate("/classifications");
     } catch (err) {
       setError("Error al crear clasificación");

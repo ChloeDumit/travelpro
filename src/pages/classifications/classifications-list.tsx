@@ -1,16 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Plus, Edit, Trash2 } from "lucide-react";
+import { Plus, Edit, Trash2, Search } from "lucide-react";
 import { Button } from "../../components/ui/button";
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardContent,
-} from "../../components/ui/card";
+import { Card, CardHeader, CardTitle } from "../../components/ui/card";
 import { Classification } from "../../types";
 import { classificationsService } from "../../lib/services/classifications.service";
 import { ConfirmModal } from "../../components/ui/confirm-modal";
+import { Input } from "../../components/ui/input";
 
 export function ClassificationsListPage() {
   const navigate = useNavigate();
@@ -20,6 +16,7 @@ export function ClassificationsListPage() {
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [classificationToDelete, setClassificationToDelete] =
     useState<Classification | null>(null);
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     fetchClassifications();
@@ -68,51 +65,74 @@ export function ClassificationsListPage() {
     );
   }
 
+  const filteredClassifications = classifications.filter((classification) =>
+    classification.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
-        <h1 className="text-2xl font-bold">Clasificaciones</h1>
+        <h1 className="text-lg font-medium">Clasificaciones</h1>
         <Button onClick={() => navigate("/classifications/new")}>
           <Plus className="mr-2 h-4 w-4" />
           Nueva Clasificación
         </Button>
       </div>
 
-      <div className="grid gap-4">
-        {classifications.map((classification) => (
-          <Card key={classification.id}>
-            <CardHeader>
-              <CardTitle className="flex justify-between items-center">
-                <span>{classification.name}</span>
-                <div className="flex gap-2">
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() =>
-                      navigate(`/classifications/${classification.id}/edit`)
-                    }
-                  >
-                    <Edit className="h-4 w-4" />
-                  </Button>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => {
-                      setClassificationToDelete(classification);
-                      setDeleteModalOpen(true);
-                    }}
-                  >
-                    <Trash2 className="h-4 w-4" />
-                  </Button>
-                </div>
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-sm text-gray-600">ID: {classification.id}</p>
-            </CardContent>
-          </Card>
-        ))}
+      <div className="flex gap-4 items-center">
+        <div className="relative flex-1">
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+          <Input
+            placeholder="Buscar clasificaciones..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="pl-10"
+          />
+        </div>
       </div>
+
+      {loading ? (
+        <div className="text-center py-8">Cargando clasificaciones...</div>
+      ) : filteredClassifications.length === 0 ? (
+        <div className="text-center py-8 text-gray-500">
+          No se encontraron clasificaciones
+        </div>
+      ) : (
+        <div className="grid gap-4">
+          {filteredClassifications.map((classification) => (
+            <Card key={classification.id}>
+              <CardHeader>
+                <CardTitle className="flex justify-between items-center">
+                  <h3 className="text-lg font-medium">{classification.name}</h3>
+                  <div className="flex gap-2">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() =>
+                        navigate(`/classifications/${classification.id}/edit`)
+                      }
+                      className="hover:bg-blue-500 hover:text-white"
+                    >
+                      <Edit className="h-4 w-4" />
+                    </Button>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => {
+                        setClassificationToDelete(classification);
+                        setDeleteModalOpen(true);
+                      }}
+                      className="hover:bg-red-500 hover:text-white"
+                    >
+                      <Trash2 className="h-4 w-4" />
+                    </Button>
+                  </div>
+                </CardTitle>
+              </CardHeader>
+            </Card>
+          ))}
+        </div>
+      )}
 
       <ConfirmModal
         isOpen={deleteModalOpen}
