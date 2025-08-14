@@ -11,6 +11,7 @@ import suppliersRoutes from "./routes/suppliers.js";
 import operatorsRoutes from "./routes/operators.js";
 import classificationsRoutes from "./routes/classifications.js";
 import supplierPaymentsRoutes from "./routes/supplier-payments.js";
+import paymentsRoutes from "./routes/payments.js";
 import dotenv from "dotenv";
 dotenv.config();
 
@@ -40,7 +41,7 @@ app.use("/api/suppliers", suppliersRoutes);
 app.use("/api/operators", operatorsRoutes);
 app.use("/api/classifications", classificationsRoutes);
 app.use("/api/supplier-payments", supplierPaymentsRoutes);
-
+app.use("/api/payments", paymentsRoutes);
 // Error handling
 app.use(errorHandler);
 

@@ -8,12 +8,8 @@ interface SaleSummaryProps {
 }
 
 export function SaleSummary({ sale }: SaleSummaryProps) {
-  console.log("Sale completa:", sale);
   const items = sale.items;
   const saleData = sale;
-
-  console.log("Items:", items);
-  console.log("Primer item:", items[0]);
 
   return (
     <div className="space-y-6">

@@ -163,7 +163,7 @@ export function SaleForm({
 
       // Set selected client if available
       if (initialData.client) {
-        setSelectedClient(initialData.client);
+        setSelectedClient(null);
       }
 
       // Set items if available
@@ -444,15 +444,15 @@ export function SaleForm({
             try {
               const response = await clientsService.create({
                 name: clientForm.name,
+                clientId: clientForm.clientId,
                 email: clientForm.email || "",
-                phone: clientForm.phone,
                 address: clientForm.address,
               });
-              if (response.data?.client) {
-                const created = response.data.client;
+              if (response.data) {
+                const created = response.data;
                 // Add new client to list and select it
                 setClients((prev) => [...prev, created]);
-                form.setValue("clientId", created.id);
+                form.setValue("clientId", created.clientId);
                 form.setValue("passengerName", created.name);
               }
               setShowClientModal(false);
@@ -492,7 +492,6 @@ export function SaleForm({
               onChange={(e) =>
                 setClientForm((f) => ({ ...f, clientId: e.target.value }))
               }
-              required
             />
           </div>
           <div>
@@ -504,7 +503,6 @@ export function SaleForm({
                 setClientForm((f) => ({ ...f, email: e.target.value }))
               }
               type="email"
-              required
             />
           </div>
           <div>
@@ -516,7 +514,6 @@ export function SaleForm({
                 setClientForm((f) => ({ ...f, phone: e.target.value }))
               }
               type="tel"
-              required
             />
           </div>
           <div>
@@ -527,7 +524,6 @@ export function SaleForm({
               onChange={(e) =>
                 setClientForm((f) => ({ ...f, address: e.target.value }))
               }
-              required
             />
           </div>
           {clientFormError && (

@@ -21284,3 +21284,793 @@
 {"level":"info","message":"GET /api/suppliers","timestamp":"2025-08-14T21:01:09.298Z"}
 {"level":"info","message":"GET /api/operators","timestamp":"2025-08-14T21:01:09.299Z"}
 {"level":"info","message":"GET /api/classifications","timestamp":"2025-08-14T21:01:09.302Z"}
+{"level":"info","message":"GET /api/sales/total","timestamp":"2025-08-14T21:02:15.296Z"}
+{"level":"info","message":"GET /api/sales/stats","timestamp":"2025-08-14T21:02:15.310Z"}
+{"level":"info","message":"GET /api/sales/stats-by-type","timestamp":"2025-08-14T21:02:15.316Z"}
+{"level":"info","message":"GET /api/sales/upcoming-departures","timestamp":"2025-08-14T21:02:15.323Z"}
+{"level":"info","message":"GET /api/sales/total","timestamp":"2025-08-14T21:02:15.516Z"}
+{"level":"info","message":"GET /api/sales/upcoming-departures","timestamp":"2025-08-14T21:02:16.007Z"}
+{"level":"info","message":"GET /api/sales/stats","timestamp":"2025-08-14T21:02:16.009Z"}
+{"level":"info","message":"GET /api/sales/stats-by-type","timestamp":"2025-08-14T21:02:16.173Z"}
+{"level":"info","message":"GET /api/suppliers","timestamp":"2025-08-14T21:02:24.499Z"}
+{"level":"info","message":"GET /api/operators","timestamp":"2025-08-14T21:02:24.500Z"}
+{"level":"info","message":"GET /api/classifications","timestamp":"2025-08-14T21:02:24.501Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-08-14T21:02:24.501Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-14T21:02:24.503Z"}
+{"level":"info","message":"GET /api/classifications","timestamp":"2025-08-14T21:02:24.597Z"}
+{"level":"info","message":"GET /api/suppliers","timestamp":"2025-08-14T21:02:24.601Z"}
+{"level":"info","message":"GET /api/operators","timestamp":"2025-08-14T21:02:24.996Z"}
+{"level":"info","message":"Users list fetched","timestamp":"2025-08-14T21:02:25.003Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-08-14T21:02:25.007Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-14T21:02:25.009Z"}
+{"level":"info","message":"Users list fetched","timestamp":"2025-08-14T21:02:25.054Z"}
+{"level":"info","message":"POST /api/sales","timestamp":"2025-08-14T21:03:27.631Z"}
+{"level":"info","message":"New sale created by user 1","timestamp":"2025-08-14T21:03:30.182Z"}
+{"level":"info","message":"GET /api/sales/10","timestamp":"2025-08-14T21:03:30.196Z"}
+{"level":"info","message":"Sale 10 fetched by user 1","timestamp":"2025-08-14T21:03:30.803Z"}
+{"level":"info","message":"GET /api/sales/10","timestamp":"2025-08-14T21:03:30.805Z"}
+{"level":"info","message":"Sale 10 fetched by user 1","timestamp":"2025-08-14T21:03:31.378Z"}
+{"level":"info","message":"POST /api/payments","timestamp":"2025-08-14T21:05:08.082Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-08-14T21:05:17.484Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-08-14T21:05:17.733Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-08-14T21:05:17.737Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-08-14T21:05:17.833Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-14T21:05:20.277Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-14T21:05:20.369Z"}
+{"level":"info","message":"GET /api/suppliers","timestamp":"2025-08-14T21:05:22.775Z"}
+{"level":"info","message":"GET /api/suppliers","timestamp":"2025-08-14T21:05:22.869Z"}
+{"level":"info","message":"GET /api/operators","timestamp":"2025-08-14T21:05:23.883Z"}
+{"level":"info","message":"GET /api/operators","timestamp":"2025-08-14T21:05:23.982Z"}
+{"level":"info","message":"GET /api/users/me","timestamp":"2025-08-14T21:05:25.205Z"}
+{"level":"info","message":"GET /api/classifications","timestamp":"2025-08-14T21:05:26.057Z"}
+{"level":"info","message":"GET /api/classifications","timestamp":"2025-08-14T21:05:26.163Z"}
+{"level":"info","message":"GET /api/supplier-payments/suppliers/sales","timestamp":"2025-08-14T21:05:29.626Z"}
+{"level":"info","message":"GET /api/supplier-payments/suppliers/sales","timestamp":"2025-08-14T21:05:30.580Z"}
+{"level":"info","message":"GET /api/suppliers","timestamp":"2025-08-14T21:05:58.756Z"}
+{"level":"info","message":"GET /api/suppliers","timestamp":"2025-08-14T21:05:58.925Z"}
+{"level":"info","message":"GET /api/supplier-payments/suppliers/sales","timestamp":"2025-08-14T21:06:26.944Z"}
+{"level":"info","message":"GET /api/supplier-payments/suppliers/sales","timestamp":"2025-08-14T21:06:27.290Z"}
+{"level":"info","message":"GET /api/sales/stats","timestamp":"2025-08-14T21:06:39.569Z"}
+{"level":"info","message":"GET /api/sales/total","timestamp":"2025-08-14T21:06:39.572Z"}
+{"level":"info","message":"GET /api/sales/stats-by-type","timestamp":"2025-08-14T21:06:39.574Z"}
+{"level":"info","message":"GET /api/sales/upcoming-departures","timestamp":"2025-08-14T21:06:39.575Z"}
+{"level":"info","message":"GET /api/sales/total","timestamp":"2025-08-14T21:06:39.784Z"}
+{"level":"info","message":"GET /api/sales/stats","timestamp":"2025-08-14T21:06:39.878Z"}
+{"level":"info","message":"GET /api/sales/stats-by-type","timestamp":"2025-08-14T21:06:39.964Z"}
+{"level":"info","message":"GET /api/sales/upcoming-departures","timestamp":"2025-08-14T21:06:40.308Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-14T21:06:40.586Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-14T21:06:40.685Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-08-14T21:06:41.122Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-08-14T21:06:41.355Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-08-14T21:06:41.360Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-08-14T21:06:41.454Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-14T21:06:42.246Z"}
+{"level":"info","message":"GET /api/classifications","timestamp":"2025-08-14T21:06:42.248Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-08-14T21:06:42.249Z"}
+{"level":"info","message":"GET /api/suppliers","timestamp":"2025-08-14T21:06:42.251Z"}
+{"level":"info","message":"GET /api/operators","timestamp":"2025-08-14T21:06:42.252Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-14T21:06:42.366Z"}
+{"level":"info","message":"Users list fetched","timestamp":"2025-08-14T21:06:42.408Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-08-14T21:06:42.409Z"}
+{"level":"info","message":"GET /api/classifications","timestamp":"2025-08-14T21:06:42.454Z"}
+{"level":"info","message":"Users list fetched","timestamp":"2025-08-14T21:06:42.457Z"}
+{"level":"info","message":"GET /api/suppliers","timestamp":"2025-08-14T21:06:42.735Z"}
+{"level":"info","message":"GET /api/operators","timestamp":"2025-08-14T21:06:42.747Z"}
+{"level":"info","message":"POST /api/sales","timestamp":"2025-08-14T21:07:00.629Z"}
+{"level":"info","message":"POST /api/sales","timestamp":"2025-08-14T21:07:03.875Z"}
+{"level":"info","message":"New sale created by user 1","timestamp":"2025-08-14T21:07:06.265Z"}
+{"level":"info","message":"GET /api/sales/11","timestamp":"2025-08-14T21:07:06.277Z"}
+{"level":"info","message":"Sale 11 fetched by user 1","timestamp":"2025-08-14T21:07:06.831Z"}
+{"level":"info","message":"GET /api/sales/11","timestamp":"2025-08-14T21:07:06.833Z"}
+{"level":"info","message":"Sale 11 fetched by user 1","timestamp":"2025-08-14T21:07:07.356Z"}
+{"level":"info","message":"GET /api/supplier-payments/suppliers/sales","timestamp":"2025-08-14T21:07:08.447Z"}
+{"level":"info","message":"GET /api/supplier-payments/suppliers/sales","timestamp":"2025-08-14T21:07:08.896Z"}
+{"level":"info","message":"GET /api/suppliers","timestamp":"2025-08-14T21:07:27.962Z"}
+{"level":"info","message":"GET /api/suppliers","timestamp":"2025-08-14T21:07:28.104Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-08-14T21:07:33.178Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-08-14T21:07:33.340Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-08-14T21:07:33.346Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-08-14T21:07:33.439Z"}
+{"level":"info","message":"GET /api/suppliers","timestamp":"2025-08-14T21:07:37.078Z"}
+{"level":"info","message":"GET /api/operators","timestamp":"2025-08-14T21:07:37.081Z"}
+{"level":"info","message":"GET /api/classifications","timestamp":"2025-08-14T21:07:37.083Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-08-14T21:07:37.084Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-14T21:07:37.084Z"}
+{"level":"info","message":"GET /api/suppliers","timestamp":"2025-08-14T21:07:37.127Z"}
+{"level":"info","message":"GET /api/operators","timestamp":"2025-08-14T21:07:37.215Z"}
+{"level":"info","message":"Users list fetched","timestamp":"2025-08-14T21:07:37.620Z"}
+{"level":"info","message":"GET /api/classifications","timestamp":"2025-08-14T21:07:37.621Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-08-14T21:07:37.624Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-14T21:07:37.629Z"}
+{"level":"info","message":"Users list fetched","timestamp":"2025-08-14T21:07:37.674Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-08-14T21:07:38.192Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-08-14T21:07:38.282Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-08-14T21:07:38.287Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-08-14T21:07:38.459Z"}
+{"level":"info","message":"GET /api/sales/11","timestamp":"2025-08-14T21:09:04.589Z"}
+{"level":"info","message":"Sale 11 fetched by user 1","timestamp":"2025-08-14T21:09:05.151Z"}
+{"level":"info","message":"GET /api/sales/11","timestamp":"2025-08-14T21:09:05.153Z"}
+{"level":"info","message":"Sale 11 fetched by user 1","timestamp":"2025-08-14T21:09:05.670Z"}
+{"level":"info","message":"POST /api/payments","timestamp":"2025-08-14T21:09:13.096Z"}
+{"level":"info","message":"GET /api/users/me","timestamp":"2025-08-14T21:10:25.222Z"}
+{"level":"info","message":"POST /api/payments","timestamp":"2025-08-14T21:11:08.791Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-08-14T21:13:29.600Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-08-14T21:13:36.526Z"}
+{"level":"info","message":"POST /api/payments","timestamp":"2025-08-14T21:13:58.149Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-08-14T21:14:01.413Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-08-14T21:14:26.762Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-08-14T21:14:40.160Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-08-14T21:14:40.557Z"}
+{"level":"info","message":"GET /api/users/me","timestamp":"2025-08-14T21:15:25.233Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-08-14T21:17:39.878Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-08-14T21:17:41.236Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-08-14T21:17:42.713Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-08-14T21:17:52.983Z"}
+{"level":"info","message":"POST /api/payments","timestamp":"2025-08-14T21:18:02.340Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-08-14T21:18:33.673Z"}
+{"level":"info","message":"POST /api/payments","timestamp":"2025-08-14T21:18:35.209Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-08-14T21:18:50.879Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-08-14T21:18:53.696Z"}
+{"level":"info","message":"POST /api/payments","timestamp":"2025-08-14T21:19:07.353Z"}
+{"level":"info","message":"GET /api/supplier-payments/suppliers/sales","timestamp":"2025-08-14T21:20:05.510Z"}
+{"level":"info","message":"GET /api/supplier-payments/suppliers/sales","timestamp":"2025-08-14T21:20:06.727Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-14T21:20:08.322Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-14T21:20:08.462Z"}
+{"level":"info","message":"GET /api/supplier-payments/suppliers/sales","timestamp":"2025-08-14T21:20:09.806Z"}
+{"level":"info","message":"GET /api/supplier-payments/suppliers/sales","timestamp":"2025-08-14T21:20:10.054Z"}
+{"level":"info","message":"GET /api/suppliers","timestamp":"2025-08-14T21:20:10.540Z"}
+{"level":"info","message":"GET /api/suppliers","timestamp":"2025-08-14T21:20:10.631Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-14T21:20:10.975Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-14T21:20:11.022Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-08-14T21:20:12.985Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-08-14T21:20:13.712Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-08-14T21:20:13.746Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-08-14T21:20:13.871Z"}
+{"level":"info","message":"GET /api/users/me","timestamp":"2025-08-14T21:20:25.221Z"}
+{"level":"info","message":"GET /api/sales/8","timestamp":"2025-08-14T21:21:01.585Z"}
+{"level":"info","message":"Sale 8 fetched by user 1","timestamp":"2025-08-14T21:21:02.870Z"}
+{"level":"info","message":"GET /api/sales/8","timestamp":"2025-08-14T21:21:02.871Z"}
+{"level":"info","message":"Sale 8 fetched by user 1","timestamp":"2025-08-14T21:21:03.395Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-08-14T21:21:05.241Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-08-14T21:21:05.404Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-08-14T21:21:05.408Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-08-14T21:21:05.501Z"}
+{"level":"info","message":"GET /api/sales/11","timestamp":"2025-08-14T21:21:06.029Z"}
+{"level":"info","message":"Sale 11 fetched by user 1","timestamp":"2025-08-14T21:21:06.554Z"}
+{"level":"info","message":"GET /api/sales/11","timestamp":"2025-08-14T21:21:06.556Z"}
+{"level":"info","message":"Sale 11 fetched by user 1","timestamp":"2025-08-14T21:21:07.064Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-08-14T21:21:15.631Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-08-14T21:21:15.721Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-08-14T21:21:15.724Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-08-14T21:21:15.889Z"}
+{"level":"info","message":"GET /api/sales/10","timestamp":"2025-08-14T21:21:18.777Z"}
+{"level":"info","message":"Sale 10 fetched by user 1","timestamp":"2025-08-14T21:21:19.342Z"}
+{"level":"info","message":"GET /api/sales/10","timestamp":"2025-08-14T21:21:19.344Z"}
+{"level":"info","message":"Sale 10 fetched by user 1","timestamp":"2025-08-14T21:21:19.871Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-08-14T21:21:21.446Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-08-14T21:21:21.618Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-08-14T21:21:21.622Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-08-14T21:21:21.711Z"}
+{"level":"info","message":"GET /api/sales/11","timestamp":"2025-08-14T21:21:30.575Z"}
+{"level":"info","message":"Sale 11 fetched by user 1","timestamp":"2025-08-14T21:21:31.091Z"}
+{"level":"info","message":"GET /api/sales/11","timestamp":"2025-08-14T21:21:31.093Z"}
+{"level":"info","message":"Sale 11 fetched by user 1","timestamp":"2025-08-14T21:21:31.619Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-08-14T21:21:40.318Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-08-14T21:21:40.532Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-08-14T21:21:40.538Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-08-14T21:21:40.627Z"}
+{"level":"info","message":"GET /api/sales/11","timestamp":"2025-08-14T21:21:41.726Z"}
+{"level":"info","message":"Sale 11 fetched by user 1","timestamp":"2025-08-14T21:21:42.240Z"}
+{"level":"info","message":"GET /api/sales/11","timestamp":"2025-08-14T21:21:42.242Z"}
+{"level":"info","message":"Sale 11 fetched by user 1","timestamp":"2025-08-14T21:21:42.757Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-08-14T21:22:15.695Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-08-14T21:22:15.837Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-08-14T21:22:15.841Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-08-14T21:22:15.933Z"}
+{"level":"info","message":"GET /api/sales/11","timestamp":"2025-08-14T21:22:17.609Z"}
+{"level":"info","message":"Sale 11 fetched by user 1","timestamp":"2025-08-14T21:22:18.110Z"}
+{"level":"info","message":"GET /api/sales/11","timestamp":"2025-08-14T21:22:18.112Z"}
+{"level":"info","message":"Sale 11 fetched by user 1","timestamp":"2025-08-14T21:22:18.624Z"}
+{"level":"info","message":"POST /api/payments","timestamp":"2025-08-14T21:22:22.677Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-08-14T21:22:27.361Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-08-14T21:22:27.458Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-08-14T21:22:27.461Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-08-14T21:22:27.552Z"}
+{"level":"info","message":"GET /api/sales/11","timestamp":"2025-08-14T21:22:28.029Z"}
+{"level":"info","message":"Sale 11 fetched by user 1","timestamp":"2025-08-14T21:22:28.551Z"}
+{"level":"info","message":"GET /api/sales/11","timestamp":"2025-08-14T21:22:28.553Z"}
+{"level":"info","message":"Sale 11 fetched by user 1","timestamp":"2025-08-14T21:22:29.070Z"}
+{"level":"info","message":"GET /api/users/me","timestamp":"2025-08-14T21:23:19.441Z"}
+{"level":"info","message":"GET /api/users/me","timestamp":"2025-08-14T21:23:19.635Z"}
+{"level":"info","message":"GET /api/sales/11","timestamp":"2025-08-14T21:23:19.652Z"}
+{"level":"info","message":"Sale 11 fetched by user 1","timestamp":"2025-08-14T21:23:20.190Z"}
+{"level":"info","message":"GET /api/sales/11","timestamp":"2025-08-14T21:23:20.192Z"}
+{"level":"info","message":"Sale 11 fetched by user 1","timestamp":"2025-08-14T21:23:20.717Z"}
+{"level":"info","message":"GET /api/users/me","timestamp":"2025-08-14T21:23:31.908Z"}
+{"level":"info","message":"GET /api/users/me","timestamp":"2025-08-14T21:23:31.953Z"}
+{"level":"info","message":"GET /api/sales/11","timestamp":"2025-08-14T21:23:31.960Z"}
+{"level":"info","message":"Sale 11 fetched by user 1","timestamp":"2025-08-14T21:23:32.469Z"}
+{"level":"info","message":"GET /api/sales/11","timestamp":"2025-08-14T21:23:32.471Z"}
+{"level":"info","message":"GET /api/payments/sale/11","timestamp":"2025-08-14T21:23:32.475Z"}
+{"level":"info","message":"GET /api/payments/sale/11","timestamp":"2025-08-14T21:23:32.523Z"}
+{"level":"info","message":"GET /api/payments/sale/11","timestamp":"2025-08-14T21:23:32.527Z"}
+{"level":"info","message":"GET /api/payments/sale/11","timestamp":"2025-08-14T21:23:32.531Z"}
+{"level":"info","message":"Sale 11 fetched by user 1","timestamp":"2025-08-14T21:23:32.993Z"}
+{"level":"info","message":"GET /api/users/me","timestamp":"2025-08-14T21:23:51.179Z"}
+{"level":"info","message":"GET /api/users/me","timestamp":"2025-08-14T21:23:51.272Z"}
+{"level":"info","message":"GET /api/sales/11","timestamp":"2025-08-14T21:23:51.293Z"}
+{"level":"info","message":"Sale 11 fetched by user 1","timestamp":"2025-08-14T21:23:51.858Z"}
+{"level":"info","message":"GET /api/sales/11","timestamp":"2025-08-14T21:23:51.859Z"}
+{"level":"info","message":"GET /api/payments/sale/11","timestamp":"2025-08-14T21:23:51.863Z"}
+{"level":"info","message":"GET /api/payments/sale/11","timestamp":"2025-08-14T21:23:51.909Z"}
+{"level":"info","message":"GET /api/payments/sale/11","timestamp":"2025-08-14T21:23:51.913Z"}
+{"level":"info","message":"GET /api/payments/sale/11","timestamp":"2025-08-14T21:23:51.917Z"}
+{"level":"info","message":"Sale 11 fetched by user 1","timestamp":"2025-08-14T21:23:52.491Z"}
+{"level":"info","message":"GET /api/users/me","timestamp":"2025-08-14T21:23:52.832Z"}
+{"level":"info","message":"GET /api/users/me","timestamp":"2025-08-14T21:23:52.879Z"}
+{"level":"info","message":"GET /api/sales/11","timestamp":"2025-08-14T21:23:52.885Z"}
+{"level":"info","message":"Sale 11 fetched by user 1","timestamp":"2025-08-14T21:23:53.385Z"}
+{"level":"info","message":"GET /api/sales/11","timestamp":"2025-08-14T21:23:53.387Z"}
+{"level":"info","message":"GET /api/payments/sale/11","timestamp":"2025-08-14T21:23:53.390Z"}
+{"level":"info","message":"GET /api/payments/sale/11","timestamp":"2025-08-14T21:23:53.394Z"}
+{"level":"info","message":"GET /api/payments/sale/11","timestamp":"2025-08-14T21:23:53.400Z"}
+{"level":"info","message":"GET /api/payments/sale/11","timestamp":"2025-08-14T21:23:53.403Z"}
+{"level":"info","message":"Sale 11 fetched by user 1","timestamp":"2025-08-14T21:23:53.907Z"}
+{"level":"info","message":"GET /api/users/me","timestamp":"2025-08-14T21:23:54.162Z"}
+{"level":"info","message":"GET /api/users/me","timestamp":"2025-08-14T21:23:54.215Z"}
+{"level":"info","message":"GET /api/sales/11","timestamp":"2025-08-14T21:23:54.220Z"}
+{"level":"info","message":"Sale 11 fetched by user 1","timestamp":"2025-08-14T21:23:54.738Z"}
+{"level":"info","message":"GET /api/sales/11","timestamp":"2025-08-14T21:23:54.739Z"}
+{"level":"info","message":"GET /api/payments/sale/11","timestamp":"2025-08-14T21:23:54.741Z"}
+{"level":"info","message":"GET /api/payments/sale/11","timestamp":"2025-08-14T21:23:54.744Z"}
+{"level":"info","message":"GET /api/payments/sale/11","timestamp":"2025-08-14T21:23:54.748Z"}
+{"level":"info","message":"GET /api/payments/sale/11","timestamp":"2025-08-14T21:23:54.752Z"}
+{"level":"info","message":"Sale 11 fetched by user 1","timestamp":"2025-08-14T21:23:55.263Z"}
+{"level":"info","message":"GET /api/users/me","timestamp":"2025-08-14T21:23:56.481Z"}
+{"level":"info","message":"GET /api/users/me","timestamp":"2025-08-14T21:23:56.529Z"}
+{"level":"info","message":"GET /api/sales/11","timestamp":"2025-08-14T21:23:56.537Z"}
+{"level":"info","message":"Sale 11 fetched by user 1","timestamp":"2025-08-14T21:23:57.052Z"}
+{"level":"info","message":"GET /api/sales/11","timestamp":"2025-08-14T21:23:57.070Z"}
+{"level":"info","message":"GET /api/payments/sale/11","timestamp":"2025-08-14T21:23:57.076Z"}
+{"level":"info","message":"GET /api/payments/sale/11","timestamp":"2025-08-14T21:23:57.082Z"}
+{"level":"info","message":"GET /api/payments/sale/11","timestamp":"2025-08-14T21:23:57.090Z"}
+{"level":"info","message":"GET /api/payments/sale/11","timestamp":"2025-08-14T21:23:57.098Z"}
+{"level":"info","message":"Sale 11 fetched by user 1","timestamp":"2025-08-14T21:23:57.576Z"}
+{"level":"info","message":"GET /api/users/me","timestamp":"2025-08-14T21:24:16.923Z"}
+{"level":"info","message":"GET /api/users/me","timestamp":"2025-08-14T21:24:17.014Z"}
+{"level":"info","message":"GET /api/payments/sale/11","timestamp":"2025-08-14T21:24:17.027Z"}
+{"level":"info","message":"GET /api/sales/11","timestamp":"2025-08-14T21:24:17.029Z"}
+{"level":"info","message":"GET /api/payments/sale/11","timestamp":"2025-08-14T21:24:17.594Z"}
+{"level":"info","message":"Sale 11 fetched by user 1","timestamp":"2025-08-14T21:24:17.758Z"}
+{"level":"info","message":"GET /api/sales/11","timestamp":"2025-08-14T21:24:17.760Z"}
+{"level":"info","message":"Sale 11 fetched by user 1","timestamp":"2025-08-14T21:24:18.283Z"}
+{"level":"info","message":"GET /api/payments/sale/11","timestamp":"2025-08-14T21:24:27.662Z"}
+{"level":"info","message":"GET /api/sales/11","timestamp":"2025-08-14T21:24:27.664Z"}
+{"level":"info","message":"Sale 11 fetched by user 1","timestamp":"2025-08-14T21:24:28.155Z"}
+{"level":"info","message":"GET /api/payments/sale/11","timestamp":"2025-08-14T21:24:29.277Z"}
+{"level":"info","message":"GET /api/sales/11","timestamp":"2025-08-14T21:24:29.278Z"}
+{"level":"info","message":"Sale 11 fetched by user 1","timestamp":"2025-08-14T21:24:29.817Z"}
+{"level":"info","message":"GET /api/payments/sale/11","timestamp":"2025-08-14T21:24:36.313Z"}
+{"level":"info","message":"GET /api/sales/11","timestamp":"2025-08-14T21:24:36.314Z"}
+{"level":"info","message":"Sale 11 fetched by user 1","timestamp":"2025-08-14T21:24:36.848Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-08-14T21:24:49.662Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-08-14T21:24:49.822Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-08-14T21:24:49.826Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-08-14T21:24:49.915Z"}
+{"level":"info","message":"GET /api/payments/sale/11","timestamp":"2025-08-14T21:24:50.739Z"}
+{"level":"info","message":"GET /api/sales/11","timestamp":"2025-08-14T21:24:50.741Z"}
+{"level":"info","message":"GET /api/payments/sale/11","timestamp":"2025-08-14T21:24:50.744Z"}
+{"level":"info","message":"Sale 11 fetched by user 1","timestamp":"2025-08-14T21:24:51.310Z"}
+{"level":"info","message":"GET /api/sales/11","timestamp":"2025-08-14T21:24:51.312Z"}
+{"level":"info","message":"Sale 11 fetched by user 1","timestamp":"2025-08-14T21:24:51.838Z"}
+{"level":"info","message":"GET /api/payments/sale/11","timestamp":"2025-08-14T21:25:02.848Z"}
+{"level":"info","message":"GET /api/sales/11","timestamp":"2025-08-14T21:25:02.850Z"}
+{"level":"info","message":"Sale 11 fetched by user 1","timestamp":"2025-08-14T21:25:03.417Z"}
+{"level":"info","message":"GET /api/sales/11","timestamp":"2025-08-14T21:25:15.051Z"}
+{"level":"info","message":"GET /api/payments/sale/11","timestamp":"2025-08-14T21:25:15.054Z"}
+{"level":"info","message":"Sale 11 fetched by user 1","timestamp":"2025-08-14T21:25:16.596Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-08-14T21:25:19.788Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-08-14T21:25:19.985Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-08-14T21:25:19.991Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-08-14T21:25:20.147Z"}
+{"level":"info","message":"GET /api/payments/sale/11","timestamp":"2025-08-14T21:25:20.848Z"}
+{"level":"info","message":"GET /api/sales/11","timestamp":"2025-08-14T21:25:20.856Z"}
+{"level":"info","message":"GET /api/payments/sale/11","timestamp":"2025-08-14T21:25:20.904Z"}
+{"level":"info","message":"Sale 11 fetched by user 1","timestamp":"2025-08-14T21:25:21.482Z"}
+{"level":"info","message":"GET /api/sales/11","timestamp":"2025-08-14T21:25:21.487Z"}
+{"level":"info","message":"Sale 11 fetched by user 1","timestamp":"2025-08-14T21:25:22.064Z"}
+{"level":"info","message":"GET /api/payments/sale/11","timestamp":"2025-08-14T21:25:50.486Z"}
+{"level":"info","message":"GET /api/sales/11","timestamp":"2025-08-14T21:25:50.502Z"}
+{"level":"info","message":"Sale 11 fetched by user 1","timestamp":"2025-08-14T21:25:51.205Z"}
+{"level":"info","message":"GET /api/payments/sale/11","timestamp":"2025-08-14T21:26:00.873Z"}
+{"level":"info","message":"GET /api/sales/11","timestamp":"2025-08-14T21:26:00.879Z"}
+{"level":"info","message":"Sale 11 fetched by user 1","timestamp":"2025-08-14T21:26:01.428Z"}
+{"level":"info","message":"POST /api/payments","timestamp":"2025-08-14T21:26:07.427Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-08-14T21:26:10.061Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-08-14T21:26:10.230Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-08-14T21:26:10.232Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-08-14T21:26:10.328Z"}
+{"level":"info","message":"GET /api/sales/11","timestamp":"2025-08-14T21:26:11.014Z"}
+{"level":"info","message":"GET /api/payments/sale/11","timestamp":"2025-08-14T21:26:11.017Z"}
+{"level":"info","message":"GET /api/payments/sale/11","timestamp":"2025-08-14T21:26:11.022Z"}
+{"level":"info","message":"Sale 11 fetched by user 1","timestamp":"2025-08-14T21:26:11.579Z"}
+{"level":"info","message":"GET /api/sales/11","timestamp":"2025-08-14T21:26:11.582Z"}
+{"level":"info","message":"Sale 11 fetched by user 1","timestamp":"2025-08-14T21:26:12.147Z"}
+{"level":"info","message":"GET /api/sales/11","timestamp":"2025-08-14T21:26:21.010Z"}
+{"level":"info","message":"GET /api/payments/sale/11","timestamp":"2025-08-14T21:26:21.016Z"}
+{"level":"info","message":"Sale 11 fetched by user 1","timestamp":"2025-08-14T21:26:21.599Z"}
+{"level":"info","message":"GET /api/payments/sale/11","timestamp":"2025-08-14T21:27:16.361Z"}
+{"level":"info","message":"GET /api/sales/11","timestamp":"2025-08-14T21:27:16.395Z"}
+{"level":"info","message":"Sale 11 fetched by user 1","timestamp":"2025-08-14T21:27:17.367Z"}
+{"level":"info","message":"GET /api/payments/sale/11","timestamp":"2025-08-14T21:27:22.834Z"}
+{"level":"info","message":"GET /api/sales/11","timestamp":"2025-08-14T21:27:22.843Z"}
+{"level":"info","message":"Sale 11 fetched by user 1","timestamp":"2025-08-14T21:27:23.554Z"}
+{"level":"info","message":"GET /api/payments/sale/11","timestamp":"2025-08-14T21:27:27.771Z"}
+{"level":"info","message":"GET /api/sales/11","timestamp":"2025-08-14T21:27:27.784Z"}
+{"level":"info","message":"Sale 11 fetched by user 1","timestamp":"2025-08-14T21:27:28.362Z"}
+{"level":"info","message":"GET /api/payments/sale/11","timestamp":"2025-08-14T21:27:36.350Z"}
+{"level":"info","message":"GET /api/sales/11","timestamp":"2025-08-14T21:27:36.369Z"}
+{"level":"info","message":"Sale 11 fetched by user 1","timestamp":"2025-08-14T21:27:37.080Z"}
+{"level":"info","message":"GET /api/payments/sale/11","timestamp":"2025-08-14T21:27:53.560Z"}
+{"level":"info","message":"GET /api/sales/11","timestamp":"2025-08-14T21:27:53.564Z"}
+{"level":"info","message":"Sale 11 fetched by user 1","timestamp":"2025-08-14T21:27:54.153Z"}
+{"level":"info","message":"GET /api/sales/11","timestamp":"2025-08-14T21:28:22.452Z"}
+{"level":"info","message":"GET /api/payments/sale/11","timestamp":"2025-08-14T21:28:22.473Z"}
+{"level":"info","message":"Sale 11 fetched by user 1","timestamp":"2025-08-14T21:28:23.176Z"}
+{"level":"info","message":"GET /api/sales/11","timestamp":"2025-08-14T21:28:49.734Z"}
+{"level":"info","message":"GET /api/payments/sale/11","timestamp":"2025-08-14T21:28:49.756Z"}
+{"level":"info","message":"Sale 11 fetched by user 1","timestamp":"2025-08-14T21:28:50.597Z"}
+{"level":"info","message":"GET /api/users/me","timestamp":"2025-08-14T21:29:17.034Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-08-14T21:29:32.785Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-08-14T21:29:32.995Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-08-14T21:29:32.999Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-08-14T21:29:33.097Z"}
+{"level":"info","message":"GET /api/payments/sale/11","timestamp":"2025-08-14T21:29:33.465Z"}
+{"level":"info","message":"GET /api/sales/11","timestamp":"2025-08-14T21:29:33.471Z"}
+{"level":"info","message":"GET /api/payments/sale/11","timestamp":"2025-08-14T21:29:33.907Z"}
+{"level":"info","message":"Sale 11 fetched by user 1","timestamp":"2025-08-14T21:29:34.012Z"}
+{"level":"info","message":"GET /api/sales/11","timestamp":"2025-08-14T21:29:34.014Z"}
+{"level":"info","message":"Sale 11 fetched by user 1","timestamp":"2025-08-14T21:29:34.574Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-08-14T21:29:36.214Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-08-14T21:29:44.984Z"}
+{"level":"info","message":"GET /api/sales/11","timestamp":"2025-08-14T21:29:52.428Z"}
+{"level":"info","message":"GET /api/payments/sale/11","timestamp":"2025-08-14T21:29:52.443Z"}
+{"level":"info","message":"Sale 11 fetched by user 1","timestamp":"2025-08-14T21:29:54.090Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-08-14T21:30:07.292Z"}
+{"level":"info","message":"GET /api/sales/11","timestamp":"2025-08-14T21:30:07.650Z"}
+{"level":"info","message":"GET /api/payments/sale/11","timestamp":"2025-08-14T21:30:07.666Z"}
+{"level":"info","message":"Sale 11 fetched by user 1","timestamp":"2025-08-14T21:30:09.429Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-08-14T21:30:17.770Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-08-14T21:30:18.044Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-08-14T21:30:18.049Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-08-14T21:30:18.151Z"}
+{"level":"info","message":"GET /api/sales/11","timestamp":"2025-08-14T21:30:19.074Z"}
+{"level":"info","message":"GET /api/payments/sale/11","timestamp":"2025-08-14T21:30:19.080Z"}
+{"level":"info","message":"GET /api/payments/sale/11","timestamp":"2025-08-14T21:30:19.086Z"}
+{"level":"info","message":"Sale 11 fetched by user 1","timestamp":"2025-08-14T21:30:19.663Z"}
+{"level":"info","message":"GET /api/sales/11","timestamp":"2025-08-14T21:30:19.666Z"}
+{"level":"info","message":"Sale 11 fetched by user 1","timestamp":"2025-08-14T21:30:20.242Z"}
+{"level":"info","message":"POST /api/payments","timestamp":"2025-08-14T21:30:28.204Z"}
+{"level":"info","message":"GET /api/users/me","timestamp":"2025-08-14T21:31:21.036Z"}
+{"level":"info","message":"GET /api/users/me","timestamp":"2025-08-14T21:31:21.651Z"}
+{"level":"info","message":"GET /api/payments/sale/11","timestamp":"2025-08-14T21:31:21.669Z"}
+{"level":"info","message":"GET /api/sales/11","timestamp":"2025-08-14T21:31:21.671Z"}
+{"level":"info","message":"GET /api/payments/sale/11","timestamp":"2025-08-14T21:31:21.724Z"}
+{"level":"info","message":"Sale 11 fetched by user 1","timestamp":"2025-08-14T21:31:22.475Z"}
+{"level":"info","message":"GET /api/sales/11","timestamp":"2025-08-14T21:31:22.477Z"}
+{"level":"info","message":"Sale 11 fetched by user 1","timestamp":"2025-08-14T21:31:23.052Z"}
+{"level":"info","message":"GET /api/sales/11","timestamp":"2025-08-14T21:32:02.932Z"}
+{"level":"info","message":"GET /api/payments/sale/11","timestamp":"2025-08-14T21:32:02.953Z"}
+{"level":"info","message":"Sale 11 fetched by user 1","timestamp":"2025-08-14T21:32:03.577Z"}
+{"level":"info","message":"GET /api/payments/sale/11","timestamp":"2025-08-14T21:32:12.310Z"}
+{"level":"info","message":"GET /api/sales/11","timestamp":"2025-08-14T21:32:12.381Z"}
+{"level":"info","message":"GET /api/payments/sale/11","timestamp":"2025-08-14T21:32:12.851Z"}
+{"level":"info","message":"Sale 11 fetched by user 1","timestamp":"2025-08-14T21:32:13.021Z"}
+{"level":"info","message":"GET /api/sales/11","timestamp":"2025-08-14T21:32:13.023Z"}
+{"level":"info","message":"Sale 11 fetched by user 1","timestamp":"2025-08-14T21:32:13.587Z"}
+{"level":"info","message":"GET /api/sales/11","timestamp":"2025-08-14T21:32:20.249Z"}
+{"level":"info","message":"GET /api/payments/sale/11","timestamp":"2025-08-14T21:32:20.279Z"}
+{"level":"info","message":"GET /api/payments/sale/11","timestamp":"2025-08-14T21:32:20.391Z"}
+{"level":"info","message":"Sale 11 fetched by user 1","timestamp":"2025-08-14T21:32:21.013Z"}
+{"level":"info","message":"GET /api/sales/11","timestamp":"2025-08-14T21:32:21.135Z"}
+{"level":"info","message":"Sale 11 fetched by user 1","timestamp":"2025-08-14T21:32:21.827Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-08-14T21:33:06.722Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-08-14T21:33:06.908Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-08-14T21:33:06.911Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-08-14T21:33:07.019Z"}
+{"level":"info","message":"GET /api/sales/11","timestamp":"2025-08-14T21:33:07.642Z"}
+{"level":"info","message":"GET /api/payments/sale/11","timestamp":"2025-08-14T21:33:07.643Z"}
+{"level":"info","message":"GET /api/payments/sale/11","timestamp":"2025-08-14T21:33:07.698Z"}
+{"level":"info","message":"Sale 11 fetched by user 1","timestamp":"2025-08-14T21:33:08.210Z"}
+{"level":"info","message":"GET /api/sales/11","timestamp":"2025-08-14T21:33:08.212Z"}
+{"level":"info","message":"Sale 11 fetched by user 1","timestamp":"2025-08-14T21:33:08.860Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-08-14T21:33:38.456Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-08-14T21:33:38.620Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-08-14T21:33:38.622Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-08-14T21:33:38.787Z"}
+{"level":"info","message":"GET /api/payments/sale/11","timestamp":"2025-08-14T21:33:40.459Z"}
+{"level":"info","message":"GET /api/sales/11","timestamp":"2025-08-14T21:33:40.461Z"}
+{"level":"info","message":"GET /api/payments/sale/11","timestamp":"2025-08-14T21:33:40.517Z"}
+{"level":"info","message":"Sale 11 fetched by user 1","timestamp":"2025-08-14T21:33:41.037Z"}
+{"level":"info","message":"GET /api/sales/11","timestamp":"2025-08-14T21:33:41.039Z"}
+{"level":"info","message":"Sale 11 fetched by user 1","timestamp":"2025-08-14T21:33:41.620Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-08-14T21:33:55.121Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-08-14T21:33:59.856Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-08-14T21:34:02.263Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-08-14T21:34:02.951Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-08-14T21:34:02.956Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-08-14T21:34:03.052Z"}
+{"level":"info","message":"GET /api/payments/sale/11","timestamp":"2025-08-14T21:34:04.014Z"}
+{"level":"info","message":"GET /api/sales/11","timestamp":"2025-08-14T21:34:04.017Z"}
+{"level":"info","message":"GET /api/payments/sale/11","timestamp":"2025-08-14T21:34:04.441Z"}
+{"level":"info","message":"Sale 11 fetched by user 1","timestamp":"2025-08-14T21:34:05.145Z"}
+{"level":"info","message":"GET /api/sales/11","timestamp":"2025-08-14T21:34:05.150Z"}
+{"level":"info","message":"Sale 11 fetched by user 1","timestamp":"2025-08-14T21:34:05.719Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-08-14T21:34:23.839Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-08-14T21:34:27.160Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-08-14T21:34:27.794Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-08-14T21:34:27.805Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-08-14T21:34:27.921Z"}
+{"level":"info","message":"GET /api/sales/11","timestamp":"2025-08-14T21:34:28.235Z"}
+{"level":"info","message":"GET /api/payments/sale/11","timestamp":"2025-08-14T21:34:28.242Z"}
+{"level":"info","message":"GET /api/payments/sale/11","timestamp":"2025-08-14T21:34:28.749Z"}
+{"level":"info","message":"Sale 11 fetched by user 1","timestamp":"2025-08-14T21:34:29.306Z"}
+{"level":"info","message":"GET /api/sales/11","timestamp":"2025-08-14T21:34:29.309Z"}
+{"level":"info","message":"Sale 11 fetched by user 1","timestamp":"2025-08-14T21:34:29.830Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-08-14T21:34:55.385Z"}
+{"level":"info","message":"GET /api/users/me","timestamp":"2025-08-14T21:35:00.514Z"}
+{"level":"info","message":"GET /api/users/me","timestamp":"2025-08-14T21:35:01.061Z"}
+{"level":"info","message":"GET /api/sales/11","timestamp":"2025-08-14T21:35:01.075Z"}
+{"level":"info","message":"GET /api/payments/sale/11","timestamp":"2025-08-14T21:35:01.079Z"}
+{"level":"info","message":"GET /api/payments/sale/11","timestamp":"2025-08-14T21:35:01.587Z"}
+{"level":"info","message":"Sale 11 fetched by user 1","timestamp":"2025-08-14T21:35:02.478Z"}
+{"level":"info","message":"GET /api/sales/11","timestamp":"2025-08-14T21:35:02.481Z"}
+{"level":"info","message":"Sale 11 fetched by user 1","timestamp":"2025-08-14T21:35:02.999Z"}
+{"level":"info","message":"GET /api/users/me","timestamp":"2025-08-14T21:35:06.120Z"}
+{"level":"info","message":"GET /api/users/me","timestamp":"2025-08-14T21:35:06.172Z"}
+{"level":"info","message":"GET /api/sales/11","timestamp":"2025-08-14T21:35:06.179Z"}
+{"level":"info","message":"GET /api/payments/sale/11","timestamp":"2025-08-14T21:35:06.181Z"}
+{"level":"info","message":"GET /api/payments/sale/11","timestamp":"2025-08-14T21:35:06.306Z"}
+{"level":"info","message":"Sale 11 fetched by user 1","timestamp":"2025-08-14T21:35:06.712Z"}
+{"level":"info","message":"GET /api/sales/11","timestamp":"2025-08-14T21:35:06.714Z"}
+{"level":"info","message":"Sale 11 fetched by user 1","timestamp":"2025-08-14T21:35:07.238Z"}
+{"level":"info","message":"GET /api/users/me","timestamp":"2025-08-14T21:35:32.429Z"}
+{"level":"info","message":"GET /api/users/me","timestamp":"2025-08-14T21:35:32.605Z"}
+{"level":"info","message":"GET /api/sales/11","timestamp":"2025-08-14T21:35:32.615Z"}
+{"level":"info","message":"GET /api/payments/sale/11","timestamp":"2025-08-14T21:35:32.624Z"}
+{"level":"info","message":"GET /api/payments/sale/11","timestamp":"2025-08-14T21:35:32.716Z"}
+{"level":"info","message":"Sale 11 fetched by user 1","timestamp":"2025-08-14T21:35:33.176Z"}
+{"level":"info","message":"GET /api/sales/11","timestamp":"2025-08-14T21:35:33.178Z"}
+{"level":"info","message":"Sale 11 fetched by user 1","timestamp":"2025-08-14T21:35:33.703Z"}
+{"level":"info","message":"GET /api/users/me","timestamp":"2025-08-14T21:35:45.201Z"}
+{"level":"info","message":"GET /api/users/me","timestamp":"2025-08-14T21:35:45.266Z"}
+{"level":"info","message":"GET /api/sales/11","timestamp":"2025-08-14T21:35:45.295Z"}
+{"level":"info","message":"GET /api/payments/sale/11","timestamp":"2025-08-14T21:35:45.304Z"}
+{"level":"info","message":"GET /api/payments/sale/11","timestamp":"2025-08-14T21:35:45.352Z"}
+{"level":"info","message":"Sale 11 fetched by user 1","timestamp":"2025-08-14T21:35:45.857Z"}
+{"level":"info","message":"GET /api/sales/11","timestamp":"2025-08-14T21:35:45.860Z"}
+{"level":"info","message":"Sale 11 fetched by user 1","timestamp":"2025-08-14T21:35:46.417Z"}
+{"level":"info","message":"GET /api/users/me","timestamp":"2025-08-14T21:35:53.349Z"}
+{"level":"info","message":"GET /api/users/me","timestamp":"2025-08-14T21:35:53.530Z"}
+{"level":"info","message":"GET /api/sales/11","timestamp":"2025-08-14T21:35:53.561Z"}
+{"level":"info","message":"GET /api/payments/sale/11","timestamp":"2025-08-14T21:35:53.562Z"}
+{"level":"info","message":"GET /api/payments/sale/11","timestamp":"2025-08-14T21:35:53.656Z"}
+{"level":"info","message":"Sale 11 fetched by user 1","timestamp":"2025-08-14T21:35:54.142Z"}
+{"level":"info","message":"GET /api/sales/11","timestamp":"2025-08-14T21:35:54.144Z"}
+{"level":"info","message":"Sale 11 fetched by user 1","timestamp":"2025-08-14T21:35:54.682Z"}
+{"level":"info","message":"GET /api/users/me","timestamp":"2025-08-14T21:35:58.221Z"}
+{"level":"info","message":"GET /api/users/me","timestamp":"2025-08-14T21:35:58.273Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-08-14T21:35:58.361Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-08-14T21:35:58.548Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-08-14T21:35:58.554Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-08-14T21:35:58.731Z"}
+{"level":"info","message":"GET /api/sales/11","timestamp":"2025-08-14T21:35:59.259Z"}
+{"level":"info","message":"GET /api/payments/sale/11","timestamp":"2025-08-14T21:35:59.261Z"}
+{"level":"info","message":"GET /api/payments/sale/11","timestamp":"2025-08-14T21:35:59.312Z"}
+{"level":"info","message":"Sale 11 fetched by user 1","timestamp":"2025-08-14T21:35:59.781Z"}
+{"level":"info","message":"GET /api/sales/11","timestamp":"2025-08-14T21:35:59.790Z"}
+{"level":"info","message":"Sale 11 fetched by user 1","timestamp":"2025-08-14T21:36:00.301Z"}
+{"level":"info","message":"GET /api/users/me","timestamp":"2025-08-14T21:36:07.397Z"}
+{"level":"info","message":"GET /api/users/me","timestamp":"2025-08-14T21:36:07.445Z"}
+{"level":"info","message":"GET /api/sales/11","timestamp":"2025-08-14T21:36:07.459Z"}
+{"level":"info","message":"GET /api/payments/sale/11","timestamp":"2025-08-14T21:36:07.460Z"}
+{"level":"info","message":"GET /api/payments/sale/11","timestamp":"2025-08-14T21:36:07.512Z"}
+{"level":"info","message":"Sale 11 fetched by user 1","timestamp":"2025-08-14T21:36:08.007Z"}
+{"level":"info","message":"GET /api/sales/11","timestamp":"2025-08-14T21:36:08.010Z"}
+{"level":"info","message":"Sale 11 fetched by user 1","timestamp":"2025-08-14T21:36:08.535Z"}
+{"level":"info","message":"GET /api/users/me","timestamp":"2025-08-14T21:36:08.986Z"}
+{"level":"info","message":"GET /api/users/me","timestamp":"2025-08-14T21:36:09.081Z"}
+{"level":"info","message":"GET /api/sales/11","timestamp":"2025-08-14T21:36:09.090Z"}
+{"level":"info","message":"GET /api/payments/sale/11","timestamp":"2025-08-14T21:36:09.091Z"}
+{"level":"info","message":"GET /api/payments/sale/11","timestamp":"2025-08-14T21:36:09.265Z"}
+{"level":"info","message":"Sale 11 fetched by user 1","timestamp":"2025-08-14T21:36:09.788Z"}
+{"level":"info","message":"GET /api/sales/11","timestamp":"2025-08-14T21:36:09.790Z"}
+{"level":"info","message":"Sale 11 fetched by user 1","timestamp":"2025-08-14T21:36:10.313Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-08-14T21:36:20.037Z"}
+{"level":"info","message":"GET /api/users/me","timestamp":"2025-08-14T21:36:22.764Z"}
+{"level":"info","message":"GET /api/users/me","timestamp":"2025-08-14T21:36:23.372Z"}
+{"level":"info","message":"GET /api/sales/11","timestamp":"2025-08-14T21:36:23.392Z"}
+{"level":"info","message":"GET /api/payments/sale/11","timestamp":"2025-08-14T21:36:23.394Z"}
+{"level":"info","message":"GET /api/payments/sale/11","timestamp":"2025-08-14T21:36:23.904Z"}
+{"level":"info","message":"Sale 11 fetched by user 1","timestamp":"2025-08-14T21:36:24.787Z"}
+{"level":"info","message":"GET /api/sales/11","timestamp":"2025-08-14T21:36:24.789Z"}
+{"level":"info","message":"Sale 11 fetched by user 1","timestamp":"2025-08-14T21:36:25.312Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-08-14T21:36:43.854Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-08-14T21:38:20.192Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-08-14T21:38:21.003Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-08-14T21:38:21.009Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-08-14T21:38:21.105Z"}
+{"level":"info","message":"GET /api/suppliers","timestamp":"2025-08-14T21:38:23.220Z"}
+{"level":"info","message":"GET /api/operators","timestamp":"2025-08-14T21:38:23.223Z"}
+{"level":"info","message":"GET /api/classifications","timestamp":"2025-08-14T21:38:23.224Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-14T21:38:23.228Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-08-14T21:38:23.231Z"}
+{"level":"info","message":"Users list fetched","timestamp":"2025-08-14T21:38:23.738Z"}
+{"level":"info","message":"GET /api/suppliers","timestamp":"2025-08-14T21:38:23.739Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-08-14T21:38:23.742Z"}
+{"level":"info","message":"Users list fetched","timestamp":"2025-08-14T21:38:23.792Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-14T21:38:24.149Z"}
+{"level":"info","message":"GET /api/operators","timestamp":"2025-08-14T21:38:24.158Z"}
+{"level":"info","message":"GET /api/classifications","timestamp":"2025-08-14T21:38:24.160Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-08-14T21:39:38.219Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-14T21:39:38.222Z"}
+{"level":"info","message":"Users list fetched","timestamp":"2025-08-14T21:39:38.316Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-14T21:39:41.048Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-08-14T21:39:41.049Z"}
+{"level":"info","message":"Users list fetched","timestamp":"2025-08-14T21:39:41.096Z"}
+{"level":"info","message":"POST /api/clients","timestamp":"2025-08-14T21:40:22.427Z"}
+{"level":"info","message":"Server running on port 3001","timestamp":"2025-08-14T21:42:11.240Z"}
+{"level":"info","message":"POST /api/auth/login","timestamp":"2025-08-14T21:42:13.064Z"}
+{"level":"info","message":"User admin@travelpro.com logged in successfully","timestamp":"2025-08-14T21:42:13.684Z"}
+{"level":"info","message":"GET /api/sales/total","timestamp":"2025-08-14T21:42:13.765Z"}
+{"level":"info","message":"GET /api/sales/stats-by-type","timestamp":"2025-08-14T21:42:13.769Z"}
+{"level":"info","message":"GET /api/sales/stats","timestamp":"2025-08-14T21:42:13.781Z"}
+{"level":"info","message":"GET /api/sales/upcoming-departures","timestamp":"2025-08-14T21:42:13.787Z"}
+{"level":"info","message":"GET /api/sales/upcoming-departures","timestamp":"2025-08-14T21:42:14.392Z"}
+{"level":"info","message":"GET /api/sales/total","timestamp":"2025-08-14T21:42:14.702Z"}
+{"level":"info","message":"GET /api/sales/stats","timestamp":"2025-08-14T21:42:14.792Z"}
+{"level":"info","message":"GET /api/sales/stats-by-type","timestamp":"2025-08-14T21:42:14.886Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-14T21:42:19.781Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-14T21:42:20.472Z"}
+{"level":"info","message":"POST /api/clients","timestamp":"2025-08-14T21:42:24.290Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-14T21:42:24.969Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-14T21:42:25.143Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-08-14T21:42:26.049Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-08-14T21:42:26.418Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-08-14T21:42:26.421Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-08-14T21:42:26.713Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-14T21:42:28.022Z"}
+{"level":"info","message":"GET /api/suppliers","timestamp":"2025-08-14T21:42:28.027Z"}
+{"level":"info","message":"GET /api/operators","timestamp":"2025-08-14T21:42:28.029Z"}
+{"level":"info","message":"GET /api/classifications","timestamp":"2025-08-14T21:42:28.031Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-08-14T21:42:28.033Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-14T21:42:28.101Z"}
+{"level":"info","message":"Users list fetched","timestamp":"2025-08-14T21:42:28.888Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-08-14T21:42:28.892Z"}
+{"level":"info","message":"GET /api/classifications","timestamp":"2025-08-14T21:42:28.894Z"}
+{"level":"info","message":"GET /api/suppliers","timestamp":"2025-08-14T21:42:28.898Z"}
+{"level":"info","message":"GET /api/operators","timestamp":"2025-08-14T21:42:28.899Z"}
+{"level":"info","message":"Users list fetched","timestamp":"2025-08-14T21:42:28.958Z"}
+{"level":"info","message":"POST /api/clients","timestamp":"2025-08-14T21:42:32.947Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-08-14T21:42:43.154Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-08-14T21:42:43.315Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-08-14T21:42:43.318Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-08-14T21:42:43.491Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-14T21:42:44.555Z"}
+{"level":"info","message":"GET /api/suppliers","timestamp":"2025-08-14T21:42:44.558Z"}
+{"level":"info","message":"GET /api/operators","timestamp":"2025-08-14T21:42:44.560Z"}
+{"level":"info","message":"GET /api/classifications","timestamp":"2025-08-14T21:42:44.560Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-08-14T21:42:44.562Z"}
+{"level":"info","message":"Users list fetched","timestamp":"2025-08-14T21:42:44.690Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-08-14T21:42:44.691Z"}
+{"level":"info","message":"Users list fetched","timestamp":"2025-08-14T21:42:44.736Z"}
+{"level":"info","message":"GET /api/classifications","timestamp":"2025-08-14T21:42:44.742Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-14T21:42:44.745Z"}
+{"level":"info","message":"GET /api/suppliers","timestamp":"2025-08-14T21:42:44.746Z"}
+{"level":"info","message":"GET /api/operators","timestamp":"2025-08-14T21:42:44.747Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-08-14T21:43:20.939Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-14T21:43:20.957Z"}
+{"level":"info","message":"Users list fetched","timestamp":"2025-08-14T21:43:21.291Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-14T21:43:33.760Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-08-14T21:43:33.764Z"}
+{"level":"info","message":"Users list fetched","timestamp":"2025-08-14T21:43:33.882Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-08-14T21:43:41.507Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-14T21:43:41.509Z"}
+{"level":"info","message":"Users list fetched","timestamp":"2025-08-14T21:43:41.596Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-08-14T21:43:51.469Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-14T21:43:51.481Z"}
+{"level":"info","message":"Users list fetched","timestamp":"2025-08-14T21:43:51.726Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-08-14T21:43:57.540Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-14T21:43:57.543Z"}
+{"level":"info","message":"Users list fetched","timestamp":"2025-08-14T21:43:57.631Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-08-14T21:44:11.662Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-14T21:44:11.667Z"}
+{"level":"info","message":"Users list fetched","timestamp":"2025-08-14T21:44:11.711Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-08-14T21:44:24.959Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-14T21:44:24.990Z"}
+{"level":"info","message":"Users list fetched","timestamp":"2025-08-14T21:44:25.100Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-08-14T21:44:31.041Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-14T21:44:31.069Z"}
+{"level":"info","message":"Users list fetched","timestamp":"2025-08-14T21:44:31.250Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-08-14T21:44:45.830Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-14T21:44:45.832Z"}
+{"level":"info","message":"Users list fetched","timestamp":"2025-08-14T21:44:45.921Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-14T21:44:47.808Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-08-14T21:44:47.811Z"}
+{"level":"info","message":"Users list fetched","timestamp":"2025-08-14T21:44:47.857Z"}
+{"level":"info","message":"POST /api/clients","timestamp":"2025-08-14T21:44:52.181Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-14T21:45:01.100Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-08-14T21:45:01.106Z"}
+{"level":"info","message":"Users list fetched","timestamp":"2025-08-14T21:45:01.225Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-08-14T21:45:04.627Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-14T21:45:04.640Z"}
+{"level":"info","message":"Users list fetched","timestamp":"2025-08-14T21:45:04.672Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-08-14T21:45:10.037Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-14T21:45:10.040Z"}
+{"level":"info","message":"Users list fetched","timestamp":"2025-08-14T21:45:10.107Z"}
+{"level":"info","message":"POST /api/clients","timestamp":"2025-08-14T21:45:16.140Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-08-14T21:45:29.099Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-14T21:45:29.101Z"}
+{"level":"info","message":"Users list fetched","timestamp":"2025-08-14T21:45:29.303Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-08-14T21:45:37.099Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-14T21:45:37.101Z"}
+{"level":"info","message":"Users list fetched","timestamp":"2025-08-14T21:45:37.144Z"}
+{"level":"info","message":"POST /api/clients","timestamp":"2025-08-14T21:45:42.447Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-08-14T21:45:48.890Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-14T21:45:48.898Z"}
+{"level":"info","message":"Users list fetched","timestamp":"2025-08-14T21:45:49.182Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-08-14T21:46:21.626Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-14T21:46:21.635Z"}
+{"level":"info","message":"Users list fetched","timestamp":"2025-08-14T21:46:21.756Z"}
+{"level":"info","message":"POST /api/clients","timestamp":"2025-08-14T21:46:23.988Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-08-14T21:46:27.572Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-08-14T21:46:27.712Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-08-14T21:46:27.716Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-08-14T21:46:28.054Z"}
+{"level":"info","message":"GET /api/suppliers","timestamp":"2025-08-14T21:46:28.471Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-14T21:46:28.475Z"}
+{"level":"info","message":"GET /api/operators","timestamp":"2025-08-14T21:46:28.477Z"}
+{"level":"info","message":"GET /api/classifications","timestamp":"2025-08-14T21:46:28.479Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-08-14T21:46:28.482Z"}
+{"level":"info","message":"GET /api/suppliers","timestamp":"2025-08-14T21:46:28.519Z"}
+{"level":"info","message":"Users list fetched","timestamp":"2025-08-14T21:46:28.525Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-08-14T21:46:28.527Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-14T21:46:28.569Z"}
+{"level":"info","message":"GET /api/operators","timestamp":"2025-08-14T21:46:28.573Z"}
+{"level":"info","message":"GET /api/classifications","timestamp":"2025-08-14T21:46:28.575Z"}
+{"level":"info","message":"Users list fetched","timestamp":"2025-08-14T21:46:28.601Z"}
+{"level":"info","message":"POST /api/clients","timestamp":"2025-08-14T21:46:36.207Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-08-14T21:46:44.212Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-14T21:46:44.227Z"}
+{"level":"info","message":"Users list fetched","timestamp":"2025-08-14T21:46:44.334Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-08-14T21:46:49.636Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-08-14T21:46:50.025Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-08-14T21:46:50.028Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-08-14T21:46:50.127Z"}
+{"level":"info","message":"GET /api/suppliers","timestamp":"2025-08-14T21:46:51.004Z"}
+{"level":"info","message":"GET /api/operators","timestamp":"2025-08-14T21:46:51.015Z"}
+{"level":"info","message":"GET /api/classifications","timestamp":"2025-08-14T21:46:51.018Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-08-14T21:46:51.021Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-14T21:46:51.026Z"}
+{"level":"info","message":"Users list fetched","timestamp":"2025-08-14T21:46:51.072Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-08-14T21:46:51.074Z"}
+{"level":"info","message":"GET /api/suppliers","timestamp":"2025-08-14T21:46:51.077Z"}
+{"level":"info","message":"Users list fetched","timestamp":"2025-08-14T21:46:51.154Z"}
+{"level":"info","message":"GET /api/operators","timestamp":"2025-08-14T21:46:51.402Z"}
+{"level":"info","message":"GET /api/classifications","timestamp":"2025-08-14T21:46:51.407Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-14T21:46:51.409Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-08-14T21:46:56.512Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-08-14T21:46:56.772Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-08-14T21:46:56.777Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-08-14T21:46:56.869Z"}
+{"level":"info","message":"GET /api/operators","timestamp":"2025-08-14T21:46:57.669Z"}
+{"level":"info","message":"GET /api/suppliers","timestamp":"2025-08-14T21:46:57.672Z"}
+{"level":"info","message":"GET /api/classifications","timestamp":"2025-08-14T21:46:57.676Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-08-14T21:46:57.678Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-14T21:46:57.680Z"}
+{"level":"info","message":"Users list fetched","timestamp":"2025-08-14T21:46:57.858Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-08-14T21:46:57.864Z"}
+{"level":"info","message":"GET /api/operators","timestamp":"2025-08-14T21:46:57.867Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-14T21:46:57.868Z"}
+{"level":"info","message":"GET /api/classifications","timestamp":"2025-08-14T21:46:57.869Z"}
+{"level":"info","message":"Users list fetched","timestamp":"2025-08-14T21:46:57.938Z"}
+{"level":"info","message":"GET /api/suppliers","timestamp":"2025-08-14T21:46:57.944Z"}
+{"level":"info","message":"GET /api/users/me","timestamp":"2025-08-14T21:47:13.775Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-08-14T21:47:14.129Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-14T21:47:14.131Z"}
+{"level":"info","message":"Users list fetched","timestamp":"2025-08-14T21:47:14.175Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-08-14T21:47:21.373Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-14T21:47:21.376Z"}
+{"level":"info","message":"Users list fetched","timestamp":"2025-08-14T21:47:21.517Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-08-14T21:47:25.812Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-08-14T21:47:26.784Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-08-14T21:47:26.790Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-08-14T21:47:26.904Z"}
+{"level":"info","message":"GET /api/suppliers","timestamp":"2025-08-14T21:47:27.444Z"}
+{"level":"info","message":"GET /api/operators","timestamp":"2025-08-14T21:47:27.447Z"}
+{"level":"info","message":"GET /api/classifications","timestamp":"2025-08-14T21:47:27.448Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-08-14T21:47:27.448Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-14T21:47:27.449Z"}
+{"level":"info","message":"Users list fetched","timestamp":"2025-08-14T21:47:27.703Z"}
+{"level":"info","message":"GET /api/suppliers","timestamp":"2025-08-14T21:47:27.705Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-08-14T21:47:27.707Z"}
+{"level":"info","message":"Users list fetched","timestamp":"2025-08-14T21:47:27.873Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-14T21:47:27.878Z"}
+{"level":"info","message":"GET /api/operators","timestamp":"2025-08-14T21:47:27.932Z"}
+{"level":"info","message":"GET /api/classifications","timestamp":"2025-08-14T21:47:28.363Z"}
+{"level":"info","message":"GET /api/sales/total","timestamp":"2025-08-14T21:47:42.026Z"}
+{"level":"info","message":"GET /api/sales/upcoming-departures","timestamp":"2025-08-14T21:47:42.030Z"}
+{"level":"info","message":"GET /api/sales/stats","timestamp":"2025-08-14T21:47:42.047Z"}
+{"level":"info","message":"GET /api/sales/stats-by-type","timestamp":"2025-08-14T21:47:42.057Z"}
+{"level":"info","message":"GET /api/sales/total","timestamp":"2025-08-14T21:47:42.166Z"}
+{"level":"info","message":"GET /api/sales/upcoming-departures","timestamp":"2025-08-14T21:47:42.667Z"}
+{"level":"info","message":"GET /api/sales/stats","timestamp":"2025-08-14T21:47:42.693Z"}
+{"level":"info","message":"GET /api/sales/stats-by-type","timestamp":"2025-08-14T21:47:42.763Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-14T21:47:44.489Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-14T21:47:44.625Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-08-14T21:47:46.440Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-08-14T21:47:46.713Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-08-14T21:47:46.716Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-08-14T21:47:46.809Z"}
+{"level":"info","message":"GET /api/sales/11","timestamp":"2025-08-14T21:47:47.151Z"}
+{"level":"info","message":"GET /api/payments/sale/11","timestamp":"2025-08-14T21:47:47.154Z"}
+{"level":"info","message":"GET /api/payments/sale/11","timestamp":"2025-08-14T21:47:47.245Z"}
+{"level":"info","message":"Sale 11 fetched by user 1","timestamp":"2025-08-14T21:47:48.190Z"}
+{"level":"info","message":"GET /api/sales/11","timestamp":"2025-08-14T21:47:48.192Z"}
+{"level":"info","message":"Sale 11 fetched by user 1","timestamp":"2025-08-14T21:47:48.719Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-08-14T21:47:50.346Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-08-14T21:47:50.444Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-08-14T21:47:50.448Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-08-14T21:47:50.541Z"}
+{"level":"info","message":"GET /api/suppliers","timestamp":"2025-08-14T21:47:51.234Z"}
+{"level":"info","message":"GET /api/operators","timestamp":"2025-08-14T21:47:51.236Z"}
+{"level":"info","message":"GET /api/classifications","timestamp":"2025-08-14T21:47:51.237Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-08-14T21:47:51.237Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-14T21:47:51.238Z"}
+{"level":"info","message":"GET /api/suppliers","timestamp":"2025-08-14T21:47:51.373Z"}
+{"level":"info","message":"GET /api/classifications","timestamp":"2025-08-14T21:47:51.726Z"}
+{"level":"info","message":"Users list fetched","timestamp":"2025-08-14T21:47:51.730Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-08-14T21:47:51.733Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-14T21:47:51.735Z"}
+{"level":"info","message":"GET /api/operators","timestamp":"2025-08-14T21:47:51.819Z"}
+{"level":"info","message":"Users list fetched","timestamp":"2025-08-14T21:47:51.860Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-08-14T21:48:25.084Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-14T21:48:25.089Z"}
+{"level":"info","message":"Users list fetched","timestamp":"2025-08-14T21:48:25.179Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-08-14T21:48:31.755Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-14T21:48:31.756Z"}
+{"level":"info","message":"Users list fetched","timestamp":"2025-08-14T21:48:31.801Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-08-14T21:48:37.689Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-14T21:48:37.690Z"}
+{"level":"info","message":"Users list fetched","timestamp":"2025-08-14T21:48:37.738Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-08-14T21:48:43.597Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-14T21:48:43.598Z"}
+{"level":"info","message":"Users list fetched","timestamp":"2025-08-14T21:48:43.768Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-08-14T21:48:49.112Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-14T21:48:49.114Z"}
+{"level":"info","message":"Users list fetched","timestamp":"2025-08-14T21:48:49.158Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-08-14T21:49:01.308Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-14T21:49:01.309Z"}
+{"level":"info","message":"Users list fetched","timestamp":"2025-08-14T21:49:01.398Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-08-14T21:49:10.513Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-08-14T21:49:10.653Z"}
+{"level":"info","message":"GET /api/sales","timestamp":"2025-08-14T21:49:10.656Z"}
+{"level":"info","message":"Sales data fetched","timestamp":"2025-08-14T21:49:10.747Z"}
+{"level":"info","message":"GET /api/suppliers","timestamp":"2025-08-14T21:49:11.884Z"}
+{"level":"info","message":"GET /api/operators","timestamp":"2025-08-14T21:49:11.886Z"}
+{"level":"info","message":"GET /api/classifications","timestamp":"2025-08-14T21:49:11.887Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-08-14T21:49:11.888Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-14T21:49:11.889Z"}
+{"level":"info","message":"Users list fetched","timestamp":"2025-08-14T21:49:11.933Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-08-14T21:49:11.934Z"}
+{"level":"info","message":"Users list fetched","timestamp":"2025-08-14T21:49:12.042Z"}
+{"level":"info","message":"GET /api/suppliers","timestamp":"2025-08-14T21:49:12.044Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-14T21:49:12.045Z"}
+{"level":"info","message":"GET /api/operators","timestamp":"2025-08-14T21:49:12.087Z"}
+{"level":"info","message":"GET /api/classifications","timestamp":"2025-08-14T21:49:12.089Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-08-14T21:49:13.409Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-14T21:49:13.410Z"}
+{"level":"info","message":"Users list fetched","timestamp":"2025-08-14T21:49:13.454Z"}
+{"level":"info","message":"GET /api/users","timestamp":"2025-08-14T21:49:17.125Z"}
+{"level":"info","message":"GET /api/clients","timestamp":"2025-08-14T21:49:17.126Z"}
+{"level":"info","message":"Users list fetched","timestamp":"2025-08-14T21:49:17.279Z"}

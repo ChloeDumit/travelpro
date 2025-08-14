@@ -3,16 +3,16 @@ import { Client } from "../../types";
 
 export interface CreateClientData {
   name: string;
+  clientId?: string;
   email?: string;
   address?: string;
-  notes?: string;
 }
 
 export interface UpdateClientData {
   name?: string;
+  clientId?: string;
   email?: string;
   address?: string;
-  notes?: string;
 }
 
 export const clientsService = {

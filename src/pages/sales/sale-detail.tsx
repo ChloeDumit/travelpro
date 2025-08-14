@@ -14,6 +14,7 @@ import { PaymentForm } from "../../components/sales/payment-form";
 import { PaymentHistory } from "../../components/sales/payment-history";
 import { Sale, Payment } from "../../types";
 import { salesService } from "../../lib/services/sales.service";
+import { paymentsService } from "../../lib/services/payments.service";
 
 export function SaleDetailPage() {
   const { id } = useParams<{ id: string }>();
@@ -22,7 +23,7 @@ export function SaleDetailPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [showPaymentForm, setShowPaymentForm] = useState(false);
-
+  const [payments, setPayments] = useState<Payment[]>([]);
   useEffect(() => {
     const fetchSale = async () => {
       if (!id) return;
@@ -36,7 +37,17 @@ export function SaleDetailPage() {
         setLoading(false);
       }
     };
+    const fetchPayments = async () => {
+      if (!id) return;
+      try {
+        const payments = await paymentsService.getBySaleId(id);
+        setPayments((payments.data || []) as unknown as Payment[]);
+      } catch (err) {
+        console.error("Error fetching payments:", err);
+      }
+    };
     fetchSale();
+    fetchPayments();
   }, [id]);
 
   const handleStatusUpdate = async (status: "completed" | "cancelled") => {
@@ -55,6 +66,8 @@ export function SaleDetailPage() {
       setSale((prev) =>
         prev ? { ...prev, payments: [payment, ...(prev.payments || [])] } : null
       );
+      // Also add to the payments state
+      setPayments((prev) => [payment, ...prev]);
     }
   };
 
@@ -73,7 +86,6 @@ export function SaleDetailPage() {
   }
 
   const totalSale = calculateTotalSale(sale);
-  const payments = sale.payments || [];
 
   return (
     <div className="space-y-6">

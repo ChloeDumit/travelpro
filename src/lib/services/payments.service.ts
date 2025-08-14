@@ -14,11 +14,13 @@ export interface Payment {
 }
 
 export interface CreatePaymentData {
+  saleId: string;
   amount: number;
   currency: string;
-  paymentMethod: string;
+  method: string;
   description?: string;
   reference?: string;
+  date: string;
 }
 
 export interface UpdatePaymentData {
@@ -59,6 +61,10 @@ export const paymentsService = {
     api.get<{ payments: Payment[] }>(
       `/api/payments?startDate=${startDate}&endDate=${endDate}`
     ),
+
+  // Get payments by sale ID
+  getBySaleId: (saleId: string) =>
+    api.get<{ payments: Payment[] }>(`/api/payments/sale/${saleId}`),
 
   // Get payment statistics
   getStats: () => api.get<{ stats: any }>("/api/payments/stats"),
