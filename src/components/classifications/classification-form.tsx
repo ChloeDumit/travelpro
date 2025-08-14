@@ -43,7 +43,7 @@ export function ClassificationForm({
       <CardContent>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <Input
-            label="Nombre"
+            label="Nombre *"
             {...register("name")}
             error={errors.name?.message}
           />

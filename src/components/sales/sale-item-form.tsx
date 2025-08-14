@@ -243,7 +243,7 @@ export function SaleItemForm({
                 setValue("classificationId", classification.id);
               }}
               error={errors.classificationId?.message}
-              label="Clasificación"
+              label="Clasificación *"
               placeholder="Selecciona una clasificación..."
               noResultsText="No se encontraron clasificaciones"
               getItemLabel={(classification) => classification.name}
@@ -256,7 +256,7 @@ export function SaleItemForm({
                 setValue("supplierId", supplier.id);
               }}
               error={errors.supplierId?.message}
-              label="Proveedor"
+              label="Proveedor *"
               placeholder="Selecciona un proveedor..."
               noResultsText="No se encontraron proveedores"
               getItemLabel={(supplier) => supplier.name}
@@ -269,7 +269,7 @@ export function SaleItemForm({
                 setValue("operatorId", operator.id);
               }}
               error={errors.operatorId?.message}
-              label="Operador"
+              label="Operador *"
               placeholder="Selecciona un operador..."
               noResultsText="No se encontraron operadores"
               getItemLabel={(operator) => operator.name}
@@ -292,7 +292,7 @@ export function SaleItemForm({
             />
             <Input
               type="number"
-              label="Número de Pasajeros"
+              label="Número de Pasajeros *"
               min={1}
               {...register("passengerCount", { valueAsNumber: true })}
               error={errors.passengerCount?.message}
@@ -300,7 +300,7 @@ export function SaleItemForm({
           </div>
 
           <Select
-            label="Estado"
+            label="Estado *"
             options={statusOptions}
             {...register("status")}
             error={errors.status?.message}
@@ -329,7 +329,7 @@ export function SaleItemForm({
             <div className="grid grid-cols-2 gap-2">
               <Input
                 type="number"
-                label="Precio de Venta"
+                label="Precio de Venta *"
                 min={0}
                 step={0.01}
                 {...register("salePrice", { valueAsNumber: true })}
@@ -339,7 +339,7 @@ export function SaleItemForm({
             <div className="grid grid-cols-2 gap-2">
               <Input
                 type="number"
-                label="Precio de Costo"
+                label="Precio de Costo *"
                 min={0}
                 step={0.01}
                 {...register("costPrice", { valueAsNumber: true })}
@@ -356,7 +356,7 @@ export function SaleItemForm({
             />
             <Input
               type="date"
-              label="Fecha de Pago (Opcional)"
+              label="Fecha de Pago"
               {...register("paymentDate")}
               error={errors.paymentDate?.message}
             />

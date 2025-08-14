@@ -1,14 +1,14 @@
-import React from 'react';
-import { useForm } from 'react-hook-form';
-import { z } from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { OperatorFormData, Operator } from '../../types';
-import { Input } from '../ui/input';
-import { Button } from '../ui/button';
-import { Card, CardHeader, CardTitle, CardContent } from '../ui/card';
+import React from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { OperatorFormData, Operator } from "../../types";
+import { Input } from "../ui/input";
+import { Button } from "../ui/button";
+import { Card, CardHeader, CardTitle, CardContent } from "../ui/card";
 
 const operatorFormSchema = z.object({
-  name: z.string().min(1, 'El nombre es requerido'),
+  name: z.string().min(1, "El nombre es requerido"),
 });
 
 interface OperatorFormProps {
@@ -17,7 +17,11 @@ interface OperatorFormProps {
   initialData?: Operator;
 }
 
-export function OperatorForm({ onSubmit, loading = false, initialData }: OperatorFormProps) {
+export function OperatorForm({
+  onSubmit,
+  loading = false,
+  initialData,
+}: OperatorFormProps) {
   const {
     register,
     handleSubmit,
@@ -25,7 +29,7 @@ export function OperatorForm({ onSubmit, loading = false, initialData }: Operato
   } = useForm<OperatorFormData>({
     resolver: zodResolver(operatorFormSchema),
     defaultValues: {
-      name: initialData?.name || '',
+      name: initialData?.name || "",
     },
   });
 
@@ -33,27 +37,24 @@ export function OperatorForm({ onSubmit, loading = false, initialData }: Operato
     <Card>
       <CardHeader>
         <CardTitle>
-          {initialData ? 'Editar Operador' : 'Nuevo Operador'}
+          {initialData ? "Editar Operador" : "Nuevo Operador"}
         </CardTitle>
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <Input
-            label="Nombre"
-            {...register('name')}
+            label="Nombre *"
+            {...register("name")}
             error={errors.name?.message}
           />
 
           <div className="flex justify-end gap-2 pt-4">
-            <Button
-              type="submit"
-              disabled={loading}
-            >
+            <Button type="submit" disabled={loading}>
               {loading
-                ? 'Guardando...'
+                ? "Guardando..."
                 : initialData
-                ? 'Guardar Cambios'
-                : 'Crear Operador'}
+                ? "Guardar Cambios"
+                : "Crear Operador"}
             </Button>
           </div>
         </form>
@@ -61,4 +62,3 @@ export function OperatorForm({ onSubmit, loading = false, initialData }: Operato
     </Card>
   );
 }
-

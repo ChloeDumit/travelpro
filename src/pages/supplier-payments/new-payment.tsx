@@ -23,6 +23,7 @@ import {
 } from "../../lib/services/supplier-payments.service";
 import { useAuthState } from "../../hooks/useAuthState";
 import { Supplier } from "../../types/supplier";
+import { SupplierSelect } from "../../components/sales/supplier-select";
 
 export function NewPaymentPage() {
   const navigate = useNavigate();
@@ -48,8 +49,8 @@ export function NewPaymentPage() {
       console.log("Loading suppliers...");
       const response = await suppliersService.getAll();
       console.log("Suppliers response:", response);
-      setSuppliers(response.data?.suppliers || []);
-      console.log("Suppliers set:", response.data?.suppliers || []);
+      setSuppliers(response.data || []);
+      console.log("Suppliers set:", response.data || []);
     } catch (err) {
       console.error("Error loading suppliers:", err);
     }
@@ -151,34 +152,16 @@ export function NewPaymentPage() {
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Supplier Selection */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Proveedor *
-              </label>
               <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
-                <Input
-                  type="text"
-                  placeholder="Buscar proveedores..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-10 mb-2"
+                <SupplierSelect
+                  suppliers={filteredSuppliers}
+                  value={parseInt(formData.supplierId)}
+                  onSelect={(supplier) =>
+                    handleInputChange("supplierId", supplier.id)
+                  }
                 />
               </div>
-              <select
-                value={formData.supplierId}
-                onChange={(e) =>
-                  handleInputChange("supplierId", e.target.value)
-                }
-                className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-                required
-              >
-                <option value="">Selecciona un proveedor</option>
-                {filteredSuppliers.map((supplier) => (
-                  <option key={supplier.id} value={supplier.id}>
-                    {supplier.name}
-                  </option>
-                ))}
-              </select>
+
               {filteredSuppliers.length === 0 && searchQuery && (
                 <p className="text-sm text-gray-500 mt-1">
                   No se encontraron proveedores con "{searchQuery}"

@@ -264,13 +264,13 @@ export function SaleForm({
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <Input
                 type="date"
-                label="Fecha de Viaje"
+                label="Fecha de Viaje *"
                 {...form.register("travelDate")}
                 error={form.formState.errors.travelDate?.message}
               />
               <Input
                 type="number"
-                label="Número de Pasajeros"
+                label="Número de Pasajeros *"
                 min={1}
                 {...form.register("passengerCount", { valueAsNumber: true })}
                 error={form.formState.errors.passengerCount?.message}
@@ -279,13 +279,13 @@ export function SaleForm({
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <Select
-                label="Tipo de Venta"
+                label="Tipo de Venta *"
                 options={saleTypeOptions}
                 {...form.register("saleType")}
                 error={form.formState.errors.saleType?.message}
               />
               <Select
-                label="Región"
+                label="Región *"
                 options={regionOptions}
                 {...form.register("region")}
                 error={form.formState.errors.region?.message}
@@ -294,13 +294,13 @@ export function SaleForm({
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <Select
-                label="Tipo de Servicio"
+                label="Tipo de Servicio *"
                 options={serviceTypeOptions}
                 {...form.register("serviceType")}
                 error={form.formState.errors.serviceType?.message}
               />
               <Select
-                label="Moneda"
+                label="Moneda *"
                 options={currencyOptions}
                 {...form.register("currency")}
                 error={form.formState.errors.currency?.message}

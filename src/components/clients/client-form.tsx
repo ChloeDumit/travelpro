@@ -46,7 +46,7 @@ export function ClientForm({
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <CardContent className="space-y-4">
           <Input
-            label="Nombre"
+            label="Nombre *"
             {...form.register("name")}
             error={form.formState.errors.name?.message}
           />
