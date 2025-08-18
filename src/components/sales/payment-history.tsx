@@ -1,19 +1,27 @@
+import { useState } from "react";
 import { Payment } from "../../types";
 import { Card } from "../ui/card";
-import { Badge } from "../ui/badge";
-import { formatCurrency, formatDate, getStatusColor } from "../../lib/utils";
+import { Button } from "../ui/button";
+import { formatCurrency, formatDate } from "../../lib/utils";
+import { Pencil } from "lucide-react";
+import { PaymentForm } from "./payment-form";
 
 interface PaymentHistoryProps {
   payments: Payment[];
   totalSale: number;
   currency: "USD" | "EUR" | "local";
+  onPaymentUpdated?: (payment: Payment) => void;
 }
 
 export function PaymentHistory({
   payments,
   totalSale,
   currency,
+  onPaymentUpdated,
 }: PaymentHistoryProps) {
+  const [editingPayment, setEditingPayment] = useState<Payment | null>(null);
+  const [showEditForm, setShowEditForm] = useState(false);
+
   // Calculate total paid amount
   console.log("payments", payments);
   const totalPaid = payments
@@ -81,17 +89,8 @@ export function PaymentHistory({
         <div className="space-y-3">
           {payments.map((payment) => (
             <Card key={payment.id} className="p-4">
-              <div className="flex justify-between items-start">
-                <div className="flex-1">
-                  <div className="flex items-center gap-2 mb-2">
-                    <h4 className="font-medium">Pago #{payment.id}</h4>
-                    <Badge className={getStatusColor(payment.status)}>
-                      {payment.status === "confirmed"
-                        ? "Confirmado"
-                        : "Pendiente"}
-                    </Badge>
-                  </div>
-
+              <div className="flex justify-between items-start flex-row">
+                <div className="flex-1 ">
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
                     <div>
                       <p className="text-gray-500">Fecha</p>
@@ -113,10 +112,41 @@ export function PaymentHistory({
                     </div>
                   </div>
                 </div>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => {
+                    setEditingPayment(payment);
+                    setShowEditForm(true);
+                  }}
+                >
+                  <Pencil className="h-4 w-4" />
+                </Button>
               </div>
             </Card>
           ))}
         </div>
+      )}
+
+      {/* Edit Payment Form */}
+      {showEditForm && editingPayment && (
+        <PaymentForm
+          saleId={editingPayment.saleId}
+          currency={editingPayment.currency as "USD" | "EUR" | "local"}
+          onPaymentAdded={(updatedPayment) => {
+            if (onPaymentUpdated) {
+              onPaymentUpdated(updatedPayment);
+            }
+            setShowEditForm(false);
+            setEditingPayment(null);
+          }}
+          onClose={() => {
+            setShowEditForm(false);
+            setEditingPayment(null);
+          }}
+          isOpen={showEditForm}
+          editingPayment={editingPayment}
+        />
       )}
     </div>
   );

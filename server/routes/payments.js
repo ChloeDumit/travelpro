@@ -81,6 +81,24 @@ router.patch("/:id/status", async (req, res) => {
   }
 });
 
+// Update payment
+router.put("/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const data = req.body;
+
+    const payment = await prisma.payment.update({
+      where: { id: parseInt(id) },
+      data: data,
+    });
+
+    res.json({ message: "Payment updated successfully", payment });
+  } catch (error) {
+    console.error("Error updating payment:", error);
+    res.status(500).json({ error: "Failed to update payment" });
+  }
+});
+
 // Delete a payment
 router.delete("/:id", async (req, res) => {
   try {

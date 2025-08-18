@@ -3,20 +3,10 @@ import { Operator } from "../../types";
 
 export interface CreateOperatorData {
   name: string;
-  email: string;
-  phone: string;
-  address?: string;
-  contactPerson?: string;
-  notes?: string;
 }
 
 export interface UpdateOperatorData {
   name?: string;
-  email?: string;
-  phone?: string;
-  address?: string;
-  contactPerson?: string;
-  notes?: string;
 }
 
 export const operatorsService = {

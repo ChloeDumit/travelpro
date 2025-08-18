@@ -16,7 +16,7 @@ export function NewOperatorPage() {
     setError(null);
 
     try {
-      await operatorsService.createOperator(data);
+      await operatorsService.create(data);
       navigate("/operators");
     } catch (err) {
       setError("Error al crear operador");

@@ -18,10 +18,6 @@ export function NewSupplierPage() {
     try {
       await suppliersService.create({
         name: data.name,
-        email: "",
-        phone: "",
-        address: "",
-        notes: "",
       });
       navigate("/suppliers");
     } catch (err) {

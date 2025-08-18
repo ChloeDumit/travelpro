@@ -1,18 +1,20 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Select } from "../ui/select";
 import { Modal } from "../ui/modal";
 import { paymentsService } from "../../lib/services/payments.service";
 import { Payment } from "../../types";
+import { formatDate } from "../../lib/utils";
 
 interface PaymentFormProps {
   saleId: string;
-  totalSale: number;
+  totalSale?: number;
   currency: "USD" | "EUR" | "local";
   onPaymentAdded: (payment: Payment) => void;
   onClose: () => void;
   isOpen: boolean;
+  editingPayment?: Payment | null;
 }
 
 export function PaymentForm({
@@ -21,16 +23,33 @@ export function PaymentForm({
   onPaymentAdded,
   onClose,
   isOpen,
+  editingPayment,
 }: PaymentFormProps) {
   const [formData, setFormData] = useState({
-    date: new Date().toISOString().split("T")[0],
-    amount: "",
-    currency: currency,
-    method: "cash" as "creditCard" | "cash" | "transfer",
-    reference: "",
+    date: editingPayment?.date
+      ? new Date(editingPayment.date).toISOString().split("T")[0]
+      : new Date().toISOString().split("T")[0],
+    amount: editingPayment?.amount?.toString() || "",
+    currency: editingPayment?.currency || currency,
+    method:
+      (editingPayment?.method as "creditCard" | "cash" | "transfer") || "cash",
+    reference: editingPayment?.reference || "",
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  // Update form when editingPayment changes
+  useEffect(() => {
+    if (editingPayment) {
+      setFormData({
+        date: new Date(editingPayment.date).toISOString().split("T")[0],
+        amount: editingPayment.amount.toString(),
+        currency: editingPayment.currency,
+        method: editingPayment.method as "creditCard" | "cash" | "transfer",
+        reference: editingPayment.reference,
+      });
+    }
+  }, [editingPayment]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -43,17 +62,35 @@ export function PaymentForm({
         throw new Error("Please enter a valid amount");
       }
 
-      const payment = await paymentsService.create({
-        saleId,
-        date: formData.date,
-        amount,
-        currency: formData.currency,
-        method: formData.method,
-        reference: formData.reference,
-      });
+      let payment;
+      if (editingPayment) {
+        // Update existing payment
+        payment = await paymentsService.update(editingPayment.id, {
+          amount,
+          currency: formData.currency,
+          method: formData.method,
+          reference: formData.reference,
+          date: new Date(formData.date).toISOString(),
+        });
+      } else {
+        // Create new payment
+        payment = await paymentsService.create({
+          saleId,
+          date: formData.date,
+          amount,
+          currency: formData.currency,
+          method: formData.method,
+          reference: formData.reference,
+        });
+      }
 
       if (payment?.data) {
-        onPaymentAdded(payment.data as unknown as Payment);
+        // Extract the payment object from the response
+        const paymentData = payment.data as {
+          message: string;
+          payment: Payment;
+        };
+        onPaymentAdded(paymentData.payment);
       }
       onClose();
 
@@ -67,7 +104,11 @@ export function PaymentForm({
       });
     } catch (err) {
       console.log(err);
-      setError(err instanceof Error ? err.message : "Failed to create payment");
+      setError(
+        err instanceof Error
+          ? err.message
+          : `Failed to ${editingPayment ? "update" : "create"} payment`
+      );
     } finally {
       setLoading(false);
     }
@@ -90,7 +131,11 @@ export function PaymentForm({
   ];
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} title="Registrar Pago">
+    <Modal
+      isOpen={isOpen}
+      onClose={onClose}
+      title={editingPayment ? "Editar Pago" : "Registrar Pago"}
+    >
       <form onSubmit={handleSubmit} className="space-y-4">
         {error && <div className="text-red-500 text-sm">{error}</div>}
 
@@ -160,7 +205,11 @@ export function PaymentForm({
             Cancelar
           </Button>
           <Button type="submit" disabled={loading}>
-            {loading ? "Guardando..." : "Registrar Pago"}
+            {loading
+              ? "Guardando..."
+              : editingPayment
+              ? "Actualizar Pago"
+              : "Registrar Pago"}
           </Button>
         </div>
       </form>

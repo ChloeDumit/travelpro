@@ -3,20 +3,10 @@ import { Supplier } from "../../types";
 
 export interface CreateSupplierData {
   name: string;
-  email: string;
-  phone: string;
-  address?: string;
-  contactPerson?: string;
-  notes?: string;
 }
 
 export interface UpdateSupplierData {
   name?: string;
-  email?: string;
-  phone?: string;
-  address?: string;
-  contactPerson?: string;
-  notes?: string;
 }
 
 export const suppliersService = {

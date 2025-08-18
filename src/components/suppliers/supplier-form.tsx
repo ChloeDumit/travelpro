@@ -6,10 +6,6 @@ import { Input } from "../ui/input";
 import { Card, CardHeader, CardContent } from "../ui/card";
 import { SupplierFormData } from "../../types";
 
-// Helper for optional string that can be empty or min length 1
-const optionalNonEmptyString = (message: string) =>
-  z.string().min(1, message).or(z.literal("")).optional();
-
 const supplierFormSchema = z.object({
   name: z.string().min(1, "Name is required"),
 });

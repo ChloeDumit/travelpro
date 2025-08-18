@@ -67,7 +67,27 @@ export function SaleDetailPage() {
         prev ? { ...prev, payments: [payment, ...(prev.payments || [])] } : null
       );
       // Also add to the payments state
-      setPayments((prev) => [payment, ...prev]);
+      setPayments((prev) => [payment, ...(prev || [])]);
+    }
+  };
+
+  const handlePaymentUpdated = (payment: Payment) => {
+    if (sale) {
+      setSale((prev) =>
+        prev
+          ? {
+              ...prev,
+              payments:
+                prev.payments?.map((p) =>
+                  p.id === payment.id ? payment : p
+                ) || [],
+            }
+          : null
+      );
+      // Also update in the payments state
+      setPayments((prev) =>
+        prev.map((p) => (p.id === payment.id ? payment : p))
+      );
     }
   };
 
@@ -153,6 +173,7 @@ export function SaleDetailPage() {
         payments={payments}
         totalSale={totalSale}
         currency={sale.currency}
+        onPaymentUpdated={handlePaymentUpdated}
       />
 
       <PaymentForm

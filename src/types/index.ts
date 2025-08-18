@@ -1,7 +1,4 @@
-import { Classification } from "./classification";
 import { Client } from "./client";
-import { Operator } from "./operator";
-import { Supplier } from "./supplier";
 
 // User types
 export type UserRole = "admin" | "sales" | "finance";
@@ -146,9 +143,6 @@ export interface ClientFormData {
 
 export interface SupplierFormData {
   name: string;
-  supplierId?: string;
-  email?: string;
-  address?: string;
 }
 
 export interface OperatorFormData {
