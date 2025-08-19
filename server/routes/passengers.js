@@ -10,12 +10,12 @@ router.get(
   authenticate,
   requireRole([ROLES.ADMIN, ROLES.SALES]),
   async (req, res) => {
-    const suppliers = await prisma.supplier.findMany({
+    const passengers = await prisma.passenger.findMany({
       where: {
         companyId: req.user.companyId,
       },
     });
-    res.json(suppliers);
+    res.json(passengers);
   }
 );
 
@@ -24,10 +24,10 @@ router.get(
   authenticate,
   requireRole([ROLES.ADMIN, ROLES.SALES]),
   async (req, res) => {
-    const supplier = await prisma.supplier.findUnique({
+    const passenger = await prisma.passenger.findUnique({
       where: { id: parseInt(req.params.id), companyId: req.user.companyId },
     });
-    res.json(supplier);
+    res.json(passenger);
   }
 );
 
@@ -36,7 +36,7 @@ router.post(
   authenticate,
   requireRole([ROLES.ADMIN, ROLES.SALES]),
   async (req, res) => {
-    const supplier = await prisma.supplier.create({
+    const passenger = await prisma.passenger.create({
       data: {
         ...req.body,
         companyId: req.user.companyId,
@@ -45,7 +45,7 @@ router.post(
         company: true,
       },
     });
-    res.json(supplier);
+    res.json(passenger);
   }
 );
 
@@ -54,11 +54,11 @@ router.put(
   authenticate,
   requireRole([ROLES.ADMIN, ROLES.SALES]),
   async (req, res) => {
-    const supplier = await prisma.supplier.update({
+    const passenger = await prisma.passenger.update({
       where: { id: parseInt(req.params.id), companyId: req.user.companyId },
       data: req.body,
     });
-    res.json(supplier);
+    res.json(passenger);
   }
 );
 
@@ -67,10 +67,10 @@ router.delete(
   authenticate,
   requireRole([ROLES.ADMIN, ROLES.SALES]),
   async (req, res) => {
-    const supplier = await prisma.supplier.delete({
-      where: { id: req.params.id, companyId: req.user.companyId },
+    const passenger = await prisma.passenger.delete({
+      where: { id: parseInt(req.params.id), companyId: req.user.companyId },
     });
-    res.json(supplier);
+    res.json(passenger);
   }
 );
 

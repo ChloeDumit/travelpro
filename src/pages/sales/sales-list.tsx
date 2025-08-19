@@ -4,7 +4,12 @@ import { Plus } from "lucide-react";
 import { Button } from "../../components/ui/button";
 import { Badge } from "../../components/ui/badge";
 import { Card } from "../../components/ui/card";
-import { formatCurrency, formatDate, getStatusColor } from "../../lib/utils";
+import {
+  formatCurrency,
+  formatDate,
+  getStatusColor,
+  mapStatusToLabel,
+} from "../../lib/utils";
 import { Sale, SaleStatus } from "../../types";
 import { salesService } from "../../lib/services/sales.service";
 import { useAuth } from "../../contexts/auth-context";
@@ -91,7 +96,7 @@ export function SalesListPage() {
             size="sm"
             onClick={() => handleStatusFilter("completed")}
           >
-            Completadas
+            Liquidadas
           </Button>
           <Button
             variant={statusFilter === "cancelled" ? "default" : "ghost"}
@@ -124,8 +129,7 @@ export function SalesListPage() {
                       {sale.passengerName}
                     </h3>
                     <Badge className={getStatusColor(sale.status)}>
-                      {sale.status.charAt(0).toUpperCase() +
-                        sale.status.slice(1)}
+                      {mapStatusToLabel(sale.status)}
                     </Badge>
                   </div>
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4">

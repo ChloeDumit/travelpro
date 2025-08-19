@@ -5,7 +5,6 @@ import { Select } from "../ui/select";
 import { Modal } from "../ui/modal";
 import { paymentsService } from "../../lib/services/payments.service";
 import { Payment } from "../../types";
-import { formatDate } from "../../lib/utils";
 
 interface PaymentFormProps {
   saleId: string;
@@ -26,12 +25,12 @@ export function PaymentForm({
   editingPayment,
 }: PaymentFormProps) {
   const [formData, setFormData] = useState({
-    date: editingPayment?.date
+    paymentDate: editingPayment?.date
       ? new Date(editingPayment.date).toISOString().split("T")[0]
       : new Date().toISOString().split("T")[0],
     amount: editingPayment?.amount?.toString() || "",
     currency: editingPayment?.currency || currency,
-    method:
+    paymentMethod:
       (editingPayment?.method as "creditCard" | "cash" | "transfer") || "cash",
     reference: editingPayment?.reference || "",
   });
@@ -42,10 +41,13 @@ export function PaymentForm({
   useEffect(() => {
     if (editingPayment) {
       setFormData({
-        date: new Date(editingPayment.date).toISOString().split("T")[0],
+        paymentDate: new Date(editingPayment.date).toISOString().split("T")[0],
         amount: editingPayment.amount.toString(),
         currency: editingPayment.currency,
-        method: editingPayment.method as "creditCard" | "cash" | "transfer",
+        paymentMethod: editingPayment.method as
+          | "creditCard"
+          | "cash"
+          | "transfer",
         reference: editingPayment.reference,
       });
     }
@@ -68,38 +70,34 @@ export function PaymentForm({
         payment = await paymentsService.update(editingPayment.id, {
           amount,
           currency: formData.currency,
-          method: formData.method,
+          method: formData.paymentMethod,
           reference: formData.reference,
-          date: new Date(formData.date).toISOString(),
+          date: new Date(formData.paymentDate).toISOString(),
         });
       } else {
         // Create new payment
         payment = await paymentsService.create({
           saleId,
-          date: formData.date,
+          date: formData.paymentDate,
           amount,
           currency: formData.currency,
-          method: formData.method,
+          method: formData.paymentMethod,
           reference: formData.reference,
         });
       }
 
       if (payment?.data) {
         // Extract the payment object from the response
-        const paymentData = payment.data as {
-          message: string;
-          payment: Payment;
-        };
-        onPaymentAdded(paymentData.payment);
+        onPaymentAdded(payment.data as unknown as Payment);
       }
       onClose();
 
       // Reset form
       setFormData({
-        date: new Date().toISOString().split("T")[0],
+        paymentDate: new Date().toISOString().split("T")[0],
         amount: "",
         currency: currency,
-        method: "cash",
+        paymentMethod: "cash",
         reference: "",
       });
     } catch (err) {
@@ -146,8 +144,8 @@ export function PaymentForm({
             </label>
             <Input
               type="date"
-              value={formData.date}
-              onChange={(e) => handleInputChange("date", e.target.value)}
+              value={formData.paymentDate}
+              onChange={(e) => handleInputChange("paymentDate", e.target.value)}
               required
             />
           </div>
@@ -182,8 +180,10 @@ export function PaymentForm({
             <Select
               label="Método de Pago"
               options={methodOptions}
-              value={formData.method}
-              onChange={(e) => handleInputChange("method", e.target.value)}
+              value={formData.paymentMethod}
+              onChange={(e) =>
+                handleInputChange("paymentMethod", e.target.value)
+              }
             />
           </div>
         </div>

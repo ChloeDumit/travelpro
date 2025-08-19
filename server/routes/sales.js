@@ -39,7 +39,7 @@ router.get(
       });
 
       logger.info("Sales data fetched");
-      console.log(sales);
+
       res.status(HTTP_STATUS.OK).json({ sales });
     } catch (error) {
       next(error);
@@ -159,6 +159,11 @@ router.post(
                 item.paymentDate && item.paymentDate.trim() !== ""
                   ? new Date(item.paymentDate)
                   : null,
+              passengers: {
+                connect: item.passengers.map((passenger) => ({
+                  passengerId: passenger.passengerId,
+                })),
+              },
             })),
           },
         },
@@ -176,17 +181,10 @@ router.post(
         },
       });
 
-      console.log("Items antes de transformar (creación):", sale.items);
-
       // Transform items to match frontend expectations
       const transformedSale = {
         ...sale,
         items: sale.items.map((item) => {
-          console.log("Transformando item (creación):", item);
-          console.log("Classification (creación):", item.classification);
-          console.log("Supplier (creación):", item.supplier);
-          console.log("Operator (creación):", item.operator);
-
           const transformedItem = {
             ...item,
             classificationName: item.classification?.name || "",
@@ -194,7 +192,6 @@ router.post(
             operatorName: item.operator?.name || "",
           };
 
-          console.log("Item transformado (creación):", transformedItem);
           return transformedItem;
         }),
       };
@@ -225,8 +222,6 @@ router.put(
       const existingSale = await prisma.sale.findUnique({
         where: { id: parseInt(id), companyId: req.user.companyId },
       });
-
-      console.log(req.body);
 
       if (!existingSale) {
         throw new AppError(ERROR_MESSAGES.NOT_FOUND, HTTP_STATUS.NOT_FOUND);
@@ -295,6 +290,11 @@ router.put(
               item.paymentDate && item.paymentDate.trim() !== ""
                 ? new Date(item.paymentDate)
                 : null,
+            passengers: {
+              connect: item.passengers.map((passenger) => ({
+                passengerId: passenger.passengerId,
+              })),
+            },
           })),
         };
       }
@@ -308,6 +308,7 @@ router.put(
               classification: true,
               supplier: true,
               operator: true,
+              passengers: true,
             },
           },
           seller: true,
@@ -315,20 +316,10 @@ router.put(
         },
       });
 
-      console.log(
-        "Items antes de transformar (actualización):",
-        updatedSale.items
-      );
-
       // Transform items to match frontend expectations
       const transformedSale = {
         ...updatedSale,
         items: updatedSale.items.map((item) => {
-          console.log("Transformando item (actualización):", item);
-          console.log("Classification (actualización):", item.classification);
-          console.log("Supplier (actualización):", item.supplier);
-          console.log("Operator (actualización):", item.operator);
-
           const transformedItem = {
             ...item,
             classificationName: item.classification?.name || "",
@@ -336,12 +327,9 @@ router.put(
             operatorName: item.operator?.name || "",
           };
 
-          console.log("Item transformado (actualización):", transformedItem);
           return transformedItem;
         }),
       };
-
-      console.log(transformedSale);
 
       logger.info(`Sale ${id} updated by user ${userId}`);
       res.status(HTTP_STATUS.OK).json({
@@ -415,7 +403,6 @@ router.get(
           ...where,
         },
       });
-      console.log(totalSales);
       res
         .status(HTTP_STATUS.OK)
         .json({ total: totalSales._sum.salePrice || 0 });
@@ -688,8 +675,7 @@ router.get(
       const { id } = req.params;
       const userId = req.user.userId;
       const userRole = req.user.role;
-      console.log(req.user);
-      console.log(id);
+
       const sale = await prisma.sale.findUnique({
         where: { id: parseInt(id), companyId: req.user.companyId },
         include: {
@@ -698,6 +684,7 @@ router.get(
               classification: true,
               supplier: true,
               operator: true,
+              passengers: true,
             },
           },
           seller: true,
@@ -709,26 +696,15 @@ router.get(
         throw new AppError(ERROR_MESSAGES.NOT_FOUND, HTTP_STATUS.NOT_FOUND);
       }
 
-      console.log("Sale found:", sale);
-      console.log("Seller:", sale.seller);
-      console.log("UserId:", userId, "Type:", typeof userId);
-
       // Only allow access if user is admin or owns the sale
       if (userRole !== ROLES.ADMIN && sale.seller.id !== parseInt(userId)) {
         throw new AppError(ERROR_MESSAGES.FORBIDDEN, HTTP_STATUS.FORBIDDEN);
       }
 
-      console.log("Items antes de transformar:", sale.items);
-
       // Transform items to match frontend expectations
       const transformedSale = {
         ...sale,
         items: sale.items.map((item) => {
-          console.log("Transformando item:", item);
-          console.log("Classification:", item.classification);
-          console.log("Supplier:", item.supplier);
-          console.log("Operator:", item.operator);
-
           const transformedItem = {
             ...item,
             classificationName: item.classification?.name || "",
@@ -736,7 +712,6 @@ router.get(
             operatorName: item.operator?.name || "",
           };
 
-          console.log("Item transformado:", transformedItem);
           return transformedItem;
         }),
       };

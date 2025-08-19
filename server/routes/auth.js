@@ -41,8 +41,6 @@ router.post("/login", validate(loginSchema), async (req, res, next) => {
       );
     }
 
-    console.log(user);
-
     const token = jwt.sign(
       {
         userId: user.id.toString(),

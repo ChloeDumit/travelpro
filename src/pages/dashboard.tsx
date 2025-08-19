@@ -101,11 +101,6 @@ export function DashboardPage() {
             salesService.getUpcomingDepartures(),
           ]);
 
-        console.log("totalSales", totalSalesData.data?.total);
-        console.log("salesStats", statsData);
-        console.log("salesStatsByType", statsByTypeData);
-        console.log("upcomingDepartures", departuresData);
-
         setTotalSales(totalSalesData.data?.total || 0);
         setSalesStats(statsData.data || null);
         setSalesStatsByType(statsByTypeData.data || null);
@@ -170,7 +165,6 @@ export function DashboardPage() {
   };
 
   const getWelcomeMessage = () => {
-    console.log(user);
     if (isAdmin) {
       return `¡Bienvenido de vuelta, ${user?.username}! Aquí tienes una vista completa de tu negocio.`;
     } else if (isSales) {
@@ -302,7 +296,7 @@ export function DashboardPage() {
                 </div>
                 <p className="text-xs text-gray-500 mt-1">
                   {salesStats?.salesByStatus.confirmed || 0} confirmadas,{" "}
-                  {salesStats?.salesByStatus.completed || 0} completadas
+                  {salesStats?.salesByStatus.completed || 0} liquidadas
                 </p>
               </>
             )}

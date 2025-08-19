@@ -1,5 +1,10 @@
-import { formatCurrency, formatDate, getStatusColor } from "../../lib/utils";
-import { Sale, SaleItem, SaleItemFormData } from "../../types";
+import {
+  formatCurrency,
+  formatDate,
+  getStatusColor,
+  mapStatusToLabel,
+} from "../../lib/utils";
+import { Sale, SaleItemFormData } from "../../types";
 import { Badge } from "../ui/badge";
 import { Card, CardHeader, CardTitle, CardContent } from "../ui/card";
 
@@ -18,15 +23,14 @@ export function SaleSummary({ sale }: SaleSummaryProps) {
           <CardTitle className="flex items-center justify-between">
             <span>Venta #{saleData.id}</span>
             <Badge className={getStatusColor(saleData.status)}>
-              {saleData.status.charAt(0).toUpperCase() +
-                saleData.status.slice(1)}
+              {mapStatusToLabel(saleData.status)}
             </Badge>
           </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <h3 className="text-sm font-medium text-gray-500">Pasajero</h3>
+              <h3 className="text-sm font-medium text-gray-500">Cliente</h3>
               <p className="mt-1 text-sm font-medium">
                 {saleData.passengerName}
               </p>
@@ -137,11 +141,10 @@ interface SaleItemCardProps {
 }
 
 function SaleItemCard({ item, saleCurrency }: SaleItemCardProps) {
-  console.log("Item:", item);
   const classificationName = item.classification?.at(0)?.name || "N/A";
 
-  const supplierName = item.supplier.at(0)?.name || "N/A";
-  const operatorName = item.operator.at(0)?.name || "N/A";
+  const supplierName = item.supplier?.at(0)?.name || "N/A";
+  const operatorName = item.operator?.at(0)?.name || "N/A";
 
   return (
     <div className="border rounded-md p-4 bg-white hover:shadow-md transition-shadow">
@@ -150,9 +153,6 @@ function SaleItemCard({ item, saleCurrency }: SaleItemCardProps) {
           <h4 className="font-medium">{classificationName}</h4>
           <p className="text-sm text-gray-500 mt-1">{item.description}</p>
         </div>
-        <Badge className={getStatusColor(item.status)}>
-          {item.status.toUpperCase()}
-        </Badge>
       </div>
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4">
@@ -173,7 +173,9 @@ function SaleItemCard({ item, saleCurrency }: SaleItemCardProps) {
         </div>
         <div>
           <h5 className="text-xs text-gray-500">Pasajeros</h5>
-          <p className="text-sm">{item.passengerCount}</p>
+          <p className="text-sm">
+            {item.passengers.map((passenger) => passenger.name).join(", ")}
+          </p>
         </div>
       </div>
 

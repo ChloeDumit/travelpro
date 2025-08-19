@@ -40,9 +40,7 @@ export function ClientSelect({
 
   return (
     <div className="relative" ref={ref}>
-      <label className="block text-sm font-medium mb-1">
-        Pasajero / Cliente *
-      </label>
+      <label className="block text-sm font-medium mb-1">Cliente *</label>
       <div
         className={`w-full border rounded px-3 py-2 bg-white cursor-pointer ${
           error ? "border-danger-500" : "border-gray-300"

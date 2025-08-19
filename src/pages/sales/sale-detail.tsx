@@ -54,40 +54,22 @@ export function SaleDetailPage() {
     if (!id) return;
 
     try {
-      const updatedSale = await salesService.update(id, { status });
-      setSale(updatedSale.data?.sale || null);
+      await salesService.update(id, { status });
+      window.location.reload();
     } catch (err) {
       console.error("Error updating sale status:", err);
     }
   };
 
   const handlePaymentAdded = (payment: Payment) => {
-    if (sale) {
-      setSale((prev) =>
-        prev ? { ...prev, payments: [payment, ...(prev.payments || [])] } : null
-      );
-      // Also add to the payments state
-      setPayments((prev) => [payment, ...(prev || [])]);
+    if (payment) {
+      window.location.reload();
     }
   };
 
   const handlePaymentUpdated = (payment: Payment) => {
-    if (sale) {
-      setSale((prev) =>
-        prev
-          ? {
-              ...prev,
-              payments:
-                prev.payments?.map((p) =>
-                  p.id === payment.id ? payment : p
-                ) || [],
-            }
-          : null
-      );
-      // Also update in the payments state
-      setPayments((prev) =>
-        prev.map((p) => (p.id === payment.id ? payment : p))
-      );
+    if (payment) {
+      window.location.reload();
     }
   };
 
@@ -133,7 +115,7 @@ export function SaleDetailPage() {
               onClick={() => handleStatusUpdate("completed")}
             >
               <Check className="mr-2 h-4 w-4" />
-              Completar Venta
+              Liquidar Venta
             </Button>
             <Button
               variant="outline"

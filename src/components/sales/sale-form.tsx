@@ -134,7 +134,6 @@ export function SaleForm({
   const getClients = async () => {
     try {
       const response = await clientsService.getAll();
-      console.log(response);
       setClients(response.data || []);
     } catch (error) {
       console.error("Error fetching clients:", error);
@@ -163,28 +162,31 @@ export function SaleForm({
 
       // Set selected client if available
       if (initialData.client) {
-        setSelectedClient(null);
+        setSelectedClient(initialData.client);
       }
 
       // Set items if available
       if (initialData.items && initialData.items.length > 0) {
         const formattedItems: SaleItemFormData[] = initialData.items.map(
           (item) => ({
-            classificationId: item.classificationId || 0,
-            classificationName: item.classificationName || "",
-            supplierId: item.supplierId || 0,
-            supplierName: item.supplierName || "",
-            operatorId: item.operatorId || 0,
-            operatorName: item.operatorName || "",
-            dateIn: item.dateIn || "",
-            dateOut: item.dateOut || "",
+            classificationId: item.classificationId,
+            classificationName: item.classificationName,
+            supplierId: item.supplierId,
+            supplierName: item.supplierName,
+            operatorId: item.operatorId,
+            operatorName: item.operatorName,
+            dateIn: item.dateIn,
+            dateOut: item.dateOut,
             passengerCount: item.passengerCount,
-            status: item.status,
-            description: item.description || "",
+            description: item.description,
             salePrice: item.salePrice,
             costPrice: item.costPrice,
-            reservationCode: item.reservationCode || "",
-            paymentDate: item.paymentDate || null,
+            reservationCode: item.reservationCode,
+            paymentDate: item.paymentDate,
+            passengers: item.passengers,
+            classification: item.classification,
+            supplier: item.supplier,
+            operator: item.operator,
           })
         );
         setItems(formattedItems);
@@ -198,7 +200,6 @@ export function SaleForm({
   }, [initialData, form, currentUser]);
 
   const handleEditItem = (index: number) => {
-    console.log(index);
     setEditingItemIndex(index);
     setShowItemForm(true);
   };
@@ -209,11 +210,8 @@ export function SaleForm({
   };
 
   const handleFormSubmit = (data: SaleFormData) => {
-    console.log("Form submitted with data:", data);
-
     const totalCost = items.reduce((sum, item) => sum + item.costPrice, 0);
     const totalSale = items.reduce((sum, item) => sum + item.salePrice, 0);
-    console.log("Calculated total cost:", totalCost);
 
     if (!selectedClient) {
       form.setError("clientId", {
@@ -233,7 +231,6 @@ export function SaleForm({
       items
     );
   };
-
   return (
     <div className="space-y-6">
       <Card>
@@ -332,7 +329,9 @@ export function SaleForm({
                 <div key={index} className="p-4 border rounded-lg bg-gray-50">
                   <div className="flex justify-between items-start">
                     <div>
-                      <h3 className="font-medium">{item.classificationName}</h3>
+                      <h3 className="font-medium">
+                        {item.classification?.at(0)?.name}
+                      </h3>
                       <p className="text-sm text-gray-500">
                         {item.description}
                       </p>
@@ -341,13 +340,27 @@ export function SaleForm({
                           <span className="text-sm text-gray-500">
                             Proveedor:
                           </span>
-                          <p className="text-sm">{item.supplierName}</p>
+                          <p className="text-sm">
+                            {item.supplier?.at(0)?.name}
+                          </p>
                         </div>
                         <div>
                           <span className="text-sm text-gray-500">
                             Operador:
                           </span>
-                          <p className="text-sm">{item.operatorName}</p>
+                          <p className="text-sm">
+                            {item.operator?.at(0)?.name}
+                          </p>
+                        </div>
+                        <div>
+                          <span className="text-sm text-gray-500">
+                            Pasajeros:
+                          </span>
+                          <p className="text-sm">
+                            {item.passengers
+                              .map((passenger) => passenger.name)
+                              .join(", ")}
+                          </p>
                         </div>
                       </div>
                       <div className="mt-2">
@@ -451,9 +464,9 @@ export function SaleForm({
               if (response.data) {
                 const created = response.data;
                 // Add new client to list and select it
-                setClients((prev) => [...prev, created]);
-                form.setValue("clientId", created.clientId);
-                form.setValue("passengerName", created.name);
+                setClients((prev) => [...prev, created.client]);
+                form.setValue("clientId", created.client.clientId);
+                form.setValue("passengerName", created.client.name);
               }
               setShowClientModal(false);
               setClientForm({

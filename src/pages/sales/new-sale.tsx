@@ -16,12 +16,10 @@ export function NewSalePage() {
     saleData: SaleFormData & { client: Client | null },
     items: SaleItemFormData[]
   ) => {
-    console.log(saleData, items);
     setLoading(true);
     setError(null);
 
     try {
-      console.log(saleData, items);
       const sale = await salesService.create({
         saleData: {
           ...saleData,

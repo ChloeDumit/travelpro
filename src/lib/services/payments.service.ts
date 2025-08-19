@@ -5,8 +5,8 @@ export interface Payment {
   amount: number;
   currency: string;
   status: "pending" | "completed" | "failed" | "cancelled";
-  paymentMethod: string;
-  paymentDate: string;
+  method: string;
+  date: string;
   description?: string;
   reference?: string;
   createdAt: string;
@@ -27,8 +27,8 @@ export interface UpdatePaymentData {
   amount?: number;
   currency?: string;
   status?: Payment["status"];
-  paymentMethod?: string;
-  paymentDate?: string;
+  method?: string;
+  date?: string;
   description?: string;
   reference?: string;
 }

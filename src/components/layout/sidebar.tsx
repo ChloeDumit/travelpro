@@ -12,6 +12,7 @@ import {
   LogOut,
   Users2,
   ShoppingCart,
+  Users,
 } from "lucide-react";
 import { useAuthState } from "../../hooks/useAuthState";
 import { useAuth } from "../../contexts/auth-context";
@@ -88,6 +89,10 @@ export function Sidebar() {
               <SidebarLink to="/clients">
                 <Briefcase size={20} />
                 {!collapsed && <span>Clientes</span>}
+              </SidebarLink>
+              <SidebarLink to="/passengers">
+                <Users size={20} />
+                {!collapsed && <span>Pasajeros</span>}
               </SidebarLink>
             </>
           )}

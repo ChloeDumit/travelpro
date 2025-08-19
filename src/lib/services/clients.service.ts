@@ -17,7 +17,7 @@ export interface UpdateClientData {
 
 export const clientsService = {
   // Get all clients
-  getAll: () => api.get<{ clients: Client[] }>("/api/clients"),
+  getAll: () => api.get<Client[]>("/api/clients"),
 
   // Get client by ID
   getById: (id: string) => api.get<Client>(`/api/clients/${id}`),

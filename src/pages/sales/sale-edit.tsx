@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import { Button } from "../../components/ui/button";
 import { SaleForm } from "../../components/sales/sale-form";
-import { Sale, SaleFormData, SaleItemFormData } from "../../types";
+import { SaleFormData, SaleItemFormData, Sale } from "../../types";
 import { salesService } from "../../lib/services/sales.service";
 import { Client } from "../../types/client";
 
@@ -11,15 +11,20 @@ export function SaleEditPage() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [initialData, setInitialData] = useState<any>(null);
+  const [initialData, setInitialData] = useState<Sale | null>(null);
   const { id } = useParams<{ id: string }>();
 
   useEffect(() => {
     const fetchSale = async () => {
       if (!id) return;
       try {
+        setLoading(true);
         const data = await salesService.getById(id);
-        setInitialData(data.data);
+        if (data.data) {
+          setInitialData(data.data);
+        } else {
+          setError("No se encontraron datos de la venta");
+        }
       } catch (err) {
         setError("Failed to fetch sale details");
         console.error("Error fetching sale:", err);
@@ -39,17 +44,14 @@ export function SaleEditPage() {
     setError(null);
 
     try {
-      // Convert SaleFormData to Partial<Sale> format
       const updateData = {
         ...saleData,
         items: items,
       };
-      const sale = await salesService.updateSale(
-        id,
-        updateData as unknown as Sale
-      );
-      console.log("edited sale", sale);
-      navigate(`/sales/${sale.sale.id}`);
+
+      const sale = await salesService.update(id, updateData);
+
+      navigate(`/sales/${sale.data?.sale.id}`);
     } catch (err) {
       setError("Error al actualizar la venta");
       console.error("Error updating sale:", err);
@@ -58,8 +60,30 @@ export function SaleEditPage() {
     }
   };
 
+  if (loading && !initialData) {
+    return (
+      <div className="flex items-center justify-center min-h-[400px]">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-500 mx-auto mb-4"></div>
+          <p className="text-gray-600">Cargando venta...</p>
+        </div>
+      </div>
+    );
+  }
+
   if (!initialData) {
-    return <div>Loading...</div>;
+    return (
+      <div className="text-center py-8">
+        <p className="text-gray-600">No se pudo cargar la venta</p>
+        <Button
+          variant="outline"
+          onClick={() => navigate("/sales")}
+          className="mt-4"
+        >
+          Volver a la lista
+        </Button>
+      </div>
+    );
   }
 
   return (
@@ -82,6 +106,7 @@ export function SaleEditPage() {
         onSubmit={handleSubmit}
         initialData={initialData}
         action="edit"
+        loading={loading}
       />
     </div>
   );

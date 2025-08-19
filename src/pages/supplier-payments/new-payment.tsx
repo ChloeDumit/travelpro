@@ -46,11 +46,9 @@ export function NewPaymentPage() {
 
   const loadSuppliers = useCallback(async () => {
     try {
-      console.log("Loading suppliers...");
       const response = await suppliersService.getAll();
-      console.log("Suppliers response:", response);
+
       setSuppliers(response.data || []);
-      console.log("Suppliers set:", response.data || []);
     } catch (err) {
       console.error("Error loading suppliers:", err);
     }
@@ -103,9 +101,6 @@ export function NewPaymentPage() {
       [field]: value,
     }));
   };
-
-  console.log("Current suppliers state:", suppliers);
-  console.log("Current hasRole admin:", hasRole("admin"));
 
   if (!hasRole("admin")) {
     return (

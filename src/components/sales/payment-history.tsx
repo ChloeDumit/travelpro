@@ -23,7 +23,6 @@ export function PaymentHistory({
   const [showEditForm, setShowEditForm] = useState(false);
 
   // Calculate total paid amount
-  console.log("payments", payments);
   const totalPaid = payments
     .filter((payment) => payment.status === "confirmed")
     .reduce((sum, payment) => sum + payment.amount, 0);
@@ -94,7 +93,9 @@ export function PaymentHistory({
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
                     <div>
                       <p className="text-gray-500">Fecha</p>
-                      <p>{formatDate(payment.date)}</p>
+                      <p>
+                        {payment.date ? formatDate(payment.date) : "Sin fecha"}
+                      </p>
                     </div>
                     <div>
                       <p className="text-gray-500">Monto</p>

@@ -5,20 +5,19 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import {
   SaleItemFormData,
   Supplier,
-  SupplierFormData,
   Operator,
-  OperatorFormData,
   Classification,
-  ClassificationFormData,
+  Passenger,
 } from "../../types";
 import { Input } from "../ui/input";
-import { Select } from "../ui/select";
 import { Button } from "../ui/button";
 import { Modal } from "../ui/modal";
 import { SearchSelect } from "../ui/search-select";
 import { suppliersService } from "../../lib/services/suppliers.service";
 import { operatorsService } from "../../lib/services/operators.service";
 import { classificationsService } from "../../lib/services/classifications.service";
+import { passengersService } from "../../lib/services/passenger.service";
+import PassengerSelect from "./passenger-select";
 
 const saleItemFormSchema = z.object({
   classificationId: z.number().min(1, "La clasificación es requerida"),
@@ -27,12 +26,21 @@ const saleItemFormSchema = z.object({
   dateIn: z.string().or(z.literal("")).optional(),
   dateOut: z.string().or(z.literal("")).optional(),
   passengerCount: z.number().min(1, "Se requiere al menos 1 pasajero"),
-  status: z.enum(["pending", "confirmed", "cancelled"]),
   description: z.string().min(1).or(z.literal("")).optional(),
   salePrice: z.number().min(0, "El precio de venta debe ser positivo"),
   costPrice: z.number().min(0, "El precio de costo debe ser positivo"),
   reservationCode: z.string().optional(),
   paymentDate: z.string().optional().nullable(),
+  passengers: z
+    .array(
+      z.object({
+        passengerId: z.string(),
+        name: z.string(),
+        email: z.string().optional(),
+        dateOfBirth: z.string(),
+      })
+    )
+    .min(1, "Se requiere al menos 1 pasajero"),
 });
 
 interface SaleItemFormProps {
@@ -62,55 +70,32 @@ export function SaleItemForm({
   } = useForm<SaleItemFormData>({
     resolver: zodResolver(saleItemFormSchema),
     defaultValues: {
-      classificationId: initialData?.classificationId || 0,
-      supplierId: initialData?.supplierId || 0,
-      operatorId: initialData?.operatorId || 0,
+      classificationId: initialData?.classification?.at(0)?.id || 0,
+      supplierId: initialData?.supplier?.at(0)?.id || 0,
+      operatorId: initialData?.operator?.at(0)?.id || 0,
       dateIn: initialData?.dateIn || "",
       dateOut: initialData?.dateOut || "",
       passengerCount: initialData?.passengerCount || 1,
-      status: initialData?.status || "pending",
       description: initialData?.description || "",
       salePrice: initialData?.salePrice || 0,
       costPrice: initialData?.costPrice || 0,
       reservationCode: initialData?.reservationCode || "",
       paymentDate: initialData?.paymentDate || null,
+      passengers: initialData?.passengers || [],
+      classification: initialData?.classification || [],
+      supplier: initialData?.supplier || [],
+      operator: initialData?.operator || [],
     },
   });
 
   const [suppliers, setSuppliers] = useState<Supplier[]>([]);
   const [operators, setOperators] = useState<Operator[]>([]);
   const [classifications, setClassifications] = useState<Classification[]>([]);
-  const [showSupplierModal, setShowSupplierModal] = useState(false);
-  const [showOperatorModal, setShowOperatorModal] = useState(false);
-  const [showClassificationModal, setShowClassificationModal] = useState(false);
-  const [newSupplierLoading, setNewSupplierLoading] = useState(false);
-  const [newOperatorLoading, setNewOperatorLoading] = useState(false);
-  const [newClassificationLoading, setNewClassificationLoading] =
-    useState(false);
-  const [supplierForm, setSupplierForm] = useState<SupplierFormData>({
-    name: "",
-  });
-  const [operatorForm, setOperatorForm] = useState<OperatorFormData>({
-    name: "",
-  });
-  const [classificationForm, setClassificationForm] =
-    useState<ClassificationFormData>({
-      name: "",
-    });
-  const [supplierFormError, setSupplierFormError] = useState<string | null>(
-    null
-  );
-  const [operatorFormError, setOperatorFormError] = useState<string | null>(
-    null
-  );
-  const [classificationFormError, setClassificationFormError] = useState<
-    string | null
-  >(null);
+  const [passengers, setPassengers] = useState<Passenger[]>([]);
 
   const getSuppliers = async () => {
     try {
       const response = await suppliersService.getAll();
-      console.log("Suppliers response:", response);
       setSuppliers(Array.isArray(response.data) ? response.data : []);
     } catch (error) {
       console.error("Error fetching suppliers:", error);
@@ -120,7 +105,6 @@ export function SaleItemForm({
   const getOperators = async () => {
     try {
       const response = await operatorsService.getAll();
-      console.log("Operators response:", response);
       setOperators(Array.isArray(response.data) ? response.data : []);
     } catch (error) {
       console.error("Error fetching operators:", error);
@@ -130,43 +114,111 @@ export function SaleItemForm({
   const getClassifications = async () => {
     try {
       const response = await classificationsService.getAll();
-      console.log("Classifications response:", response);
       setClassifications(Array.isArray(response.data) ? response.data : []);
     } catch (error) {
       console.error("Error fetching classifications:", error);
     }
   };
 
-  // Reset form when initialData changes
+  const getPassengers = async () => {
+    try {
+      const response = await passengersService.getAll();
+
+      // Fix: Extract passengers from the correct response structure
+      const passengersData = response.data?.passengers || response.data || [];
+      const allPassengers = Array.isArray(passengersData) ? passengersData : [];
+
+      // If we're editing an item, merge existing passengers with available ones
+      if (initialData?.passengers && initialData.passengers.length > 0) {
+        // Add existing passengers that might not be in the main list
+        const existingPassengers = initialData.passengers.filter(
+          (p) => !allPassengers.some((ap) => ap.passengerId === p.passengerId)
+        );
+
+        // Combine existing passengers with available ones
+        const mergedPassengers = [...existingPassengers, ...allPassengers];
+
+        setPassengers(mergedPassengers);
+      } else {
+        setPassengers(allPassengers);
+      }
+    } catch (error) {
+      console.error("Error fetching passengers:", error);
+      // If there's an error but we have existing passengers, use those
+      if (initialData?.passengers && initialData.passengers.length > 0) {
+        setPassengers(initialData.passengers);
+      } else {
+        setPassengers([]);
+      }
+    }
+  };
+
+  React.useEffect(() => {
+    getSuppliers();
+    getOperators();
+    getClassifications();
+    getPassengers();
+  }, []);
+
+  // Reset form when initialData changes (for editing)
   React.useEffect(() => {
     if (initialData) {
-      // Helper function to format date for HTML date input
-      const formatDateForInput = (
-        dateString: string | null | undefined
-      ): string => {
-        if (!dateString) return "";
-        try {
-          const date = new Date(dateString);
-          return date.toISOString().split("T")[0];
-        } catch {
-          return "";
-        }
-      };
+      // Extract IDs from the arrays or use direct IDs
+      const classificationId =
+        initialData.classificationId ||
+        (initialData.classification && initialData.classification.length > 0
+          ? initialData.classification[0].id
+          : 0);
 
-      reset({
-        classificationId: initialData.classificationId || 0,
-        supplierId: initialData.supplierId || 0,
-        operatorId: initialData.operatorId || 0,
-        dateIn: formatDateForInput(initialData.dateIn),
-        dateOut: formatDateForInput(initialData.dateOut),
+      const supplierId =
+        initialData.supplierId ||
+        (initialData.supplier && initialData.supplier.length > 0
+          ? initialData.supplier[0].id
+          : 0);
+
+      const operatorId =
+        initialData.operatorId ||
+        (initialData.operator && initialData.operator.length > 0
+          ? initialData.operator[0].id
+          : 0);
+
+      // Ensure we have the correct data structure
+      const formData = {
+        classificationId: classificationId,
+        supplierId: supplierId,
+        operatorId: operatorId,
+        dateIn: initialData.dateIn || "",
+        dateOut: initialData.dateOut || "",
         passengerCount: initialData.passengerCount || 1,
-        status: initialData.status || "pending",
         description: initialData.description || "",
         salePrice: initialData.salePrice || 0,
         costPrice: initialData.costPrice || 0,
         reservationCode: initialData.reservationCode || "",
-        paymentDate: formatDateForInput(initialData.paymentDate),
-      });
+        paymentDate: initialData.paymentDate || null,
+        passengers: initialData.passengers || [],
+        classification: initialData.classification || [],
+        supplier: initialData.supplier || [],
+        operator: initialData.operator || [],
+      };
+
+      reset(formData);
+
+      // Also set the values individually to ensure they're set
+      setValue("classificationId", formData.classificationId);
+      setValue("supplierId", formData.supplierId);
+      setValue("operatorId", formData.operatorId);
+      setValue("dateIn", formData.dateIn);
+      setValue("dateOut", formData.dateOut);
+      setValue("passengerCount", formData.passengerCount);
+      setValue("description", formData.description);
+      setValue("salePrice", formData.salePrice);
+      setValue("costPrice", formData.costPrice);
+      setValue("reservationCode", formData.reservationCode);
+      setValue("paymentDate", formData.paymentDate);
+      setValue("passengers", formData.passengers);
+      setValue("classification", formData.classification);
+      setValue("supplier", formData.supplier);
+      setValue("operator", formData.operator);
     } else {
       // Reset to empty form when adding new item
       reset({
@@ -176,52 +228,51 @@ export function SaleItemForm({
         dateIn: "",
         dateOut: "",
         passengerCount: 1,
-        status: "pending",
         description: "",
         salePrice: 0,
         costPrice: 0,
         reservationCode: "",
         paymentDate: null,
+        passengers: [],
+        classification: [],
+        supplier: [],
+        operator: [],
       });
     }
-    getSuppliers();
-    getOperators();
-    getClassifications();
-  }, [initialData, reset]);
-
-  const statusOptions = [
-    { value: "pending", label: "Pendiente" },
-    { value: "confirmed", label: "Confirmado" },
-    { value: "cancelled", label: "Cancelado" },
-  ];
+  }, [initialData, reset, setValue]);
 
   const handleFormSubmit = (data: SaleItemFormData) => {
-    console.log("Form data submitted:", data);
+    // Find the selected objects based on IDs
+    const selectedClassification = classifications.find(
+      (c) => c.id === data.classificationId
+    );
+    const selectedSupplier = suppliers.find((s) => s.id === data.supplierId);
+    const selectedOperator = operators.find((o) => o.id === data.operatorId);
 
-    // Crear el objeto completo del item
+    // Create the complete item object
     const newItem: SaleItemFormData = {
       ...data,
-      // Asegurarse de que todos los campos requeridos estén presentes
       classificationId: data.classificationId,
-      classificationName:
-        classifications.find((c) => c.id === data.classificationId)?.name || "",
+      classificationName: selectedClassification?.name || "",
       supplierId: data.supplierId,
-      supplierName: suppliers.find((s) => s.id === data.supplierId)?.name || "",
+      supplierName: selectedSupplier?.name || "",
       operatorId: data.operatorId,
-      operatorName: operators.find((o) => o.id === data.operatorId)?.name || "",
+      operatorName: selectedOperator?.name || "",
+      passengers: data.passengers,
+      classification: selectedClassification ? [selectedClassification] : [],
+      supplier: selectedSupplier ? [selectedSupplier] : [],
+      operator: selectedOperator ? [selectedOperator] : [],
     };
 
-    console.log("New item to add:", newItem);
-
     if (initialData && typeof itemIndex === "number") {
+      // Editing existing item
       const updatedItems = [...items];
       updatedItems[itemIndex] = newItem;
       setItems(updatedItems);
-      console.log("Updated items:", updatedItems);
     } else {
+      // Adding new item
       const newItems = [...items, newItem];
       setItems(newItems);
-      console.log("New items array:", newItems);
     }
 
     onClose();
@@ -269,13 +320,29 @@ export function SaleItemForm({
                 setValue("operatorId", operator.id);
               }}
               error={errors.operatorId?.message}
-              label="Operador *"
+              label=" Operador *"
               placeholder="Selecciona un operador..."
               noResultsText="No se encontraron operadores"
               getItemLabel={(operator) => operator.name}
               getItemId={(operator) => operator.id}
             />
           </div>
+
+          <PassengerSelect
+            items={passengers}
+            value={watch("passengers")}
+            onSelect={(selectedPassengers) => {
+              setValue("passengers", selectedPassengers);
+              // Also update passenger count immediately
+              setValue("passengerCount", selectedPassengers.length);
+            }}
+            error={errors.passengers?.message}
+            label="Pasajeros *"
+            placeholder="Selecciona pasajeros..."
+            noResultsText="No se encontraron pasajeros"
+            getItemLabel={(passenger) => passenger.name}
+            getItemId={(passenger) => passenger.passengerId}
+          />
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <Input
@@ -294,17 +361,12 @@ export function SaleItemForm({
               type="number"
               label="Número de Pasajeros *"
               min={1}
+              readOnly
+              className="bg-gray-50 cursor-not-allowed"
               {...register("passengerCount", { valueAsNumber: true })}
               error={errors.passengerCount?.message}
             />
           </div>
-
-          <Select
-            label="Estado *"
-            options={statusOptions}
-            {...register("status")}
-            error={errors.status?.message}
-          />
 
           <div className="space-y-1">
             <label
@@ -356,7 +418,7 @@ export function SaleItemForm({
             />
             <Input
               type="date"
-              label="Fecha de Pago"
+              label="Fecha de Pago a Proveedor"
               {...register("paymentDate")}
               error={errors.paymentDate?.message}
             />

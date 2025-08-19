@@ -32,6 +32,9 @@ import {
   SupplierDetailPage,
   NewPaymentPage,
 } from "./pages/supplier-payments";
+import { PassengersListPage } from "./pages/passengers/passengers-list";
+import { NewPassengerPage } from "./pages/passengers/new-passenger";
+import { EditPassengerPage } from "./pages/passengers/edit-passenger";
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const { user, isLoading } = useAuth();
@@ -83,6 +86,12 @@ function App() {
             <Route path="/clients" element={<ClientsListPage />} />
             <Route path="/clients/new" element={<NewClientPage />} />
             <Route path="/clients/:id/edit" element={<EditClientPage />} />
+            <Route path="/passengers" element={<PassengersListPage />} />
+            <Route path="/passengers/new" element={<NewPassengerPage />} />
+            <Route
+              path="/passengers/:id/edit"
+              element={<EditPassengerPage />}
+            />
             <Route path="/suppliers" element={<SuppliersListPage />} />
             <Route path="/suppliers/new" element={<NewSupplierPage />} />
             <Route path="/suppliers/:id/edit" element={<EditSupplierPage />} />

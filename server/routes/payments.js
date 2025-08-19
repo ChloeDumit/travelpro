@@ -14,7 +14,7 @@ router.get("/sale/:saleId", async (req, res) => {
       where: { saleId: parseInt(req.params.saleId) },
       orderBy: { date: "desc" },
     });
-    console.log("payments", payments);
+
     res.json(payments);
   } catch (error) {
     console.error("Error fetching payments:", error);

@@ -1,4 +1,7 @@
 import { Client } from "./client";
+import { Operator } from "./operator";
+import { Classification } from "./classification";
+import { Supplier } from "./supplier";
 
 // User types
 export type UserRole = "admin" | "sales" | "finance";
@@ -24,7 +27,6 @@ export type ServiceType =
   | "other";
 export type SaleStatus = "draft" | "confirmed" | "completed" | "cancelled";
 export type Currency = "USD" | "EUR" | "local";
-export type ItemStatus = "pending" | "confirmed" | "cancelled";
 export type PaymentMethod = "creditCard" | "cash" | "transfer";
 
 export interface SaleItem {
@@ -35,7 +37,6 @@ export interface SaleItem {
   dateIn: string;
   dateOut: string;
   passengerCount: number;
-  status: ItemStatus;
   description: string;
   salePrice: number;
   saleCurrency: Currency;
@@ -100,6 +101,15 @@ export interface SupplierPayment {
   relatedSales: string[];
 }
 
+// Passenger types
+export interface Passenger {
+  passengerId: string;
+  name: string;
+  email?: string;
+  dateOfBirth: string;
+  saleId?: number;
+}
+
 // Form related types
 export interface SaleFormData {
   passengerName: string;
@@ -126,12 +136,15 @@ export interface SaleItemFormData {
   dateIn: string;
   dateOut: string;
   passengerCount: number;
-  status: ItemStatus;
   description: string;
   salePrice: number;
   costPrice: number;
   reservationCode: string;
   paymentDate: string | null;
+  passengers: Passenger[];
+  classification: Classification[];
+  supplier: Supplier[];
+  operator: Operator[];
 }
 
 export interface ClientFormData {
@@ -151,6 +164,13 @@ export interface OperatorFormData {
 
 export interface ClassificationFormData {
   name: string;
+}
+
+export interface PassengerFormData {
+  name: string;
+  passengerId: string;
+  email?: string;
+  dateOfBirth: string;
 }
 
 export * from "./operator";

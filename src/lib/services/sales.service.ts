@@ -1,5 +1,5 @@
 import { api } from "../api";
-import { Sale, SaleItem } from "../../types";
+import { Sale } from "../../types";
 
 export interface CreateSaleData {
   saleData: {
@@ -28,6 +28,13 @@ export interface CreateSaleData {
     costPrice: number;
     reservationCode?: string;
     paymentDate?: string;
+    passengers: Array<{
+      passengerId: string;
+      name: string;
+      email?: string;
+      dateOfBirth: string;
+      saleId?: number;
+    }>;
   }>;
 }
 
@@ -107,8 +114,8 @@ export const salesService = {
     api.post<{ message: string; sale: Sale }>("/api/sales", data),
 
   // Update sale
-  update: (id: string, data: UpdateSaleData) =>
-    api.put<{ message: string; sale: Sale }>(`/api/sales/${id}`, data),
+  update: (id: string, data: any) =>
+    api.put<{ sale: Sale }>(`/api/sales/${id}`, data),
 
   // Delete sale
   delete: (id: string) => api.delete<{ message: string }>(`/api/sales/${id}`),

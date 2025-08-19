@@ -15,7 +15,6 @@ router.get(
         companyId: req.user.companyId,
       },
     });
-    console.log(clients);
     res.json(clients);
   }
 );
@@ -37,7 +36,6 @@ router.post(
   authenticate,
   requireRole([ROLES.ADMIN, ROLES.SALES]),
   async (req, res) => {
-    console.log("acaaaaaaaa", req.user);
     const client = await prisma.client.create({
       data: {
         ...req.body,
@@ -57,7 +55,7 @@ router.put(
   requireRole([ROLES.ADMIN, ROLES.SALES]),
   async (req, res) => {
     const client = await prisma.client.update({
-      where: { id: req.params.id, companyId: req.user.companyId },
+      where: { id: parseInt(req.params.id), companyId: req.user.companyId },
       data: req.body,
     });
     res.json(client);

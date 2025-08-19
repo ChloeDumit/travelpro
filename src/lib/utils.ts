@@ -15,22 +15,33 @@ export function formatCurrency(amount: number, currency: string): string {
 }
 
 export function formatDate(dateStr: string | Date): string {
-  const [year, month, day] = dateStr.toString().split("T")[0].split("-");
-  const date = new Date(`${year}-${month}-${day}T00:00:00`);
+  if (!dateStr) return "Sin fecha";
 
-  const options = {
-    day: "2-digit",
-    month: "short",
-    year: "numeric",
-    timeZone: "America/Montevideo",
-  };
+  try {
+    const date = new Date(dateStr);
 
-  return date.toLocaleDateString("es-UY", options).replace(".", "");
+    if (isNaN(date.getTime())) {
+      return "Fecha inválida";
+    }
+
+    const options: Intl.DateTimeFormatOptions = {
+      day: "2-digit",
+      month: "short",
+      year: "numeric",
+      timeZone: "America/Montevideo",
+    };
+
+    return date.toLocaleDateString("es-UY", options).replace(".", "");
+  } catch (error) {
+    console.error("Error formatting date:", error);
+    return "Error en fecha";
+  }
 }
 
 export function getStatusColor(status: string): string {
   switch (status) {
     case "confirmed":
+      return "bg-warning-100 text-warning-800";
     case "completed":
     case "paid":
       return "bg-success-100 text-success-800";
@@ -41,5 +52,18 @@ export function getStatusColor(status: string): string {
       return "bg-danger-100 text-danger-800";
     default:
       return "bg-gray-100 text-gray-800";
+  }
+}
+
+export function mapStatusToLabel(status: string): string {
+  switch (status) {
+    case "confirmed":
+      return "Confirmada";
+    case "completed":
+      return "Liquidada";
+    case "cancelled":
+      return "Cancelada";
+    default:
+      return status;
   }
 }
