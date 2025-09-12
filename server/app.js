@@ -34,28 +34,26 @@ const allowedOrigins = [
   "https://tripsoffice.com", // Production frontend without www
 ].filter(Boolean); // Remove any undefined values
 
-// Log allowed origins for debugging
 console.log("Allowed CORS origins:", allowedOrigins);
 console.log("FRONTEND_URL env var:", process.env.FRONTEND_URL);
 
 app.use(
   cors({
     origin: (origin, callback) => {
-      console.log("CORS request from origin:", origin);
+      console.log("CORS request from:", origin);
 
-      // Allow requests with no origin (like mobile apps or curl requests)
+      // Allow requests with no origin (like mobile apps, curl, Postman)
       if (!origin) {
-        console.log("Allowing request with no origin");
         return callback(null, true);
       }
 
       if (allowedOrigins.includes(origin)) {
         console.log("Origin allowed:", origin);
-        callback(null, true);
+        return callback(null, true);
       } else {
         console.log("Origin blocked:", origin);
         console.log("Allowed origins:", allowedOrigins);
-        callback(new Error("Not allowed by CORS"));
+        return callback(new Error("Not allowed by CORS"));
       }
     },
     credentials: true,
@@ -68,7 +66,7 @@ app.use(
       "Origin",
     ],
     exposedHeaders: ["Authorization"],
-    optionsSuccessStatus: 200, // Some legacy browsers choke on 204
+    optionsSuccessStatus: 200, // for legacy browsers
   })
 );
 
@@ -90,29 +88,6 @@ app.use((req, res, next) => {
     userAgent: req.get("User-Agent"),
   });
   next();
-});
-
-// Manual CORS preflight handler for all routes
-app.options("*", (req, res) => {
-  const origin = req.headers.origin;
-  console.log("OPTIONS preflight request from:", origin);
-
-  if (allowedOrigins.includes(origin) || !origin) {
-    res.header("Access-Control-Allow-Origin", origin || "*");
-    res.header(
-      "Access-Control-Allow-Methods",
-      "GET, POST, PUT, DELETE, PATCH, OPTIONS"
-    );
-    res.header(
-      "Access-Control-Allow-Headers",
-      "Content-Type, Authorization, X-Requested-With, Accept, Origin"
-    );
-    res.header("Access-Control-Allow-Credentials", "true");
-    res.header("Access-Control-Max-Age", "86400"); // 24 hours
-    res.status(200).end();
-  } else {
-    res.status(403).json({ error: "CORS policy violation" });
-  }
 });
 
 // Health check endpoint
