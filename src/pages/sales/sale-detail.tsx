@@ -15,6 +15,7 @@ import { PaymentHistory } from "../../components/sales/payment-history";
 import { Sale, Payment } from "../../types";
 import { salesService } from "../../lib/services/sales.service";
 import { paymentsService } from "../../lib/services/payments.service";
+import { LoadingState } from "../../components/ui/loading-spinner";
 
 export function SaleDetailPage() {
   const { id } = useParams<{ id: string }>();
@@ -80,7 +81,7 @@ export function SaleDetailPage() {
   };
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <LoadingState message="Cargando venta..." />;
   }
 
   if (error || !sale) {

@@ -1,0 +1,76 @@
+version: "3.8"
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15-alpine
+    container_name: travelpro-postgres
+    environment:
+      POSTGRES_DB: travelpro_db
+      POSTGRES_USER: travelpro_user
+      POSTGRES_PASSWORD: travelpro_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./server/prisma/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - travelpro-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U travelpro_user -d travelpro_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Backend API
+  backend:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: travelpro-backend
+    environment:
+      NODE_ENV: development
+      PORT: 3001
+      DATABASE_URL: postgresql://travelpro_user:travelpro_password@postgres:5432/travelpro_db
+      JWT_SECRET: your_super_secret_jwt_key_here
+      JWT_EXPIRATION: 1d
+      FRONTEND_URL: http://localhost:5173
+      CORS_ORIGIN: http://localhost:5173
+    ports:
+      - "3001:3001"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - ./server:/app
+      - /app/node_modules
+      - ./server/logs:/app/logs
+    networks:
+      - travelpro-network
+    command: npm run dev
+
+  # Frontend (if needed)
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    container_name: travelpro-frontend
+    environment:
+      VITE_API_URL: http://localhost:3001
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
+    volumes:
+      - .:/app
+      - /app/node_modules
+    networks:
+      - travelpro-network
+    command: npm run dev
+
+volumes:
+  postgres_data:
+
+networks:
+  travelpro-network:
+    driver: bridge

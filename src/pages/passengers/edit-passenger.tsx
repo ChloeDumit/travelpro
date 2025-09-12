@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import { Button } from "../../components/ui/button";
+import { PageLoading } from "../../components/ui/loading-spinner";
 import { PassengerFormPage } from "../../components/passengers/passenger-form-page";
 import { PassengerFormData } from "../../types";
 import { passengersService } from "../../lib/services/passenger.service";
@@ -51,11 +52,7 @@ export function EditPassengerPage() {
   };
 
   if (loading) {
-    return (
-      <div className="flex h-screen items-center justify-center">
-        <div className="animate-spin h-8 w-8 border-4 border-primary-600 rounded-full border-t-transparent"></div>
-      </div>
-    );
+    return <PageLoading message="Cargando pasajero..." />;
   }
 
   if (!passenger) {

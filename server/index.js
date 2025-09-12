@@ -1,54 +1,29 @@
-import express from "express";
-import cors from "cors";
+import app from "./app.js";
 import { config } from "./config/index.js";
-import { errorHandler } from "./middleware/error.js";
+import { db } from "./config/database.js";
 import logger from "./utils/logger.js";
-import authRoutes from "./routes/auth.js";
-import userRoutes from "./routes/users.js";
-import salesRoutes from "./routes/sales.js";
-import clientsRoutes from "./routes/clients.js";
-import suppliersRoutes from "./routes/suppliers.js";
-import operatorsRoutes from "./routes/operators.js";
-import classificationsRoutes from "./routes/classifications.js";
-import supplierPaymentsRoutes from "./routes/supplier-payments.js";
-import paymentsRoutes from "./routes/payments.js";
-import passengersRoutes from "./routes/passengers.js";
 import dotenv from "dotenv";
+
+// Load environment variables
 dotenv.config();
 
-const app = express();
+// Initialize database connection
+const startServer = async () => {
+  try {
+    // Connect to database
+    await db.connect();
 
-// Middleware
-app.use(express.json());
-app.use(
-  cors({
-    origin: process.env.FRONTEND_URL || "*",
-    credentials: true,
-  })
-);
+    // Start server
+    const PORT = process.env.PORT || config.port || 3001;
+    app.listen(PORT, () => {
+      logger.info(`Server running on port ${PORT}`);
+      logger.info(`Environment: ${process.env.NODE_ENV || "development"}`);
+    });
+  } catch (error) {
+    logger.error("Failed to start server:", error);
+    process.exit(1);
+  }
+};
 
-// Request logging
-app.use((req, res, next) => {
-  logger.info(`${req.method} ${req.url}`);
-  next();
-});
-
-// Routes
-app.use("/api/auth", authRoutes);
-app.use("/api/users", userRoutes);
-app.use("/api/sales", salesRoutes);
-app.use("/api/clients", clientsRoutes);
-app.use("/api/suppliers", suppliersRoutes);
-app.use("/api/operators", operatorsRoutes);
-app.use("/api/classifications", classificationsRoutes);
-app.use("/api/supplier-payments", supplierPaymentsRoutes);
-app.use("/api/payments", paymentsRoutes);
-app.use("/api/passengers", passengersRoutes);
-// Error handling
-app.use(errorHandler);
-
-// Start server
-const PORT = process.env.PORT || config.port || 3001;
-app.listen(PORT, () => {
-  logger.info(`Server running on port ${PORT}`);
-});
+// Start the server
+startServer();

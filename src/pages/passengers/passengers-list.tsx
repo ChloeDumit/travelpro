@@ -5,6 +5,8 @@ import { Button } from "../../components/ui/button";
 import { Card } from "../../components/ui/card";
 import { Input } from "../../components/ui/input";
 import { ConfirmModal } from "../../components/ui/confirm-modal";
+import { LoadingState } from "../../components/ui/loading-spinner";
+import { PageLayout } from "../../components/ui/page-layout";
 import { Passenger } from "../../types/passenger";
 import { passengersService } from "../../lib/services/passenger.service";
 
@@ -59,21 +61,18 @@ export function PassengersListPage() {
   );
 
   return (
-    <div className="space-y-6">
-      <div className="flex justify-between items-center">
-        <h1 className="text-lg font-medium">Pasajeros</h1>
+    <PageLayout
+      title="Pasajeros"
+      subtitle="Gestiona la información de los pasajeros"
+      error={error}
+      onDismissError={() => setError(null)}
+      actions={
         <Button onClick={() => navigate("/passengers/new")}>
           <Plus className="mr-2 h-4 w-4" />
           Nuevo Pasajero
         </Button>
-      </div>
-
-      {error && (
-        <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded">
-          {error}
-        </div>
-      )}
-
+      }
+    >
       <div className="flex gap-4 items-center">
         <div className="relative flex-1">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
@@ -87,7 +86,7 @@ export function PassengersListPage() {
       </div>
 
       {loading ? (
-        <div className="text-center py-8">Cargando pasajeros...</div>
+        <LoadingState message="Cargando pasajeros..." />
       ) : filteredPassengers.length === 0 ? (
         <div className="text-center py-8 text-gray-500">
           No se encontraron pasajeros
@@ -153,6 +152,6 @@ export function PassengersListPage() {
         confirmLabel="Delete"
         isLoading={isDeleting}
       />
-    </div>
+    </PageLayout>
   );
 }

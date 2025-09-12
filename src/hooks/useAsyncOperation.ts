@@ -23,33 +23,37 @@ export function useAsyncOperation<T, Args extends any[]>(
 
   const execute = useCallback(
     async (...args: Args) => {
-      setState(prev => ({ ...prev, loading: true, error: null }));
+      setState((prev) => ({ ...prev, loading: true, error: null }));
 
       try {
         const response = await operation(...args);
-        
+
         if (response.data) {
-          setState(prev => ({ 
-            ...prev, 
-            data: response.data!, 
-            loading: false 
+          setState((prev) => ({
+            ...prev,
+            data: response.data!,
+            loading: false,
           }));
           options.onSuccess?.(response.data);
+          return response;
         } else {
-          setState(prev => ({ 
-            ...prev, 
-            loading: false 
+          setState((prev) => ({
+            ...prev,
+            loading: false,
           }));
           options.onSuccess?.(response);
+          return response;
         }
       } catch (error) {
-        const errorMessage = error instanceof Error ? error.message : "An error occurred";
-        setState(prev => ({ 
-          ...prev, 
-          error: errorMessage, 
-          loading: false 
+        const errorMessage =
+          error instanceof Error ? error.message : "An error occurred";
+        setState((prev) => ({
+          ...prev,
+          error: errorMessage,
+          loading: false,
         }));
         options.onError?.(errorMessage);
+        throw error;
       }
     },
     [operation, options.onSuccess, options.onError]
@@ -61,7 +65,9 @@ export function useAsyncOperation<T, Args extends any[]>(
 
   return {
     ...state,
-    execute,
+    execute: execute as (
+      ...args: Args
+    ) => Promise<{ data?: T; message?: string }>,
     reset,
   };
 }

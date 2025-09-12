@@ -6,6 +6,7 @@ import { PassengerFormData } from "../../types";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { Card, CardHeader, CardTitle, CardContent } from "../ui/card";
+import { LoadingSpinner } from "../ui/loading-spinner";
 
 const passengerFormSchema = z.object({
   name: z.string().min(1, "El nombre es requerido"),
@@ -101,7 +102,14 @@ export function PassengerFormPage({
 
           <div className="flex justify-end gap-2 pt-4">
             <Button type="submit" disabled={isSubmitting || loading}>
-              {isSubmitting || loading ? "Guardando..." : submitLabel}
+              {isSubmitting || loading ? (
+                <>
+                  <LoadingSpinner size="sm" className="mr-2" />
+                  Guardando...
+                </>
+              ) : (
+                submitLabel
+              )}
             </Button>
           </div>
         </form>

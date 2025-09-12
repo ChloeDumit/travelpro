@@ -4,6 +4,7 @@ import { Badge } from "../ui/badge";
 import { X, ChevronDown, Plus, Check } from "lucide-react";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
+import { LoadingSpinner } from "../ui/loading-spinner";
 import { passengersService } from "../../lib/services/passenger.service";
 
 interface PassengerSelectProps {
@@ -276,7 +277,10 @@ export default function PassengerSelect({
               disabled={isCreatingPassenger}
             >
               {isCreatingPassenger ? (
-                "Creando..."
+                <>
+                  <LoadingSpinner size="sm" className="mr-1" />
+                  Creando...
+                </>
               ) : (
                 <>
                   <Check className="h-4 w-4 mr-1" />

@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import { Button } from "../../components/ui/button";
+import { PageLoading } from "../../components/ui/loading-spinner";
 import { ClientForm } from "../../components/clients/client-form";
 import { ClientFormData } from "../../types";
 import { clientsService } from "../../lib/services/clients.service";
@@ -51,11 +52,7 @@ export function EditClientPage() {
   };
 
   if (loading) {
-    return (
-      <div className="flex h-screen items-center justify-center">
-        <div className="animate-spin h-8 w-8 border-4 border-primary-600 rounded-full border-t-transparent"></div>
-      </div>
-    );
+    return <PageLoading message="Cargando cliente..." />;
   }
 
   if (!client) {

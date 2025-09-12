@@ -108,7 +108,7 @@ export function SaleSummary({ sale }: SaleSummaryProps) {
             {items.map((item, index) => (
               <SaleItemCard
                 key={index}
-                item={item}
+                item={item as SaleItemFormData}
                 saleCurrency={saleData.currency}
               />
             ))}

@@ -13,6 +13,7 @@ import {
 import { Sale, SaleStatus } from "../../types";
 import { salesService } from "../../lib/services/sales.service";
 import { useAuth } from "../../contexts/auth-context";
+import { LoadingState } from "../../components/ui/loading-spinner";
 
 export function SalesListPage() {
   const navigate = useNavigate();
@@ -54,7 +55,7 @@ export function SalesListPage() {
   };
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <LoadingState message="Cargando ventas..." />;
   }
 
   if (error) {

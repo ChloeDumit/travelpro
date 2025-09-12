@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -24,6 +24,7 @@ import {
   serviceTypeOptions,
   currencyOptions,
   ClientFormData,
+  User,
 } from "../../types";
 import { usersService } from "../../lib/services/users.service";
 import { clientsService } from "../../lib/services/clients.service";
@@ -103,7 +104,7 @@ export function SaleForm({
   // Load initial data
   useEffect(() => {
     usersOp.execute();
-    clientsOp.execute();
+    clientsOp.execute(1, 100); // Load first 100 clients
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Set initial form data
@@ -151,13 +152,13 @@ export function SaleForm({
 
   const handleCreateClient = async (clientData: ClientFormData) => {
     try {
-      const response = await createClientOp.execute(clientData);
-      if (response?.client) {
+      const response = await clientsService.create(clientData);
+      if (response.data?.client) {
         // Add to clients list and select it
-        clientsOp.execute(); // Refresh clients list
-        setSelectedClient(response.client);
-        form.setValue("clientId", response.client.clientId);
-        form.setValue("passengerName", response.client.name);
+        clientsOp.execute(1, 100); // Refresh clients list
+        setSelectedClient(response.data.client);
+        form.setValue("clientId", response.data.client.id);
+        form.setValue("passengerName", response.data.client.name);
         setShowClientModal(false);
       }
     } catch (error) {
@@ -220,7 +221,7 @@ export function SaleForm({
           >
             {/* Client Selection */}
             <ClientSelect
-              clients={clientsOp.data || []}
+              clients={clientsOp.data?.data || []}
               value={form.watch("clientId")}
               onSelect={(client) => {
                 setSelectedClient(client);
@@ -229,6 +230,7 @@ export function SaleForm({
               }}
               onCreateNew={() => setShowClientModal(true)}
               error={form.formState.errors.clientId?.message}
+              loading={clientsOp.loading}
             />
 
             {/* Travel Details */}
@@ -286,7 +288,7 @@ export function SaleForm({
               value={form.watch("sellerId")}
               onSelect={(user) => form.setValue("sellerId", user.id)}
               error={form.formState.errors.sellerId?.message}
-              currentUser={currentUser}
+              currentUser={currentUser as User}
             />
           </form>
         </CardContent>
@@ -329,8 +331,14 @@ export function SaleForm({
                           </p>
                         </div>
                         <div>
-                          <span className="text-gray-500">Pasajeros:</span>
-                          <p className="font-medium">{item.passengerCount}</p>
+                          <span className="text-gray-500">
+                            Pasajeros ({item.passengerCount}):
+                          </span>
+                          <p className="font-medium">
+                            {item.passengers
+                              ?.map((passenger) => passenger.name)
+                              .join(", ") || "N/A"}
+                          </p>
                         </div>
                       </div>
 
@@ -438,7 +446,7 @@ export function SaleForm({
         initialData={
           editingItemIndex !== null ? items[editingItemIndex] : undefined
         }
-        itemIndex={editingItemIndex}
+        itemIndex={editingItemIndex ?? undefined}
         setItems={setItems}
         items={items}
       />

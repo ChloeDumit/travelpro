@@ -19,9 +19,22 @@ export interface UpdateUserData {
   active?: boolean;
 }
 
+export interface UsersResponse {
+  users: User[];
+  pagination: {
+    page: number;
+    limit: number;
+    total: number;
+    totalPages: number;
+    hasNext: boolean;
+    hasPrev: boolean;
+  };
+}
+
 export const usersService = {
   // Get all users
-  getAll: () => api.get<{ users: User[] }>("/api/users"),
+  getAll: (page = 1, limit = 100) =>
+    api.get<UsersResponse>(`/api/users?page=${page}&limit=${limit}`),
 
   // Get user by ID
   getById: (id: string) => api.get<User>(`/api/users/${id}`),

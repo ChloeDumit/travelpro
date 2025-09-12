@@ -10,6 +10,7 @@ import {
 } from "../../components/ui/card";
 import { Input } from "../../components/ui/input";
 import { Badge } from "../../components/ui/badge";
+import { LoadingState } from "../../components/ui/loading-spinner";
 import {
   supplierPaymentsService,
   SalesBySupplier,
@@ -182,10 +183,7 @@ export function SupplierPaymentsPage() {
 
       {/* Suppliers List */}
       {loading ? (
-        <div className="text-center py-8">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600 mx-auto"></div>
-          <p className="mt-2 text-gray-600">Cargando proveedores...</p>
-        </div>
+        <LoadingState message="Cargando proveedores..." />
       ) : error ? (
         <div className="text-center py-8 text-red-600">
           <p>{error}</p>

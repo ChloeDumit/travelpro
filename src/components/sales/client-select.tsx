@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useMemo } from "react";
 import { Client } from "../../types/client";
 
 interface ClientSelectProps {
@@ -7,6 +7,7 @@ interface ClientSelectProps {
   onSelect: (client: Client) => void;
   onCreateNew: () => void;
   error?: string;
+  loading?: boolean;
 }
 
 export function ClientSelect({
@@ -15,6 +16,7 @@ export function ClientSelect({
   onSelect,
   onCreateNew,
   error,
+  loading = false,
 }: ClientSelectProps) {
   const [search, setSearch] = useState("");
   const [open, setOpen] = useState(false);
@@ -30,13 +32,20 @@ export function ClientSelect({
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const filtered = clients.filter(
-    (c) =>
-      c.name.toLowerCase().includes(search.toLowerCase()) ||
-      c.clientId.toLowerCase().includes(search.toLowerCase())
-  );
+  const filtered = useMemo(() => {
+    return Array.isArray(clients)
+      ? clients.filter(
+          (c) =>
+            c.name.toLowerCase().includes(search.toLowerCase()) ||
+            (c.clientId &&
+              c.clientId.toLowerCase().includes(search.toLowerCase()))
+        )
+      : [];
+  }, [clients, search]);
 
-  const selected = clients.find((c) => c.clientId === value);
+  const selected = Array.isArray(clients)
+    ? clients.find((c) => c.clientId === value)
+    : null;
 
   return (
     <div className="relative" ref={ref}>
@@ -65,29 +74,34 @@ export function ClientSelect({
             autoFocus
           />
           <div>
-            {filtered.length === 0 && (
+            {loading ? (
+              <div className="px-3 py-2 text-gray-500">
+                Cargando clientes...
+              </div>
+            ) : filtered.length === 0 && !loading ? (
               <div className="px-3 py-2 text-gray-500">
                 No se encontraron clientes
               </div>
-            )}
-            {filtered.map((client) => (
-              <div
-                key={client.id}
-                className={`px-3 py-2 hover:bg-blue-100 cursor-pointer ${
-                  value === client.clientId ? "bg-blue-50" : ""
-                }`}
-                onClick={() => {
-                  onSelect(client);
-                  setOpen(false);
-                  setSearch("");
-                }}
-              >
-                <div className="font-medium">{client.name}</div>
-                <div className="text-xs text-gray-500">
-                  {client.clientId} &bull; {client.email}
+            ) : (
+              filtered.map((client) => (
+                <div
+                  key={client.id}
+                  className={`px-3 py-2 hover:bg-blue-100 cursor-pointer ${
+                    value === client.clientId ? "bg-blue-50" : ""
+                  }`}
+                  onClick={() => {
+                    onSelect(client);
+                    setOpen(false);
+                    setSearch("");
+                  }}
+                >
+                  <div className="font-medium">{client.name}</div>
+                  <div className="text-xs text-gray-500">
+                    {client.clientId} &bull; {client.email}
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))
+            )}
             <div
               className="px-3 py-2 text-blue-600 hover:bg-blue-50 cursor-pointer border-t border-gray-200"
               onClick={() => {
