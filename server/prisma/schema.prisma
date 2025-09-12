@@ -12,13 +12,13 @@ model Company {
   name             String            @unique
   classification   Classification[]
   clients          Client[]
+  settings         CompanySettings?
+  currencyRates    CurrencyRate[]
   operator         Operator[]
   sales            Sale[]
   suppliers        Supplier[]
   supplierPayments SupplierPayment[]
   users            User[]
-  settings         CompanySettings?
-  currencyRates    CurrencyRate[]
 }
 
 model User {
@@ -56,7 +56,6 @@ model Sale {
   region           Region
   serviceType      ServiceType
   status           SaleStatus        @default(confirmed)
-  currency         Currency
   sellerId         Int
   passengerCount   Int
   totalCost        Float
@@ -72,7 +71,7 @@ model Sale {
 }
 
 model Passenger {
-  id          Int       @id @default(autoincrement()) 
+  id          Int       @id @default(autoincrement())
   name        String
   passengerId String    @unique
   email       String?
@@ -168,6 +167,29 @@ model Classification {
   saleItems SaleItem[] @relation("ClassificationToSaleItem")
 }
 
+model CompanySettings {
+  id              Int      @id @default(autoincrement())
+  companyId       Int      @unique
+  defaultCurrency String   @default("USD")
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  company         Company  @relation(fields: [companyId], references: [id])
+}
+
+model CurrencyRate {
+  id          Int      @id @default(autoincrement())
+  companyId   Int
+  currency    String
+  rate        Float
+  isActive    Boolean  @default(true)
+  lastUpdated DateTime @default(now())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  company     Company  @relation(fields: [companyId], references: [id])
+
+  @@unique([companyId, currency])
+}
+
 enum UserRole {
   admin
   sales
@@ -220,27 +242,4 @@ enum PaymentMethod {
   creditCard
   cash
   transfer
-}
-
-model CompanySettings {
-  id             Int      @id @default(autoincrement())
-  companyId      Int      @unique
-  defaultCurrency String  @default("USD")
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
-  company        Company  @relation(fields: [companyId], references: [id])
-}
-
-model CurrencyRate {
-  id          Int      @id @default(autoincrement())
-  companyId   Int
-  currency    String
-  rate        Float    // Rate to USD
-  isActive    Boolean  @default(true)
-  lastUpdated DateTime @default(now())
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  company     Company  @relation(fields: [companyId], references: [id])
-
-  @@unique([companyId, currency])
 }

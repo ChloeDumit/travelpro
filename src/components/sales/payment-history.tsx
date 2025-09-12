@@ -9,14 +9,12 @@ import { PaymentForm } from "./payment-form";
 interface PaymentHistoryProps {
   payments: Payment[];
   totalSale: number;
-  currency: "USD" | "EUR" | "local";
   onPaymentUpdated?: (payment: Payment) => void;
 }
 
 export function PaymentHistory({
   payments,
   totalSale,
-  currency,
   onPaymentUpdated,
 }: PaymentHistoryProps) {
   const [editingPayment, setEditingPayment] = useState<Payment | null>(null);
@@ -47,7 +45,7 @@ export function PaymentHistory({
       <div className="flex justify-between items-center">
         <h3 className="text-lg font-semibold">Historial de Pagos</h3>
         <div className="text-sm text-gray-600">
-          Total: {formatCurrency(totalSale, currency)}
+          Total: ${totalSale.toFixed(2)}
         </div>
       </div>
 
@@ -56,14 +54,12 @@ export function PaymentHistory({
         <div className="grid grid-cols-3 gap-4 text-center">
           <div>
             <p className="text-sm text-gray-500">Total Venta</p>
-            <p className="text-lg font-semibold">
-              {formatCurrency(totalSale, currency)}
-            </p>
+            <p className="text-lg font-semibold">${totalSale.toFixed(2)}</p>
           </div>
           <div>
             <p className="text-sm text-gray-500">Total Pagado</p>
             <p className="text-lg font-semibold text-green-600">
-              {formatCurrency(totalPaid, currency)}
+              ${totalPaid.toFixed(2)}
             </p>
           </div>
           <div>
@@ -73,7 +69,7 @@ export function PaymentHistory({
                 pendingBalance > 0 ? "text-red-600" : "text-green-600"
               }`}
             >
-              {formatCurrency(pendingBalance, currency)}
+              ${pendingBalance.toFixed(2)}
             </p>
           </div>
         </div>
@@ -100,7 +96,7 @@ export function PaymentHistory({
                     <div>
                       <p className="text-gray-500">Monto</p>
                       <p className="font-medium">
-                        {formatCurrency(payment.amount, payment.currency)}
+                        ${payment.amount.toFixed(2)}
                       </p>
                     </div>
                     <div>
@@ -133,7 +129,6 @@ export function PaymentHistory({
       {showEditForm && editingPayment && (
         <PaymentForm
           saleId={editingPayment.saleId}
-          currency={editingPayment.currency as "USD" | "EUR" | "local"}
           onPaymentAdded={(updatedPayment) => {
             if (onPaymentUpdated) {
               onPaymentUpdated(updatedPayment);

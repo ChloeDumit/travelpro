@@ -25,10 +25,13 @@ export function ClientsListPage() {
     try {
       setLoading(true);
       const response = await clientsService.getAll();
-      setClients(response.data || []);
+      // Ensure we have an array of clients
+      const clientsData = response.data?.data || response.data || [];
+      setClients(Array.isArray(clientsData) ? clientsData : []);
     } catch (err) {
       setError("Error loading clients");
       console.error("Error loading clients:", err);
+      setClients([]); // Ensure clients is always an array
     } finally {
       setLoading(false);
     }
@@ -40,7 +43,11 @@ export function ClientsListPage() {
     try {
       setIsDeleting(true);
       await clientsService.delete(clientToDelete.id);
-      setClients(clients.filter((c) => c.id !== clientToDelete.id));
+      setClients(
+        Array.isArray(clients)
+          ? clients.filter((c) => c.id !== clientToDelete.id)
+          : []
+      );
       setClientToDelete(null);
     } catch (err) {
       setError("Error deleting client");
@@ -50,12 +57,14 @@ export function ClientsListPage() {
     }
   };
 
-  const filteredClients = clients.filter(
-    (client) =>
-      client.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      client.clientId.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      client.email.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  const filteredClients = Array.isArray(clients)
+    ? clients.filter(
+        (client) =>
+          client.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          client.clientId?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          client.email?.toLowerCase().includes(searchQuery.toLowerCase())
+      )
+    : [];
 
   return (
     <div className="space-y-6">

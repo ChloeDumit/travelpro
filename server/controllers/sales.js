@@ -233,7 +233,6 @@ export const createSale = async (req, res, next) => {
         region: saleData.region,
         serviceType: saleData.serviceType,
         status: "confirmed",
-        currency: saleData.currency,
         sellerId: parseInt(saleData.sellerId),
         passengerCount: saleData.passengerCount,
         totalCost: saleData.totalCost,
@@ -373,7 +372,6 @@ export const updateSale = async (req, res, next) => {
     if (updateData.region) dataToUpdate.region = updateData.region;
     if (updateData.serviceType)
       dataToUpdate.serviceType = updateData.serviceType;
-    if (updateData.currency) dataToUpdate.currency = updateData.currency;
     if (updateData.passengerCount)
       dataToUpdate.passengerCount = updateData.passengerCount;
     if (updateData.totalCost !== undefined)

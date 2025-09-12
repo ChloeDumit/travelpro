@@ -25,12 +25,10 @@ import {
   ClientFormData,
   User,
 } from "../../types";
-import { currencyOptions } from "../../types/company";
 import { usersService } from "../../lib/services/users.service";
 import { clientsService } from "../../lib/services/clients.service";
 import { useAuth } from "../../contexts/auth-context";
 import { useAsyncOperation } from "../../hooks/useAsyncOperation";
-import { formatCurrency } from "../../lib/utils";
 
 const saleFormSchema = z.object({
   passengerName: z.string().min(1, "El nombre del pasajero es requerido"),
@@ -48,7 +46,6 @@ const saleFormSchema = z.object({
   ]),
   region: z.enum(["national", "international", "regional"]),
   passengerCount: z.number().min(1, "Se requiere al menos un pasajero"),
-  currency: z.enum(["USD", "EUR", "local"]),
   sellerId: z.string().min(1, "El vendedor es requerido"),
   totalCost: z.number().min(0, "El costo total debe ser positivo"),
   totalSale: z.number().min(0, "El total de la venta debe ser positivo"),
@@ -90,7 +87,6 @@ export function SaleForm({
       saleType: "individual",
       serviceType: "package",
       region: "national",
-      currency: "USD",
       passengerCount: 1,
       passengerName: "",
       clientId: "",
@@ -122,7 +118,6 @@ export function SaleForm({
         serviceType: initialData.serviceType,
         region: initialData.region,
         passengerCount: initialData.passengerCount,
-        currency: initialData.currency,
         sellerId: initialData.seller.id,
         totalCost: initialData.totalCost,
         totalSale: initialData.salePrice,
@@ -266,19 +261,13 @@ export function SaleForm({
               />
             </div>
 
-            {/* Service Type and Currency */}
+            {/* Service Type */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <Select
                 label="Tipo de Servicio *"
                 options={serviceTypeOptions}
                 {...form.register("serviceType")}
                 error={form.formState.errors.serviceType?.message}
-              />
-              <Select
-                label="Moneda *"
-                options={currencyOptions}
-                {...form.register("currency")}
-                error={form.formState.errors.currency?.message}
               />
             </div>
 
@@ -348,10 +337,7 @@ export function SaleForm({
                             Precio de Venta:
                           </span>
                           <p className="font-medium">
-                            {formatCurrency(
-                              item.salePrice,
-                              form.getValues("currency")
-                            )}
+                            ${item.salePrice.toFixed(2)}
                           </p>
                         </div>
                         <div>
@@ -359,10 +345,7 @@ export function SaleForm({
                             Precio de Costo:
                           </span>
                           <p className="font-medium">
-                            {formatCurrency(
-                              item.costPrice,
-                              form.getValues("currency")
-                            )}
+                            ${item.costPrice.toFixed(2)}
                           </p>
                         </div>
                       </div>
@@ -397,10 +380,10 @@ export function SaleForm({
                       Total de Venta:
                     </span>
                     <p className="text-lg font-medium">
-                      {formatCurrency(
-                        items.reduce((sum, item) => sum + item.salePrice, 0),
-                        form.getValues("currency")
-                      )}
+                      $
+                      {items
+                        .reduce((sum, item) => sum + item.salePrice, 0)
+                        .toFixed(2)}
                     </p>
                   </div>
                   <div>
@@ -408,10 +391,10 @@ export function SaleForm({
                       Total de Costo:
                     </span>
                     <p className="text-lg font-medium">
-                      {formatCurrency(
-                        items.reduce((sum, item) => sum + item.costPrice, 0),
-                        form.getValues("currency")
-                      )}
+                      $
+                      {items
+                        .reduce((sum, item) => sum + item.costPrice, 0)
+                        .toFixed(2)}
                     </p>
                   </div>
                 </div>

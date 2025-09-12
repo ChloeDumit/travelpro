@@ -9,7 +9,6 @@ import { Payment } from "../../types";
 interface PaymentFormProps {
   saleId: string;
   totalSale?: number;
-  currency: "USD" | "EUR" | "local";
   onPaymentAdded: (payment: Payment) => void;
   onClose: () => void;
   isOpen: boolean;
@@ -18,7 +17,6 @@ interface PaymentFormProps {
 
 export function PaymentForm({
   saleId,
-  currency,
   onPaymentAdded,
   onClose,
   isOpen,
@@ -29,7 +27,6 @@ export function PaymentForm({
       ? new Date(editingPayment.date).toISOString().split("T")[0]
       : new Date().toISOString().split("T")[0],
     amount: editingPayment?.amount?.toString() || "",
-    currency: editingPayment?.currency || currency,
     paymentMethod:
       (editingPayment?.method as "creditCard" | "cash" | "transfer") || "cash",
     reference: editingPayment?.reference || "",
@@ -43,7 +40,6 @@ export function PaymentForm({
       setFormData({
         paymentDate: new Date(editingPayment.date).toISOString().split("T")[0],
         amount: editingPayment.amount.toString(),
-        currency: editingPayment.currency,
         paymentMethod: editingPayment.method as
           | "creditCard"
           | "cash"
@@ -69,7 +65,6 @@ export function PaymentForm({
         // Update existing payment
         payment = await paymentsService.update(editingPayment.id, {
           amount,
-          currency: formData.currency,
           method: formData.paymentMethod,
           reference: formData.reference,
           date: new Date(formData.paymentDate).toISOString(),
@@ -80,7 +75,6 @@ export function PaymentForm({
           saleId,
           date: formData.paymentDate,
           amount,
-          currency: formData.currency,
           method: formData.paymentMethod,
           reference: formData.reference,
         });
@@ -96,7 +90,7 @@ export function PaymentForm({
       setFormData({
         paymentDate: new Date().toISOString().split("T")[0],
         amount: "",
-        currency: currency,
+        currency: "USD",
         paymentMethod: "cash",
         reference: "",
       });
@@ -115,20 +109,6 @@ export function PaymentForm({
   const handleInputChange = (field: string, value: string) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
-
-  // Import currency options from company types
-  const currencyOptions = [
-    { value: "USD", label: "USD - Dólar Americano" },
-    { value: "EUR", label: "EUR - Euro" },
-    { value: "CLP", label: "CLP - Peso Chileno" },
-    { value: "ARS", label: "ARS - Peso Argentino" },
-    { value: "BRL", label: "BRL - Real Brasileño" },
-    { value: "MXN", label: "MXN - Peso Mexicano" },
-    { value: "COP", label: "COP - Peso Colombiano" },
-    { value: "PEN", label: "PEN - Sol Peruano" },
-    { value: "UYU", label: "UYU - Peso Uruguayo" },
-    { value: "BOB", label: "BOB - Boliviano" },
-  ];
 
   const methodOptions = [
     { value: "cash", label: "Efectivo" },
@@ -174,26 +154,13 @@ export function PaymentForm({
           </div>
         </div>
 
-        <div className="grid grid-cols-2 gap-4">
-          <div>
-            <Select
-              label="Moneda"
-              options={currencyOptions}
-              value={formData.currency}
-              onChange={(e) => handleInputChange("currency", e.target.value)}
-            />
-          </div>
-
-          <div>
-            <Select
-              label="Método de Pago"
-              options={methodOptions}
-              value={formData.paymentMethod}
-              onChange={(e) =>
-                handleInputChange("paymentMethod", e.target.value)
-              }
-            />
-          </div>
+        <div>
+          <Select
+            label="Método de Pago"
+            options={methodOptions}
+            value={formData.paymentMethod}
+            onChange={(e) => handleInputChange("paymentMethod", e.target.value)}
+          />
         </div>
 
         <div>

@@ -15,7 +15,6 @@ export type ServiceType =
   | "excursion"
   | "insurance"
   | "other";
-export type Currency = "USD" | "EUR" | "local";
 export type SaleStatus = "draft" | "confirmed" | "completed" | "cancelled";
 export type ItemStatus = "pending" | "confirmed" | "cancelled";
 
@@ -49,7 +48,6 @@ export interface Sale {
   region: Region;
   serviceType: ServiceType;
   status: SaleStatus;
-  currency: Currency;
   sellerId: string;
   passengerCount: number;
   totalCost: number;
@@ -67,7 +65,6 @@ export interface SaleFormData {
   saleType: SaleType;
   region: Region;
   serviceType: ServiceType;
-  currency: Currency;
   sellerId: string;
   passengerCount: number;
   totalCost: number;
@@ -103,9 +100,10 @@ export interface CreateSaleData {
 
 export interface UpdateSaleData extends Partial<SaleFormData> {
   items?: SaleItemFormData[];
+  status?: SaleStatus;
 }
 
-// Options for form selects
+// Options for form selectsos
 export const saleTypeOptions = [
   { value: "individual", label: "Individual" },
   { value: "corporate", label: "Corporativo" },

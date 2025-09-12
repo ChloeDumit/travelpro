@@ -389,26 +389,22 @@ export function SaleItemForm({
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="grid grid-cols-2 gap-2">
-              <Input
-                type="number"
-                label="Precio de Venta *"
-                min={0}
-                step={0.01}
-                {...register("salePrice", { valueAsNumber: true })}
-                error={errors.salePrice?.message}
-              />
-            </div>
-            <div className="grid grid-cols-2 gap-2">
-              <Input
-                type="number"
-                label="Precio de Costo *"
-                min={0}
-                step={0.01}
-                {...register("costPrice", { valueAsNumber: true })}
-                error={errors.costPrice?.message}
-              />
-            </div>
+            <Input
+              type="number"
+              label="Precio de Venta *"
+              min={0}
+              step={0.01}
+              {...register("salePrice", { valueAsNumber: true })}
+              error={errors.salePrice?.message}
+            />
+            <Input
+              type="number"
+              label="Precio de Costo *"
+              min={0}
+              step={0.01}
+              {...register("costPrice", { valueAsNumber: true })}
+              error={errors.costPrice?.message}
+            />
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

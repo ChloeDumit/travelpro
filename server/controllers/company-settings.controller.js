@@ -74,7 +74,7 @@ export const companySettingsController = {
 
       const rate = await companySettingsService.updateCurrencyRate(
         companyId,
-        id,
+        parseInt(id),
         data
       );
 
@@ -91,7 +91,7 @@ export const companySettingsController = {
     const { companyId } = req.user;
     const { id } = req.params;
 
-    await companySettingsService.deleteCurrencyRate(companyId, id);
+    await companySettingsService.deleteCurrencyRate(companyId, parseInt(id));
 
     return ApiResponse.success(res, null, "Currency rate deleted successfully");
   }),
@@ -101,7 +101,10 @@ export const companySettingsController = {
     const { companyId } = req.user;
     const { id } = req.params;
 
-    const rate = await companySettingsService.toggleCurrencyRate(companyId, id);
+    const rate = await companySettingsService.toggleCurrencyRate(
+      companyId,
+      parseInt(id)
+    );
 
     return ApiResponse.success(
       res,

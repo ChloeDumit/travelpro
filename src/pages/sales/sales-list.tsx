@@ -4,12 +4,7 @@ import { Plus } from "lucide-react";
 import { Button } from "../../components/ui/button";
 import { Badge } from "../../components/ui/badge";
 import { Card } from "../../components/ui/card";
-import {
-  formatCurrency,
-  formatDate,
-  getStatusColor,
-  mapStatusToLabel,
-} from "../../lib/utils";
+import { formatDate, getStatusColor, mapStatusToLabel } from "../../lib/utils";
 import { Sale, SaleStatus } from "../../types";
 import { salesService } from "../../lib/services/sales.service";
 import { useAuth } from "../../contexts/auth-context";
@@ -174,7 +169,7 @@ export function SalesListPage() {
                   <div>
                     <p className="text-sm text-gray-500">Total Venta</p>
                     <p className="text-lg font-bold">
-                      {formatCurrency(sale.salePrice, sale.currency)}
+                      ${sale.salePrice.toFixed(2)}
                     </p>
                   </div>
 

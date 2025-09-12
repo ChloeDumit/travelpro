@@ -155,14 +155,12 @@ export function SaleDetailPage() {
       <PaymentHistory
         payments={payments}
         totalSale={totalSale}
-        currency={sale.currency}
         onPaymentUpdated={handlePaymentUpdated}
       />
 
       <PaymentForm
         saleId={sale.id}
         totalSale={totalSale}
-        currency={sale.currency}
         onPaymentAdded={handlePaymentAdded}
         onClose={() => setShowPaymentForm(false)}
         isOpen={showPaymentForm}
