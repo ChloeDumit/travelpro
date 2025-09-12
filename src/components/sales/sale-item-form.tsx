@@ -80,7 +80,7 @@ export function SaleItemForm({
       salePrice: initialData?.salePrice || 0,
       costPrice: initialData?.costPrice || 0,
       reservationCode: initialData?.reservationCode || "",
-      paymentDate: initialData?.paymentDate || null,
+      paymentDate: initialData?.paymentDate || undefined,
       passengers: initialData?.passengers || [],
       classification: initialData?.classification || [],
       supplier: initialData?.supplier || [],
@@ -93,34 +93,34 @@ export function SaleItemForm({
   const [classifications, setClassifications] = useState<Classification[]>([]);
   const [passengers, setPassengers] = useState<Passenger[]>([]);
 
-  const getSuppliers = async () => {
+  const getSuppliers = React.useCallback(async () => {
     try {
       const response = await suppliersService.getAll();
       setSuppliers(Array.isArray(response.data) ? response.data : []);
     } catch (error) {
       console.error("Error fetching suppliers:", error);
     }
-  };
+  }, []);
 
-  const getOperators = async () => {
+  const getOperators = React.useCallback(async () => {
     try {
       const response = await operatorsService.getAll();
       setOperators(Array.isArray(response.data) ? response.data : []);
     } catch (error) {
       console.error("Error fetching operators:", error);
     }
-  };
+  }, []);
 
-  const getClassifications = async () => {
+  const getClassifications = React.useCallback(async () => {
     try {
       const response = await classificationsService.getAll();
       setClassifications(Array.isArray(response.data) ? response.data : []);
     } catch (error) {
       console.error("Error fetching classifications:", error);
     }
-  };
+  }, []);
 
-  const getPassengers = async () => {
+  const getPassengers = React.useCallback(async () => {
     try {
       const response = await passengersService.getAll();
 
@@ -128,37 +128,34 @@ export function SaleItemForm({
       const passengersData = response.data?.passengers || response.data || [];
       const allPassengers = Array.isArray(passengersData) ? passengersData : [];
 
-      // If we're editing an item, merge existing passengers with available ones
-      if (initialData?.passengers && initialData.passengers.length > 0) {
-        // Add existing passengers that might not be in the main list
-        const existingPassengers = initialData.passengers.filter(
-          (p) => !allPassengers.some((ap) => ap.passengerId === p.passengerId)
-        );
-
-        // Combine existing passengers with available ones
-        const mergedPassengers = [...existingPassengers, ...allPassengers];
-
-        setPassengers(mergedPassengers);
-      } else {
-        setPassengers(allPassengers);
-      }
+      setPassengers(allPassengers);
     } catch (error) {
       console.error("Error fetching passengers:", error);
-      // If there's an error but we have existing passengers, use those
-      if (initialData?.passengers && initialData.passengers.length > 0) {
-        setPassengers(initialData.passengers);
-      } else {
-        setPassengers([]);
-      }
+      setPassengers([]);
     }
-  };
+  }, []);
 
   React.useEffect(() => {
     getSuppliers();
     getOperators();
     getClassifications();
     getPassengers();
-  }, []);
+  }, [getSuppliers, getOperators, getClassifications, getPassengers]);
+
+  // Handle merging existing passengers when editing
+  React.useEffect(() => {
+    if (initialData?.passengers && initialData.passengers.length > 0) {
+      setPassengers((prevPassengers) => {
+        // Add existing passengers that might not be in the main list
+        const existingPassengers = (initialData.passengers || []).filter(
+          (p) => !prevPassengers.some((ap) => ap.passengerId === p.passengerId)
+        );
+
+        // Combine existing passengers with available ones
+        return [...existingPassengers, ...prevPassengers];
+      });
+    }
+  }, [initialData?.passengers]);
 
   // Reset form when initialData changes (for editing)
   React.useEffect(() => {
@@ -194,7 +191,7 @@ export function SaleItemForm({
         salePrice: initialData.salePrice || 0,
         costPrice: initialData.costPrice || 0,
         reservationCode: initialData.reservationCode || "",
-        paymentDate: initialData.paymentDate || null,
+        paymentDate: initialData.paymentDate || undefined,
         passengers: initialData.passengers || [],
         classification: initialData.classification || [],
         supplier: initialData.supplier || [],
@@ -214,7 +211,7 @@ export function SaleItemForm({
       setValue("salePrice", formData.salePrice);
       setValue("costPrice", formData.costPrice);
       setValue("reservationCode", formData.reservationCode);
-      setValue("paymentDate", formData.paymentDate);
+      setValue("paymentDate", formData.paymentDate || undefined);
       setValue("passengers", formData.passengers);
       setValue("classification", formData.classification);
       setValue("supplier", formData.supplier);
@@ -232,7 +229,7 @@ export function SaleItemForm({
         salePrice: 0,
         costPrice: 0,
         reservationCode: "",
-        paymentDate: null,
+        paymentDate: undefined,
         passengers: [],
         classification: [],
         supplier: [],
@@ -242,6 +239,12 @@ export function SaleItemForm({
   }, [initialData, reset, setValue]);
 
   const handleFormSubmit = (data: SaleItemFormData) => {
+    // Prevent form submission if passenger creation form is open
+    // This is handled by the PassengerSelect component, but adding extra safety
+    if (document.querySelector("[data-passenger-creation-form]")) {
+      return;
+    }
+
     // Find the selected objects based on IDs
     const selectedClassification = classifications.find(
       (c) => c.id === data.classificationId
@@ -289,7 +292,7 @@ export function SaleItemForm({
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <SearchSelect
               items={classifications}
-              value={watch("classificationId")}
+              value={watch("classificationId") || 0}
               onSelect={(classification) => {
                 setValue("classificationId", classification.id);
               }}
@@ -302,7 +305,7 @@ export function SaleItemForm({
             />
             <SearchSelect
               items={suppliers}
-              value={watch("supplierId")}
+              value={watch("supplierId") || 0}
               onSelect={(supplier) => {
                 setValue("supplierId", supplier.id);
               }}
@@ -315,7 +318,7 @@ export function SaleItemForm({
             />
             <SearchSelect
               items={operators}
-              value={watch("operatorId")}
+              value={watch("operatorId") || 0}
               onSelect={(operator) => {
                 setValue("operatorId", operator.id);
               }}
@@ -335,6 +338,9 @@ export function SaleItemForm({
               setValue("passengers", selectedPassengers);
               // Also update passenger count immediately
               setValue("passengerCount", selectedPassengers.length);
+            }}
+            onPassengersUpdate={(updatedPassengers) => {
+              setPassengers(updatedPassengers);
             }}
             error={errors.passengers?.message}
             label="Pasajeros *"

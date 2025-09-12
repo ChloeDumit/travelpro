@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -6,50 +6,34 @@ import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Select } from "../ui/select";
 import { Card, CardHeader, CardTitle, CardContent } from "../ui/card";
+import { LoadingState } from "../ui/loading-spinner";
+import { ErrorState } from "../ui/error-state";
 import { Pencil, Plus, Trash2 } from "lucide-react";
 import { SaleItemForm } from "./sale-item-form";
-import { SaleItemFormData, User, ClientFormData, Sale } from "../../types";
-import { usersService } from "../../lib/services/users.service";
-import { clientsService } from "../../lib/services/clients.service";
-import { Client } from "../../types/client";
-import { Modal } from "../ui/modal";
 import { ClientSelect } from "./client-select";
 import { UserSelect } from "./user-select";
+import { Modal } from "../ui/modal";
+import { ClientForm } from "../clients/client-form";
+import {
+  SaleItemFormData,
+  Client,
+  Sale,
+  SaleFormData,
+  saleTypeOptions,
+  regionOptions,
+  serviceTypeOptions,
+  currencyOptions,
+  ClientFormData,
+} from "../../types";
+import { usersService } from "../../lib/services/users.service";
+import { clientsService } from "../../lib/services/clients.service";
 import { useAuth } from "../../contexts/auth-context";
-
-// Definir las opciones localmente para evitar conflictos de importación
-const saleTypeOptions = [
-  { value: "individual", label: "Individual" },
-  { value: "corporate", label: "Corporativo" },
-  { value: "sports", label: "Deportivo" },
-  { value: "group", label: "Grupo" },
-] as const;
-
-const regionOptions = [
-  { value: "national", label: "Nacional" },
-  { value: "international", label: "Internacional" },
-  { value: "regional", label: "Regional" },
-] as const;
-
-const serviceTypeOptions = [
-  { value: "flight", label: "Vuelo" },
-  { value: "hotel", label: "Hotel" },
-  { value: "package", label: "Paquete" },
-  { value: "transfer", label: "Transfer" },
-  { value: "excursion", label: "Excursión" },
-  { value: "insurance", label: "Seguro" },
-  { value: "other", label: "Otro" },
-] as const;
-
-const currencyOptions = [
-  { value: "USD", label: "USD" },
-  { value: "EUR", label: "EUR" },
-  { value: "local", label: "Moneda Local" },
-] as const;
+import { useAsyncOperation } from "../../hooks/useAsyncOperation";
+import { formatCurrency } from "../../lib/utils";
 
 const saleFormSchema = z.object({
   passengerName: z.string().min(1, "El nombre del pasajero es requerido"),
-  clientId: z.string().min(1, "El ID del cliente es requerido"),
+  clientId: z.string().min(1, "El cliente es requerido"),
   travelDate: z.string().min(1, "La fecha de viaje es requerida"),
   saleType: z.enum(["individual", "corporate", "sports", "group"]),
   serviceType: z.enum([
@@ -65,11 +49,11 @@ const saleFormSchema = z.object({
   passengerCount: z.number().min(1, "Se requiere al menos un pasajero"),
   currency: z.enum(["USD", "EUR", "local"]),
   sellerId: z.string().min(1, "El vendedor es requerido"),
-  totalCost: z.number().min(0, "El total de la venta debe ser positivo"),
+  totalCost: z.number().min(0, "El costo total debe ser positivo"),
   totalSale: z.number().min(0, "El total de la venta debe ser positivo"),
 });
 
-type SaleFormData = z.infer<typeof saleFormSchema>;
+type FormData = z.infer<typeof saleFormSchema>;
 
 interface SaleFormProps {
   onSubmit: (
@@ -89,25 +73,17 @@ export function SaleForm({
 }: SaleFormProps) {
   const { user: currentUser } = useAuth();
   const [items, setItems] = useState<SaleItemFormData[]>([]);
-  const [users, setUsers] = useState<User[]>([]);
   const [showItemForm, setShowItemForm] = useState(false);
   const [editingItemIndex, setEditingItemIndex] = useState<number | null>(null);
-  const [clients, setClients] = useState<Client[]>([]);
   const [showClientModal, setShowClientModal] = useState(false);
-  const [newClientLoading, setNewClientLoading] = useState(false);
-  const [clientForm, setClientForm] = useState<
-    ClientFormData & { phone: string }
-  >({
-    name: "",
-    clientId: "",
-    email: "",
-    address: "",
-    phone: "",
-  });
-  const [clientFormError, setClientFormError] = useState<string | null>(null);
   const [selectedClient, setSelectedClient] = useState<Client | null>(null);
 
-  const form = useForm<SaleFormData>({
+  // Async operations
+  const usersOp = useAsyncOperation(usersService.getAll);
+  const clientsOp = useAsyncOperation(clientsService.getAll);
+  const createClientOp = useAsyncOperation(clientsService.create);
+
+  const form = useForm<FormData>({
     resolver: zodResolver(saleFormSchema),
     defaultValues: {
       saleType: "individual",
@@ -119,27 +95,18 @@ export function SaleForm({
       clientId: "",
       travelDate: "",
       sellerId: currentUser?.id || "",
+      totalCost: 0,
+      totalSale: 0,
     },
   });
 
-  const getUsers = async () => {
-    try {
-      const response = await usersService.getAll();
-      setUsers(response.data?.users || []);
-    } catch (error) {
-      console.error("Error fetching users:", error);
-    }
-  };
+  // Load initial data
+  useEffect(() => {
+    usersOp.execute();
+    clientsOp.execute();
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const getClients = async () => {
-    try {
-      const response = await clientsService.getAll();
-      setClients(response.data || []);
-    } catch (error) {
-      console.error("Error fetching clients:", error);
-    }
-  };
-
+  // Set initial form data
   useEffect(() => {
     if (initialData) {
       const formattedDate = initialData.travelDate
@@ -157,46 +124,19 @@ export function SaleForm({
         currency: initialData.currency,
         sellerId: initialData.seller.id,
         totalCost: initialData.totalCost,
-        totalSale: initialData.totalCost - initialData.pendingBalance,
+        totalSale: initialData.salePrice,
       });
 
-      // Set selected client if available
       if (initialData.client) {
         setSelectedClient(initialData.client);
       }
 
-      // Set items if available
-      if (initialData.items && initialData.items.length > 0) {
-        const formattedItems: SaleItemFormData[] = initialData.items.map(
-          (item) => ({
-            classificationId: item.classificationId,
-            classificationName: item.classificationName,
-            supplierId: item.supplierId,
-            supplierName: item.supplierName,
-            operatorId: item.operatorId,
-            operatorName: item.operatorName,
-            dateIn: item.dateIn,
-            dateOut: item.dateOut,
-            passengerCount: item.passengerCount,
-            description: item.description,
-            salePrice: item.salePrice,
-            costPrice: item.costPrice,
-            reservationCode: item.reservationCode,
-            paymentDate: item.paymentDate,
-            passengers: item.passengers,
-            classification: item.classification,
-            supplier: item.supplier,
-            operator: item.operator,
-          })
-        );
-        setItems(formattedItems);
+      if (initialData.items) {
+        setItems(initialData.items as SaleItemFormData[]);
       }
     } else if (currentUser) {
-      // Si es una nueva venta, establecer el vendedor por defecto
       form.setValue("sellerId", currentUser.id);
     }
-    getUsers();
-    getClients();
   }, [initialData, form, currentUser]);
 
   const handleEditItem = (index: number) => {
@@ -209,14 +149,30 @@ export function SaleForm({
     setItems(newItems);
   };
 
-  const handleFormSubmit = (data: SaleFormData) => {
+  const handleCreateClient = async (clientData: ClientFormData) => {
+    try {
+      const response = await createClientOp.execute(clientData);
+      if (response?.client) {
+        // Add to clients list and select it
+        clientsOp.execute(); // Refresh clients list
+        setSelectedClient(response.client);
+        form.setValue("clientId", response.client.clientId);
+        form.setValue("passengerName", response.client.name);
+        setShowClientModal(false);
+      }
+    } catch (error) {
+      console.error("Error creating client:", error);
+    }
+  };
+
+  const handleFormSubmit = (data: FormData) => {
     const totalCost = items.reduce((sum, item) => sum + item.costPrice, 0);
     const totalSale = items.reduce((sum, item) => sum + item.salePrice, 0);
 
     if (!selectedClient) {
       form.setError("clientId", {
         type: "manual",
-        message: "Client is required",
+        message: "El cliente es requerido",
       });
       return;
     }
@@ -224,40 +180,58 @@ export function SaleForm({
     onSubmit(
       {
         ...data,
-        totalCost: totalCost,
-        totalSale: totalSale,
+        totalCost,
+        totalSale,
         client: selectedClient,
       },
       items
     );
   };
+
+  if (usersOp.loading || clientsOp.loading) {
+    return <LoadingState message="Cargando formulario..." />;
+  }
+
+  if (usersOp.error || clientsOp.error) {
+    return (
+      <ErrorState
+        error={usersOp.error || clientsOp.error || "Error al cargar datos"}
+        onRetry={() => {
+          usersOp.execute();
+          clientsOp.execute();
+        }}
+      />
+    );
+  }
+
   return (
     <div className="space-y-6">
+      {/* Main Sale Form */}
       <Card>
         <CardHeader>
           <CardTitle>
             {action === "new" ? "Nuevo Registro de Venta" : "Editar Venta"}
           </CardTitle>
         </CardHeader>
-        <form onSubmit={form.handleSubmit(handleFormSubmit)}>
-          <CardContent className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <ClientSelect
-                clients={clients}
-                value={form.watch("clientId")}
-                onSelect={(client) => {
-                  setSelectedClient(client);
-                  form.setValue("clientId", client.clientId);
-                  form.setValue("passengerName", client.name);
-                }}
-                onCreateNew={() => setShowClientModal(true)}
-                error={
-                  form.formState.errors.clientId?.message ||
-                  form.formState.errors.passengerName?.message
-                }
-              />
-            </div>
+        <CardContent>
+          <form
+            onSubmit={form.handleSubmit(handleFormSubmit)}
+            className="space-y-4"
+          >
+            {/* Client Selection */}
+            <ClientSelect
+              clients={clientsOp.data || []}
+              value={form.watch("clientId")}
+              onSelect={(client) => {
+                setSelectedClient(client);
+                form.setValue("clientId", client.clientId);
+                form.setValue("passengerName", client.name);
+              }}
+              onCreateNew={() => setShowClientModal(true)}
+              error={form.formState.errors.clientId?.message}
+            />
 
+            {/* Travel Details */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <Input
                 type="date"
@@ -274,6 +248,7 @@ export function SaleForm({
               />
             </div>
 
+            {/* Sale Type and Region */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <Select
                 label="Tipo de Venta *"
@@ -289,6 +264,7 @@ export function SaleForm({
               />
             </div>
 
+            {/* Service Type and Currency */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <Select
                 label="Tipo de Servicio *"
@@ -303,17 +279,20 @@ export function SaleForm({
                 error={form.formState.errors.currency?.message}
               />
             </div>
+
+            {/* Seller Selection */}
             <UserSelect
-              users={users}
+              users={usersOp.data?.users || []}
               value={form.watch("sellerId")}
               onSelect={(user) => form.setValue("sellerId", user.id)}
               error={form.formState.errors.sellerId?.message}
               currentUser={currentUser}
             />
-          </CardContent>
-        </form>
+          </form>
+        </CardContent>
       </Card>
 
+      {/* Sale Items */}
       <Card>
         <CardHeader className="flex flex-row items-center justify-between">
           <CardTitle>Items de Venta</CardTitle>
@@ -328,53 +307,59 @@ export function SaleForm({
               {items.map((item, index) => (
                 <div key={index} className="p-4 border rounded-lg bg-gray-50">
                   <div className="flex justify-between items-start">
-                    <div>
+                    <div className="flex-1">
                       <h3 className="font-medium">
-                        {item.classification?.at(0)?.name}
+                        {item.classification?.[0]?.name || "Sin clasificación"}
                       </h3>
-                      <p className="text-sm text-gray-500">
+                      <p className="text-sm text-gray-500 mt-1">
                         {item.description}
                       </p>
-                      <div className="mt-2 grid grid-cols-2 gap-4">
+
+                      <div className="mt-3 grid grid-cols-2 md:grid-cols-3 gap-4 text-sm">
                         <div>
-                          <span className="text-sm text-gray-500">
-                            Proveedor:
-                          </span>
-                          <p className="text-sm">
-                            {item.supplier?.at(0)?.name}
+                          <span className="text-gray-500">Proveedor:</span>
+                          <p className="font-medium">
+                            {item.supplier?.[0]?.name || "N/A"}
                           </p>
                         </div>
                         <div>
-                          <span className="text-sm text-gray-500">
-                            Operador:
-                          </span>
-                          <p className="text-sm">
-                            {item.operator?.at(0)?.name}
+                          <span className="text-gray-500">Operador:</span>
+                          <p className="font-medium">
+                            {item.operator?.[0]?.name || "N/A"}
                           </p>
                         </div>
                         <div>
-                          <span className="text-sm text-gray-500">
-                            Pasajeros:
-                          </span>
-                          <p className="text-sm">
-                            {item.passengers
-                              .map((passenger) => passenger.name)
-                              .join(", ")}
-                          </p>
+                          <span className="text-gray-500">Pasajeros:</span>
+                          <p className="font-medium">{item.passengerCount}</p>
                         </div>
                       </div>
-                      <div className="mt-2">
-                        <span className="text-sm text-gray-500">
-                          Precio de Venta:
-                        </span>
-                        <p className="text-sm font-medium">
-                          {new Intl.NumberFormat("es-CL", {
-                            style: "currency",
-                            currency: form.getValues("currency"),
-                          }).format(item.salePrice)}
-                        </p>
+
+                      <div className="mt-3 flex gap-6">
+                        <div>
+                          <span className="text-sm text-gray-500">
+                            Precio de Venta:
+                          </span>
+                          <p className="font-medium">
+                            {formatCurrency(
+                              item.salePrice,
+                              form.getValues("currency")
+                            )}
+                          </p>
+                        </div>
+                        <div>
+                          <span className="text-sm text-gray-500">
+                            Precio de Costo:
+                          </span>
+                          <p className="font-medium">
+                            {formatCurrency(
+                              item.costPrice,
+                              form.getValues("currency")
+                            )}
+                          </p>
+                        </div>
                       </div>
                     </div>
+
                     <div className="flex gap-2">
                       <Button
                         variant="outline"
@@ -395,30 +380,32 @@ export function SaleForm({
                 </div>
               ))}
 
-              {/* Summary Section */}
+              {/* Summary */}
               <div className="mt-6 p-4 border rounded-lg bg-white">
-                <h3 className="text-lg font-medium mb-4 ">Resumen de Venta</h3>
-                <div>
-                  <span className="text-sm text-gray-500">Total de Venta:</span>
-                  <p className="text-lg font-medium">
-                    {new Intl.NumberFormat("es-CL", {
-                      style: "currency",
-                      currency: form.getValues("currency"),
-                    }).format(
-                      items.reduce((sum, item) => sum + item.salePrice, 0)
-                    )}
-                  </p>
-                </div>
-                <div>
-                  <span className="text-sm text-gray-500">Total de Costo:</span>
-                  <p className="text-lg font-medium">
-                    {new Intl.NumberFormat("es-CL", {
-                      style: "currency",
-                      currency: form.getValues("currency"),
-                    }).format(
-                      items.reduce((sum, item) => sum + item.costPrice, 0)
-                    )}
-                  </p>
+                <h3 className="text-lg font-medium mb-4">Resumen de Venta</h3>
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <span className="text-sm text-gray-500">
+                      Total de Venta:
+                    </span>
+                    <p className="text-lg font-medium">
+                      {formatCurrency(
+                        items.reduce((sum, item) => sum + item.salePrice, 0),
+                        form.getValues("currency")
+                      )}
+                    </p>
+                  </div>
+                  <div>
+                    <span className="text-sm text-gray-500">
+                      Total de Costo:
+                    </span>
+                    <p className="text-lg font-medium">
+                      {formatCurrency(
+                        items.reduce((sum, item) => sum + item.costPrice, 0),
+                        form.getValues("currency")
+                      )}
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -430,6 +417,18 @@ export function SaleForm({
         </CardContent>
       </Card>
 
+      {/* Submit Button */}
+      <div className="flex justify-end gap-2">
+        <Button
+          type="submit"
+          onClick={form.handleSubmit(handleFormSubmit)}
+          disabled={loading || items.length === 0}
+        >
+          {loading ? "Guardando..." : "Guardar Venta"}
+        </Button>
+      </div>
+
+      {/* Modals */}
       <SaleItemForm
         isOpen={showItemForm}
         onClose={() => {
@@ -439,7 +438,7 @@ export function SaleForm({
         initialData={
           editingItemIndex !== null ? items[editingItemIndex] : undefined
         }
-        itemIndex={editingItemIndex !== null ? editingItemIndex : undefined}
+        itemIndex={editingItemIndex}
         setItems={setItems}
         items={items}
       />
@@ -447,133 +446,18 @@ export function SaleForm({
       <Modal
         isOpen={showClientModal}
         onClose={() => setShowClientModal(false)}
-        title="Crear nuevo cliente"
+        title="Crear Nuevo Cliente"
       >
-        <form
-          onSubmit={async (e) => {
-            e.preventDefault();
-            setNewClientLoading(true);
-            setClientFormError(null);
-            try {
-              const response = await clientsService.create({
-                name: clientForm.name,
-                clientId: clientForm.clientId,
-                email: clientForm.email || "",
-                address: clientForm.address,
-              });
-              if (response.data) {
-                const created = response.data;
-                // Add new client to list and select it
-                setClients((prev) => [...prev, created.client]);
-                form.setValue("clientId", created.client.clientId);
-                form.setValue("passengerName", created.client.name);
-              }
-              setShowClientModal(false);
-              setClientForm({
-                name: "",
-                clientId: "",
-                email: "",
-                address: "",
-                phone: "",
-              });
-            } catch (err: unknown) {
-              const errorMessage =
-                err instanceof Error ? err.message : "Error al crear cliente";
-              setClientFormError(errorMessage);
-            } finally {
-              setNewClientLoading(false);
-            }
-          }}
-          className="space-y-4"
-        >
-          <div>
-            <label className="block text-sm font-medium">Nombre</label>
-            <input
-              className="w-full border rounded px-2 py-1"
-              value={clientForm.name}
-              onChange={(e) =>
-                setClientForm((f) => ({ ...f, name: e.target.value }))
-              }
-              required
-            />
+        <ClientForm
+          onSubmit={handleCreateClient}
+          submitLabel={createClientOp.loading ? "Creando..." : "Crear Cliente"}
+        />
+        {createClientOp.error && (
+          <div className="mt-4 p-3 bg-red-50 border border-red-200 rounded-md">
+            <p className="text-red-800 text-sm">{createClientOp.error}</p>
           </div>
-          <div>
-            <label className="block text-sm font-medium">ID/RUT</label>
-            <input
-              className="w-full border rounded px-2 py-1"
-              value={clientForm.clientId}
-              onChange={(e) =>
-                setClientForm((f) => ({ ...f, clientId: e.target.value }))
-              }
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium">Email</label>
-            <input
-              className="w-full border rounded px-2 py-1"
-              value={clientForm.email}
-              onChange={(e) =>
-                setClientForm((f) => ({ ...f, email: e.target.value }))
-              }
-              type="email"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium">Teléfono</label>
-            <input
-              className="w-full border rounded px-2 py-1"
-              value={clientForm.phone}
-              onChange={(e) =>
-                setClientForm((f) => ({ ...f, phone: e.target.value }))
-              }
-              type="tel"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium">Dirección</label>
-            <input
-              className="w-full border rounded px-2 py-1"
-              value={clientForm.address}
-              onChange={(e) =>
-                setClientForm((f) => ({ ...f, address: e.target.value }))
-              }
-            />
-          </div>
-          {clientFormError && (
-            <div className="text-red-500 text-sm">{clientFormError}</div>
-          )}
-          <div className="flex justify-end gap-2">
-            <button
-              type="button"
-              className="px-4 py-2 border rounded"
-              onClick={() => setShowClientModal(false)}
-            >
-              Cancelar
-            </button>
-            <button
-              type="submit"
-              className="px-4 py-2 bg-blue-600 text-white rounded"
-              disabled={newClientLoading}
-            >
-              {newClientLoading ? "Creando..." : "Crear"}
-            </button>
-          </div>
-        </form>
+        )}
       </Modal>
-
-      <div className="flex justify-end gap-2 mt-6">
-        <Button
-          type="submit"
-          onClick={() => {
-            handleFormSubmit(form.getValues());
-          }}
-          disabled={form.formState.isSubmitting}
-        >
-          {form.formState.isSubmitting || loading
-            ? "Guardando..."
-            : "Guardar Venta"}
-        </Button>
-      </div>
     </div>
   );
 }

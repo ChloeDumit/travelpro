@@ -1,5 +1,5 @@
 import { api } from "../api";
-import { User } from "../../types";
+import { User, UserRole } from "../../types";
 
 export interface LoginCredentials {
   email: string;
@@ -16,23 +16,30 @@ export interface RegisterData {
   username: string;
   email: string;
   password: string;
-  role: User["role"];
+  role: UserRole;
+}
+
+export interface AuthUser {
+  id: string;
+  username: string;
+  email: string;
+  role: UserRole;
+  companyId: number;
 }
 
 export const authService = {
-  // Login user
   login: (credentials: LoginCredentials) =>
     api.post<LoginResponse>("/api/auth/login", credentials),
 
-  // Register user
-  register: (data: RegisterData) => api.post<User>("/api/auth/register", data),
+  register: (data: RegisterData) => 
+    api.post<{ message: string; user: User }>("/api/auth/register", data),
 
-  // Logout user
-  logout: () => api.post("/api/auth/logout"),
+  logout: () => 
+    api.post<{ message: string }>("/api/auth/logout"),
 
-  // Get current user
-  getCurrentUser: () => api.get<{ user: User }>("/api/users/me"),
+  getCurrentUser: () => 
+    api.get<{ user: AuthUser }>("/api/users/me"),
 
-  // Update current user profile
-  updateProfile: (data: Partial<User>) => api.put<User>("/api/users/me", data),
+  updateProfile: (data: Partial<AuthUser>) => 
+    api.put<{ message: string; user: AuthUser }>("/api/users/me", data),
 };

@@ -1,40 +1,47 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback } from "react";
 import { useAuth } from "../contexts/auth-context";
-import { User } from "../types";
+import { UserRole } from "../types";
 
 export function useAuthState() {
-  const { user, isLoading, isAuthenticated, refreshUser } = useAuth();
-  const [isInitialized, setIsInitialized] = useState(false);
-
-  useEffect(() => {
-    if (!isLoading) {
-      setIsInitialized(true);
-    }
-  }, [isLoading]);
-
-  const checkAuth = useCallback(async () => {
-    if (isAuthenticated) {
-      await refreshUser();
-    }
-  }, [isAuthenticated, refreshUser]);
+  const { user, isLoading, isAuthenticated, error, clearError } = useAuth();
 
   const hasRole = useCallback(
-    (role: User["role"]) => user?.role === role,
+    (role: UserRole): boolean => {
+      return user?.role === role;
+    },
     [user?.role]
   );
 
   const hasAnyRole = useCallback(
-    (roles: User["role"][]) => roles.includes(user?.role as User["role"]),
+    (roles: UserRole[]): boolean => {
+      return user?.role ? roles.includes(user.role) : false;
+    },
     [user?.role]
   );
+
+  const isAdmin = useCallback((): boolean => {
+    return hasRole("admin");
+  }, [hasRole]);
+
+  const isSales = useCallback((): boolean => {
+    return hasRole("sales");
+  }, [hasRole]);
+
+  const isFinance = useCallback((): boolean => {
+    return hasRole("finance");
+  }, [hasRole]);
 
   return {
     user,
     isLoading,
     isAuthenticated,
-    isInitialized,
-    checkAuth,
+    error,
+    clearError,
     hasRole,
     hasAnyRole,
+    isAdmin,
+    isSales,
+    isFinance,
+    isInitialized: !isLoading,
   };
 }

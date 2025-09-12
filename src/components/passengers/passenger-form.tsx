@@ -1,32 +1,42 @@
+import React from "react";
 import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { Button } from "../ui/button";
-import { Input } from "../ui/input";
-import { Card, CardHeader, CardContent } from "../ui/card";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { PassengerFormData } from "../../types";
+import { Input } from "../ui/input";
+import { Button } from "../ui/button";
+import { Modal } from "../ui/modal";
 
 const passengerFormSchema = z.object({
-  name: z.string().min(1, "Name is required"),
-  passengerId: z.string().min(1, "Passenger ID is required"),
-  email: z.string().email("Invalid email address").or(z.literal("")).optional(),
-  dateOfBirth: z.string().min(1, "Date of birth is required"),
+  name: z.string().min(1, "El nombre es requerido"),
+  passengerId: z.string().min(1, "El ID del pasajero es requerido"),
+  email: z.string().email("Email inválido").optional().or(z.literal("")),
+  dateOfBirth: z.string().min(1, "La fecha de nacimiento es requerida"),
 });
 
-type PassengerFormValues = z.infer<typeof passengerFormSchema>;
-
 interface PassengerFormProps {
+  isOpen: boolean;
+  onClose: () => void;
   onSubmit: (data: PassengerFormData) => void;
+  loading?: boolean;
   initialData?: Partial<PassengerFormData>;
-  submitLabel?: string;
+  title?: string;
 }
 
 export function PassengerForm({
+  isOpen,
+  onClose,
   onSubmit,
+  loading = false,
   initialData,
-  submitLabel = "Save",
+  title = "Crear Pasajero",
 }: PassengerFormProps) {
-  const form = useForm<PassengerFormValues>({
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors, isSubmitting },
+  } = useForm<PassengerFormData>({
     resolver: zodResolver(passengerFormSchema),
     defaultValues: {
       name: initialData?.name || "",
@@ -36,39 +46,64 @@ export function PassengerForm({
     },
   });
 
+  React.useEffect(() => {
+    if (initialData) {
+      reset(initialData);
+    } else {
+      reset({
+        name: "",
+        passengerId: "",
+        email: "",
+        dateOfBirth: "",
+      });
+    }
+  }, [initialData, reset]);
+
+  const handleFormSubmit = (data: PassengerFormData) => {
+    onSubmit(data);
+  };
+
   return (
-    <Card>
-      <CardHeader />
-      <form onSubmit={form.handleSubmit(onSubmit)}>
-        <CardContent className="space-y-4">
-          <Input
-            label="Nombre *"
-            {...form.register("name")}
-            error={form.formState.errors.name?.message}
-          />
-          <Input
-            label="ID/Pasaporte"
-            {...form.register("passengerId")}
-            error={form.formState.errors.passengerId?.message}
-          />
-          <Input
-            label="Email"
-            type="email"
-            {...form.register("email")}
-            error={form.formState.errors.email?.message}
-          />
-          <Input
-            label="Fecha de Nacimiento"
-            {...form.register("dateOfBirth")}
-            error={form.formState.errors.dateOfBirth?.message}
-          />
-          <div className="flex justify-end gap-2">
-            <Button type="submit" disabled={form.formState.isSubmitting}>
-              {form.formState.isSubmitting ? "Guardando..." : submitLabel}
-            </Button>
-          </div>
-        </CardContent>
+    <Modal isOpen={isOpen} onClose={onClose} title={title}>
+      <form onSubmit={handleSubmit(handleFormSubmit)} className="space-y-4">
+        <Input
+          label="Nombre Completo *"
+          {...register("name")}
+          error={errors.name?.message}
+          placeholder="Ingresa el nombre completo"
+        />
+
+        <Input
+          label="ID/RUT del Pasajero *"
+          {...register("passengerId")}
+          error={errors.passengerId?.message}
+          placeholder="Ingresa el ID o RUT"
+        />
+
+        <Input
+          type="email"
+          label="Email"
+          {...register("email")}
+          error={errors.email?.message}
+          placeholder="email@ejemplo.com"
+        />
+
+        <Input
+          type="date"
+          label="Fecha de Nacimiento *"
+          {...register("dateOfBirth")}
+          error={errors.dateOfBirth?.message}
+        />
+
+        <div className="flex justify-end gap-2 pt-4">
+          <Button variant="outline" type="button" onClick={onClose}>
+            Cancelar
+          </Button>
+          <Button type="submit" disabled={isSubmitting || loading}>
+            {isSubmitting || loading ? "Guardando..." : "Crear Pasajero"}
+          </Button>
+        </div>
       </form>
-    </Card>
+    </Modal>
   );
 }

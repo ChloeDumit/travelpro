@@ -15,7 +15,7 @@ router.get(
         companyId: req.user.companyId,
       },
     });
-    res.json(passengers);
+    res.json({ passengers });
   }
 );
 
@@ -36,16 +36,21 @@ router.post(
   authenticate,
   requireRole([ROLES.ADMIN, ROLES.SALES]),
   async (req, res) => {
-    const passenger = await prisma.passenger.create({
-      data: {
-        ...req.body,
-        companyId: req.user.companyId,
-      },
-      include: {
-        company: true,
-      },
-    });
-    res.json(passenger);
+    try {
+      const passenger = await prisma.passenger.create({
+        data: {
+          ...req.body,
+          companyId: req.user.companyId,
+        },
+      });
+      res.json({ message: "Passenger created successfully", passenger });
+    } catch (error) {
+      console.error("Error creating passenger:", error);
+      res.status(400).json({
+        message: "Error creating passenger",
+        error: error.message,
+      });
+    }
   }
 );
 

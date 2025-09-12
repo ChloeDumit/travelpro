@@ -6,19 +6,28 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export function formatCurrency(amount: number, currency: string): string {
-  const formatter = new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: currency === "local" ? "USD" : currency,
-  });
+  try {
+    const currencyCode = currency === "local" ? "USD" : currency;
+    
+    const formatter = new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: currencyCode,
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    });
 
-  return formatter.format(amount);
+    return formatter.format(amount);
+  } catch (error) {
+    console.error("Error formatting currency:", error);
+    return `${currency} ${amount.toFixed(2)}`;
+  }
 }
 
-export function formatDate(dateStr: string | Date): string {
-  if (!dateStr) return "Sin fecha";
+export function formatDate(dateInput: string | Date | null | undefined): string {
+  if (!dateInput) return "Sin fecha";
 
   try {
-    const date = new Date(dateStr);
+    const date = new Date(dateInput);
 
     if (isNaN(date.getTime())) {
       return "Fecha inválida";
@@ -28,10 +37,10 @@ export function formatDate(dateStr: string | Date): string {
       day: "2-digit",
       month: "short",
       year: "numeric",
-      timeZone: "America/Montevideo",
+      timeZone: "UTC",
     };
 
-    return date.toLocaleDateString("es-UY", options).replace(".", "");
+    return date.toLocaleDateString("es-ES", options);
   } catch (error) {
     console.error("Error formatting date:", error);
     return "Error en fecha";
@@ -39,31 +48,61 @@ export function formatDate(dateStr: string | Date): string {
 }
 
 export function getStatusColor(status: string): string {
-  switch (status) {
-    case "confirmed":
-      return "bg-warning-100 text-warning-800";
-    case "completed":
-    case "paid":
-      return "bg-success-100 text-success-800";
-    case "pending":
-    case "draft":
-      return "bg-warning-100 text-warning-800";
-    case "cancelled":
-      return "bg-danger-100 text-danger-800";
-    default:
-      return "bg-gray-100 text-gray-800";
-  }
+  const statusColors: Record<string, string> = {
+    // Sale statuses
+    confirmed: "bg-blue-100 text-blue-800",
+    completed: "bg-green-100 text-green-800",
+    pending: "bg-yellow-100 text-yellow-800",
+    draft: "bg-gray-100 text-gray-800",
+    cancelled: "bg-red-100 text-red-800",
+    // Payment statuses
+    paid: "bg-green-100 text-green-800",
+    failed: "bg-red-100 text-red-800",
+  };
+
+  return statusColors[status] || "bg-gray-100 text-gray-800";
 }
 
 export function mapStatusToLabel(status: string): string {
-  switch (status) {
-    case "confirmed":
-      return "Confirmada";
-    case "completed":
-      return "Liquidada";
-    case "cancelled":
-      return "Cancelada";
-    default:
-      return status;
-  }
+  const statusLabels: Record<string, string> = {
+    draft: "Borrador",
+    confirmed: "Confirmada",
+    completed: "Completada",
+    cancelled: "Cancelada",
+    pending: "Pendiente",
+    paid: "Pagado",
+    failed: "Fallido",
+  };
+
+  return statusLabels[status] || status;
+}
+
+export function debounce<T extends (...args: any[]) => any>(
+  func: T,
+  wait: number
+): (...args: Parameters<T>) => void {
+  let timeout: NodeJS.Timeout;
+  
+  return (...args: Parameters<T>) => {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => func(...args), wait);
+  };
+}
+
+export function generateId(): string {
+  return Math.random().toString(36).substr(2, 9);
+}
+
+export function isValidEmail(email: string): boolean {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
+}
+
+export function capitalize(str: string): string {
+  return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+}
+
+export function truncateText(text: string, maxLength: number): string {
+  if (text.length <= maxLength) return text;
+  return text.slice(0, maxLength) + "...";
 }

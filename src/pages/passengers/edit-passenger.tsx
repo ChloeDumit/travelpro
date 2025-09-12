@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import { Button } from "../../components/ui/button";
-import { PassengerForm } from "../../components/passengers/passenger-form.tsx";
+import { PassengerFormPage } from "../../components/passengers/passenger-form-page";
 import { PassengerFormData } from "../../types";
 import { passengersService } from "../../lib/services/passenger.service";
 
@@ -86,9 +86,11 @@ export function EditPassengerPage() {
         </div>
       )}
 
-      <PassengerForm
+      <PassengerFormPage
         onSubmit={handleSubmit}
+        loading={saving}
         initialData={passenger}
+        title="Editar Pasajero"
         submitLabel={saving ? "Guardando..." : "Guardar Cambios"}
       />
     </div>

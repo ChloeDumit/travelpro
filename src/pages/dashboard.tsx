@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect } from "react";
 import {
   BarChart,
   DollarSign,
@@ -6,19 +6,14 @@ import {
   Package,
   Calendar,
   TrendingUp,
-  CreditCard,
   Plus,
   FileText,
   UserPlus,
   ArrowRight,
-  Clock,
   CheckCircle,
-  AlertCircle,
+  Clock,
   XCircle,
-  Shield,
   UserCheck,
-  PieChart,
-  Activity,
 } from "lucide-react";
 import {
   Card,
@@ -27,106 +22,52 @@ import {
   CardTitle,
 } from "../components/ui/card";
 import { Button } from "../components/ui/button";
+import { LoadingState } from "../components/ui/loading-spinner";
+import { ErrorState } from "../components/ui/error-state";
 import { salesService } from "../lib/services/sales.service";
-import { useAuth } from "../contexts/auth-context";
+import { useAuthState } from "../hooks/useAuthState";
+import { useAsyncOperation } from "../hooks/useAsyncOperation";
 import { useNavigate } from "react-router-dom";
-
-interface SalesStats {
-  totalSales: number;
-  salesCount: number;
-  salesByStatus: {
-    draft?: number;
-    confirmed?: number;
-    completed?: number;
-    cancelled?: number;
-  };
-}
-
-interface SalesStatsByType {
-  salesBySaleType: {
-    [key: string]: {
-      count: number;
-      totalCost: number;
-    };
-  };
-  salesByServiceType: {
-    [key: string]: {
-      count: number;
-      totalCost: number;
-    };
-  };
-  salesByRegion: {
-    [key: string]: {
-      count: number;
-      totalCost: number;
-    };
-  };
-}
-
-interface UpcomingDeparture {
-  id: string;
-  passengerName: string;
-  travelDate: string;
-  region: string;
-  serviceType: string;
-  client: {
-    name: string;
-  };
-}
+import { formatCurrency } from "../lib/utils";
 
 export function DashboardPage() {
   const navigate = useNavigate();
-  const { user } = useAuth();
-  const [totalSales, setTotalSales] = useState(0);
-  const [salesStats, setSalesStats] = useState<SalesStats | null>(null);
-  const [salesStatsByType, setSalesStatsByType] =
-    useState<SalesStatsByType | null>(null);
-  const [upcomingDepartures, setUpcomingDepartures] = useState<
-    UpcomingDeparture[]
-  >([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const { user, isAdmin, isSales } = useAuthState();
 
-  const isAdmin = user?.role === "admin";
-  const isSales = user?.role === "sales";
+  const totalSalesOp = useAsyncOperation(salesService.getTotal);
+  const statsOp = useAsyncOperation(salesService.getStats);
+  const statsByTypeOp = useAsyncOperation(salesService.getStatsByType);
+  const departuresOp = useAsyncOperation(salesService.getUpcomingDepartures);
 
   useEffect(() => {
-    const fetchDashboardData = async () => {
-      try {
-        const [totalSalesData, statsData, statsByTypeData, departuresData] =
-          await Promise.all([
-            salesService.getTotal(),
-            salesService.getStats(),
-            salesService.getStatsByType(),
-            salesService.getUpcomingDepartures(),
-          ]);
-
-        setTotalSales(totalSalesData.data?.total || 0);
-        setSalesStats(statsData.data || null);
-        setSalesStatsByType(statsByTypeData.data || null);
-        setUpcomingDepartures(departuresData.data?.departures || []);
-      } catch (err) {
-        console.error("Error fetching dashboard data:", err);
-        setError("Failed to fetch dashboard data");
-      } finally {
-        setLoading(false);
-      }
+    const loadDashboardData = async () => {
+      await Promise.all([
+        totalSalesOp.execute(),
+        statsOp.execute(),
+        statsByTypeOp.execute(),
+        departuresOp.execute(),
+      ]);
     };
-    fetchDashboardData();
+
+    loadDashboardData();
   }, []);
 
-  const formatCurrency = (amount: number, currency: string) => {
-    return new Intl.NumberFormat("en-US", {
-      style: "currency",
-      currency: currency,
-    }).format(amount);
-  };
+  const isLoading =
+    totalSalesOp.loading ||
+    statsOp.loading ||
+    statsByTypeOp.loading ||
+    departuresOp.loading;
+  const hasError =
+    totalSalesOp.error ||
+    statsOp.error ||
+    statsByTypeOp.error ||
+    departuresOp.error;
 
-  const getActiveBookings = () => {
-    if (!salesStats) return 0;
+  const getActiveBookings = (): number => {
+    if (!statsOp.data) return 0;
     return (
-      (salesStats.salesByStatus.confirmed || 0) +
-      (salesStats.salesByStatus.completed || 0)
+      (statsOp.data.salesByStatus.confirmed || 0) +
+      (statsOp.data.salesByStatus.completed || 0)
     );
   };
 
@@ -141,33 +82,14 @@ export function DashboardPage() {
       case "cancelled":
         return <XCircle className="h-4 w-4 text-red-500" />;
       default:
-        return <AlertCircle className="h-4 w-4 text-gray-500" />;
+        return <Clock className="h-4 w-4 text-gray-500" />;
     }
   };
 
-  const handleQuickAction = (action: string) => {
-    switch (action) {
-      case "new-sale":
-        navigate("/sales/new");
-        break;
-      case "new-client":
-        navigate("/clients/new");
-        break;
-      case "view-sales":
-        navigate("/sales");
-        break;
-      case "view-clients":
-        navigate("/clients");
-        break;
-      default:
-        break;
-    }
-  };
-
-  const getWelcomeMessage = () => {
-    if (isAdmin) {
+  const getWelcomeMessage = (): string => {
+    if (isAdmin()) {
       return `¡Bienvenido de vuelta, ${user?.username}! Aquí tienes una vista completa de tu negocio.`;
-    } else if (isSales) {
+    } else if (isSales()) {
       return `¡Bienvenido de vuelta, ${user?.username}! Aquí están tus ventas y actividades.`;
     }
     return "¡Bienvenido de vuelta! Aquí está lo que está pasando con tu negocio.";
@@ -180,52 +102,60 @@ export function DashboardPage() {
         icon: <Plus className="h-8 w-8 text-blue-600 mb-2" />,
         label: "Crear Venta",
         color: "text-blue-600",
+        onClick: () => navigate("/sales/new"),
       },
       {
         action: "new-client",
         icon: <UserPlus className="h-8 w-8 text-green-600 mb-2" />,
         label: "Agregar Cliente",
         color: "text-green-600",
+        onClick: () => navigate("/clients/new"),
       },
       {
         action: "view-sales",
         icon: <FileText className="h-8 w-8 text-purple-600 mb-2" />,
         label: "Ver Ventas",
         color: "text-purple-600",
+        onClick: () => navigate("/sales"),
       },
-    ];
-
-    if (isAdmin) {
-      return [
-        ...baseActions,
-        {
-          action: "view-clients",
-          icon: <Users className="h-8 w-8 text-orange-600 mb-2" />,
-          label: "Gestionar Clientes",
-          color: "text-orange-600",
-        },
-      ];
-    }
-
-    return [
-      ...baseActions,
       {
         action: "view-clients",
         icon: <Users className="h-8 w-8 text-orange-600 mb-2" />,
-        label: "Ver Clientes",
+        label: isAdmin() ? "Gestionar Clientes" : "Ver Clientes",
         color: "text-orange-600",
+        onClick: () => navigate("/clients"),
       },
     ];
+
+    return baseActions;
   };
+
+  if (isLoading) {
+    return <LoadingState message="Cargando dashboard..." />;
+  }
+
+  if (hasError) {
+    return (
+      <ErrorState
+        error={hasError}
+        onRetry={() => {
+          totalSalesOp.execute();
+          statsOp.execute();
+          statsByTypeOp.execute();
+          departuresOp.execute();
+        }}
+        title="Error al cargar dashboard"
+      />
+    );
+  }
 
   return (
     <div className="space-y-6">
       {/* Welcome Section */}
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">
-            {getWelcomeMessage()}
-          </h1>
+          <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
+          <p className="text-gray-600 mt-1">{getWelcomeMessage()}</p>
         </div>
       </div>
 
@@ -239,7 +169,7 @@ export function DashboardPage() {
             {getQuickActions().map((action, index) => (
               <button
                 key={index}
-                onClick={() => handleQuickAction(action.action)}
+                onClick={action.onClick}
                 className="flex flex-col items-center p-4 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow border border-blue-100"
               >
                 <div className={`h-8 w-8 mb-2 ${action.color}`}>
@@ -254,27 +184,22 @@ export function DashboardPage() {
         </CardContent>
       </Card>
 
+      {/* Stats Cards */}
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         <Card className="hover:shadow-lg transition-shadow border-l-4 border-l-blue-500">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
             <CardTitle className="text-sm font-medium text-gray-500">
-              {isAdmin ? "Ingresos Totales" : "Mis ingresos"}
+              {isAdmin() ? "Ingresos Totales" : "Mis Ingresos"}
             </CardTitle>
             <DollarSign className="h-4 w-4 text-blue-500" />
           </CardHeader>
           <CardContent>
-            {loading ? (
-              <div className="text-2xl font-bold">Cargando...</div>
-            ) : error ? (
-              <div className="text-2xl font-bold text-red-500">Error</div>
-            ) : (
-              <div className="text-2xl font-bold text-blue-600">
-                {formatCurrency(totalSales, "USD")}
-              </div>
-            )}
+            <div className="text-2xl font-bold text-blue-600">
+              {formatCurrency(totalSalesOp.data?.total || 0, "USD")}
+            </div>
             <p className="text-xs text-gray-500 flex items-center mt-1">
               <TrendingUp className="mr-1 h-3 w-3 text-green-500" />
-              {isAdmin ? "Ingresos totales" : "Mis ingresos totales"}
+              {isAdmin() ? "Ingresos totales" : "Mis ingresos totales"}
             </p>
           </CardContent>
         </Card>
@@ -282,53 +207,41 @@ export function DashboardPage() {
         <Card className="hover:shadow-lg transition-shadow border-l-4 border-l-green-500">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
             <CardTitle className="text-sm font-medium text-gray-500">
-              {isAdmin ? "Reservas Activas" : "Mis Reservas"}
+              {isAdmin() ? "Reservas Activas" : "Mis Reservas"}
             </CardTitle>
             <Calendar className="h-4 w-4 text-green-500" />
           </CardHeader>
           <CardContent>
-            {loading ? (
-              <div className="text-2xl font-bold">Cargando...</div>
-            ) : (
-              <>
-                <div className="text-2xl font-bold text-green-600">
-                  {getActiveBookings()}
-                </div>
-                <p className="text-xs text-gray-500 mt-1">
-                  {salesStats?.salesByStatus.confirmed || 0} confirmadas,{" "}
-                  {salesStats?.salesByStatus.completed || 0} liquidadas
-                </p>
-              </>
-            )}
+            <div className="text-2xl font-bold text-green-600">
+              {getActiveBookings()}
+            </div>
+            <p className="text-xs text-gray-500 mt-1">
+              {statsOp.data?.salesByStatus.confirmed || 0} confirmadas,{" "}
+              {statsOp.data?.salesByStatus.completed || 0} liquidadas
+            </p>
           </CardContent>
         </Card>
 
         <Card className="hover:shadow-lg transition-shadow border-l-4 border-l-purple-500">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
             <CardTitle className="text-sm font-medium text-gray-500">
-              {isAdmin ? "Total de Ventas" : "Mis Ventas"}
+              {isAdmin() ? "Total de Ventas" : "Mis Ventas"}
             </CardTitle>
             <Package className="h-4 w-4 text-purple-500" />
           </CardHeader>
           <CardContent>
-            {loading ? (
-              <div className="text-2xl font-bold">Cargando...</div>
-            ) : (
-              <>
-                <div className="text-2xl font-bold text-purple-600">
-                  {salesStats?.salesCount || 0}
-                </div>
-                <p className="text-xs text-gray-500 mt-1">
-                  {isAdmin ? "Total de ventas" : "Mis ventas totales"}
-                </p>
-              </>
-            )}
+            <div className="text-2xl font-bold text-purple-600">
+              {statsOp.data?.salesCount || 0}
+            </div>
+            <p className="text-xs text-gray-500 mt-1">
+              {isAdmin() ? "Total de ventas" : "Mis ventas totales"}
+            </p>
           </CardContent>
         </Card>
       </div>
 
-      {/* Sales-specific section */}
-      {isSales && (
+      {/* Sales Activity for Sales Users */}
+      {isSales() && (
         <Card className="bg-gradient-to-r from-green-50 to-blue-50 border-green-200">
           <CardHeader>
             <CardTitle className="text-green-900 flex items-center">
@@ -363,9 +276,9 @@ export function DashboardPage() {
       )}
 
       {/* Main Content Grid */}
-      <div className="grid gap-6 lg:grid-cols-3">
+      <div className="grid gap-6 lg:grid-cols-2">
         {/* Sales Status Overview */}
-        <Card className="lg:col-span-1 hover:shadow-lg transition-shadow">
+        <Card className="hover:shadow-lg transition-shadow">
           <CardHeader>
             <CardTitle className="flex items-center">
               <BarChart className="h-5 w-5 mr-2 text-blue-600" />
@@ -374,23 +287,23 @@ export function DashboardPage() {
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
-              {salesStats ? (
+              {statsOp.data ? (
                 [
                   {
                     name: "Confirmada",
-                    count: salesStats.salesByStatus.confirmed || 0,
+                    count: statsOp.data.salesByStatus.confirmed || 0,
                     status: "confirmed",
                     color: "bg-blue-500",
                   },
                   {
                     name: "Completada",
-                    count: salesStats.salesByStatus.completed || 0,
+                    count: statsOp.data.salesByStatus.completed || 0,
                     status: "completed",
                     color: "bg-green-500",
                   },
                   {
                     name: "Cancelada",
-                    count: salesStats.salesByStatus.cancelled || 0,
+                    count: statsOp.data.salesByStatus.cancelled || 0,
                     status: "cancelled",
                     color: "bg-red-500",
                   },
@@ -419,9 +332,9 @@ export function DashboardPage() {
                         {status.count}
                       </p>
                       <p className="text-xs text-gray-500">
-                        {salesStats.salesCount > 0
+                        {statsOp.data?.salesCount && statsOp.data.salesCount > 0
                           ? Math.round(
-                              (status.count / salesStats.salesCount) * 100
+                              (status.count / statsOp.data.salesCount) * 100
                             )
                           : 0}
                         %
@@ -430,16 +343,14 @@ export function DashboardPage() {
                   </div>
                 ))
               ) : (
-                <div className="text-center text-gray-500 py-8">
-                  Cargando...
-                </div>
+                <LoadingState message="Cargando estadísticas..." />
               )}
             </div>
           </CardContent>
         </Card>
 
         {/* Upcoming Departures */}
-        <Card className="lg:col-span-1 hover:shadow-lg transition-shadow">
+        <Card className="hover:shadow-lg transition-shadow">
           <CardHeader>
             <CardTitle className="flex items-center justify-between">
               <div className="flex items-center">
@@ -449,7 +360,7 @@ export function DashboardPage() {
               <Button
                 variant="ghost"
                 size="sm"
-                onClick={() => handleQuickAction("view-sales")}
+                onClick={() => navigate("/sales")}
                 className="text-xs"
               >
                 Ver Todas <ArrowRight className="h-3 w-3 ml-1" />
@@ -458,8 +369,9 @@ export function DashboardPage() {
           </CardHeader>
           <CardContent>
             <div className="space-y-3">
-              {upcomingDepartures.length > 0 ? (
-                upcomingDepartures.slice(0, 5).map((trip, i) => {
+              {departuresOp.data?.departures &&
+              departuresOp.data.departures.length > 0 ? (
+                departuresOp.data.departures.slice(0, 5).map((trip, i) => {
                   const travelDate = new Date(trip.travelDate);
                   const formattedDate = travelDate.toLocaleDateString("es-ES", {
                     month: "short",
@@ -489,30 +401,33 @@ export function DashboardPage() {
                 })
               ) : (
                 <div className="text-center text-gray-500 py-8">
-                  {loading ? "Cargando..." : "No hay próximas salidas"}
+                  No hay próximas salidas
                 </div>
               )}
             </div>
           </CardContent>
         </Card>
+      </div>
 
-        {/* Sales by Service Type */}
-        <Card className="lg:col-span-1 hover:shadow-lg transition-shadow">
-          <CardHeader>
-            <CardTitle className="flex items-center">
-              <Package className="h-5 w-5 mr-2 text-purple-600" />
-              Servicios Principales
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-3">
-              {salesStatsByType ? (
-                Object.entries(salesStatsByType.salesByServiceType)
+      {/* Service Types and Regions */}
+      {statsByTypeOp.data && (
+        <div className="grid gap-6 lg:grid-cols-2">
+          {/* Services */}
+          <Card className="hover:shadow-lg transition-shadow">
+            <CardHeader>
+              <CardTitle className="flex items-center">
+                <Package className="h-5 w-5 mr-2 text-purple-600" />
+                Servicios Principales
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-3">
+                {Object.entries(statsByTypeOp.data.salesByServiceType)
                   .sort(([, a], [, b]) => b.count - a.count)
                   .slice(0, 5)
                   .map(([type, data], i) => {
                     const totalCount = Object.values(
-                      salesStatsByType.salesByServiceType
+                      statsByTypeOp.data!.salesByServiceType
                     ).reduce((sum, item) => sum + item.count, 0);
                     const percentage =
                       totalCount > 0
@@ -526,9 +441,8 @@ export function DashboardPage() {
                       "bg-red-500",
                     ];
 
-                    // Translate service types
                     const getServiceTypeLabel = (type: string) => {
-                      const translations: { [key: string]: string } = {
+                      const translations: Record<string, string> = {
                         flight: "Vuelo",
                         hotel: "Hotel",
                         package: "Paquete",
@@ -554,7 +468,7 @@ export function DashboardPage() {
                               colors[i % colors.length]
                             }`}
                             style={{ width: `${percentage}%` }}
-                          ></div>
+                          />
                         </div>
                         <div className="flex justify-between text-xs text-gray-500">
                           <span>{percentage}% del total</span>
@@ -562,35 +476,26 @@ export function DashboardPage() {
                         </div>
                       </div>
                     );
-                  })
-              ) : (
-                <div className="text-center text-gray-500 py-8">
-                  Cargando...
-                </div>
-              )}
-            </div>
-          </CardContent>
-        </Card>
-      </div>
+                  })}
+              </div>
+            </CardContent>
+          </Card>
 
-      {/* Bottom Stats Row */}
-      <div className="grid gap-4 md:grid-cols-2">
-        {/* Sales by Region */}
-        <Card className="hover:shadow-lg transition-shadow">
-          <CardHeader>
-            <CardTitle className="flex items-center">
-              <Users className="h-5 w-5 mr-2 text-indigo-600" />
-              Ventas por Región
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-3">
-              {salesStatsByType ? (
-                Object.entries(salesStatsByType.salesByRegion)
+          {/* Regions */}
+          <Card className="hover:shadow-lg transition-shadow">
+            <CardHeader>
+              <CardTitle className="flex items-center">
+                <Users className="h-5 w-5 mr-2 text-indigo-600" />
+                Ventas por Región
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-3">
+                {Object.entries(statsByTypeOp.data.salesByRegion)
                   .sort(([, a], [, b]) => b.count - a.count)
                   .map(([region, data], i) => {
                     const totalCount = Object.values(
-                      salesStatsByType.salesByRegion
+                      statsByTypeOp.data!.salesByRegion
                     ).reduce((sum, item) => sum + item.count, 0);
                     const percentage =
                       totalCount > 0
@@ -602,9 +507,8 @@ export function DashboardPage() {
                       "bg-yellow-500",
                     ];
 
-                    // Translate regions
                     const getRegionLabel = (region: string) => {
-                      const translations: { [key: string]: string } = {
+                      const translations: Record<string, string> = {
                         national: "Nacional",
                         international: "Internacional",
                         regional: "Regional",
@@ -644,97 +548,12 @@ export function DashboardPage() {
                         </div>
                       </div>
                     );
-                  })
-              ) : (
-                <div className="text-center text-gray-500 py-8">
-                  Cargando...
-                </div>
-              )}
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Sales by Type */}
-        <Card className="hover:shadow-lg transition-shadow">
-          <CardHeader>
-            <CardTitle className="flex items-center">
-              <FileText className="h-5 w-5 mr-2 text-teal-600" />
-              Ventas por Tipo
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-3">
-              {salesStatsByType ? (
-                Object.entries(salesStatsByType.salesBySaleType)
-                  .sort(([, a], [, b]) => b.count - a.count)
-                  .map(([type, data], i) => {
-                    const totalCount = Object.values(
-                      salesStatsByType.salesBySaleType
-                    ).reduce((sum, item) => sum + item.count, 0);
-                    const percentage =
-                      totalCount > 0
-                        ? Math.round((data.count / totalCount) * 100)
-                        : 0;
-                    const colors = [
-                      "bg-teal-500",
-                      "bg-cyan-500",
-                      "bg-emerald-500",
-                      "bg-sky-500",
-                    ];
-
-                    // Translate sale types
-                    const getSaleTypeLabel = (type: string) => {
-                      const translations: { [key: string]: string } = {
-                        individual: "Individual",
-                        corporate: "Corporativo",
-                        sports: "Deportes",
-                        group: "Grupo",
-                      };
-                      return translations[type] || type;
-                    };
-
-                    return (
-                      <div
-                        key={i}
-                        className="flex items-center justify-between p-3 bg-gray-50 rounded-lg"
-                      >
-                        <div className="flex items-center space-x-3">
-                          <div
-                            className={`h-6 w-6 rounded-full ${
-                              colors[i % colors.length]
-                            } flex items-center justify-center`}
-                          >
-                            <span className="text-xs text-white font-bold">
-                              {getSaleTypeLabel(type).charAt(0).toUpperCase()}
-                            </span>
-                          </div>
-                          <div>
-                            <p className="text-sm font-medium">
-                              {getSaleTypeLabel(type)}
-                            </p>
-                            <p className="text-xs text-gray-500">
-                              {data.count} ventas
-                            </p>
-                          </div>
-                        </div>
-                        <div className="text-right">
-                          <p className="text-sm font-bold">{percentage}%</p>
-                          <p className="text-xs text-gray-500">
-                            {formatCurrency(data.totalCost, "USD")}
-                          </p>
-                        </div>
-                      </div>
-                    );
-                  })
-              ) : (
-                <div className="text-center text-gray-500 py-8">
-                  Cargando...
-                </div>
-              )}
-            </div>
-          </CardContent>
-        </Card>
-      </div>
+                  })}
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      )}
     </div>
   );
 }

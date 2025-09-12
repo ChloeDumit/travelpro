@@ -174,7 +174,7 @@ function SaleItemCard({ item, saleCurrency }: SaleItemCardProps) {
         <div>
           <h5 className="text-xs text-gray-500">Pasajeros</h5>
           <p className="text-sm">
-            {item.passengers.map((passenger) => passenger.name).join(", ")}
+            {item.passengers?.map((passenger) => passenger.name).join(", ")}
           </p>
         </div>
       </div>

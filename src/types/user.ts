@@ -1,19 +1,30 @@
-export type UserRole = 'admin' | 'manager' | 'agent';
+export type UserRole = "admin" | "sales" | "finance";
 
 export interface User {
   id: string;
   username: string;
   email: string;
   role: UserRole;
-  firstName: string;
-  lastName: string;
-  active: boolean;
-  createdAt: Date;
-  updatedAt: Date;
+  companyId: number;
+  createdAt: string;
+}
+
+export interface CreateUserData {
+  username: string;
+  email: string;
+  password: string;
+  role: UserRole;
+  companyId: number;
+}
+
+export interface UpdateUserData {
+  username?: string;
+  email?: string;
+  role?: UserRole;
 }
 
 export const userRoleOptions = [
-  { value: 'admin', label: 'Administrator' },
-  { value: 'manager', label: 'Manager' },
-  { value: 'agent', label: 'Agent' },
-] as const; 
+  { value: "admin", label: "Administrador" },
+  { value: "sales", label: "Ventas" },
+  { value: "finance", label: "Finanzas" },
+] as const;

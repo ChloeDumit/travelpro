@@ -1,30 +1,44 @@
 import jwt from "jsonwebtoken";
 import { config } from "../config/index.js";
+import { AppError } from "./error.js";
+import { HTTP_STATUS, ERROR_MESSAGES } from "../constants/index.js";
 
 export const authenticate = (req, res, next) => {
-  const token = req.headers.authorization?.split(" ")[1];
-
-  if (!token) {
-    return res.status(401).json({ message: "Authentication required" });
-  }
-
   try {
+    const authHeader = req.headers.authorization;
+    
+    if (!authHeader || !authHeader.startsWith("Bearer ")) {
+      throw new AppError(ERROR_MESSAGES.UNAUTHORIZED, HTTP_STATUS.UNAUTHORIZED);
+    }
+
+    const token = authHeader.split(" ")[1];
+    
+    if (!token) {
+      throw new AppError(ERROR_MESSAGES.UNAUTHORIZED, HTTP_STATUS.UNAUTHORIZED);
+    }
+
     const decoded = jwt.verify(token, config.jwtSecret);
     req.user = decoded;
     next();
   } catch (error) {
-    return res.status(401).json({ message: "Invalid token" });
+    if (error.name === "JsonWebTokenError") {
+      return next(new AppError(ERROR_MESSAGES.INVALID_TOKEN, HTTP_STATUS.UNAUTHORIZED));
+    }
+    if (error.name === "TokenExpiredError") {
+      return next(new AppError("Token expired", HTTP_STATUS.UNAUTHORIZED));
+    }
+    next(error);
   }
 };
 
-export const requireRole = (roles) => {
+export const requireRole = (allowedRoles) => {
   return (req, res, next) => {
     if (!req.user) {
-      return res.status(401).json({ message: "Authentication required" });
+      return next(new AppError(ERROR_MESSAGES.UNAUTHORIZED, HTTP_STATUS.UNAUTHORIZED));
     }
 
-    if (!roles.includes(req.user.role)) {
-      return res.status(403).json({ message: "Access denied" });
+    if (!allowedRoles.includes(req.user.role)) {
+      return next(new AppError(ERROR_MESSAGES.FORBIDDEN, HTTP_STATUS.FORBIDDEN));
     }
 
     next();

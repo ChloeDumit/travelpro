@@ -1,39 +1,22 @@
 import { api } from "../api";
-import { Supplier } from "../../types";
-
-export interface CreateSupplierData {
-  name: string;
-}
-
-export interface UpdateSupplierData {
-  name?: string;
-}
+import { Supplier, SupplierFormData, CreateSupplierData, UpdateSupplierData } from "../../types";
 
 export const suppliersService = {
-  // Get all suppliers
-  getAll: () => api.get<{ suppliers: Supplier[] }>("/api/suppliers"),
+  getAll: () => 
+    api.get<Supplier[]>("/api/suppliers"),
 
-  // Get supplier by ID
-  getById: (id: string) => api.get<Supplier>(`/api/suppliers/${id}`),
+  getById: (id: string) => 
+    api.get<Supplier>(`/api/suppliers/${id}`),
 
-  // Create new supplier
-  create: (data: CreateSupplierData) =>
+  create: (data: SupplierFormData) =>
     api.post<{ message: string; supplier: Supplier }>("/api/suppliers", data),
 
-  // Update supplier
   update: (id: string, data: UpdateSupplierData) =>
-    api.put<{ message: string; supplier: Supplier }>(
-      `/api/suppliers/${id}`,
-      data
-    ),
+    api.put<{ message: string; supplier: Supplier }>(`/api/suppliers/${id}`, data),
 
-  // Delete supplier
-  delete: (id: string) =>
+  delete: (id: string) => 
     api.delete<{ message: string }>(`/api/suppliers/${id}`),
 
-  // Search suppliers
   search: (query: string) =>
-    api.get<{ suppliers: Supplier[] }>(
-      `/api/suppliers/search?q=${encodeURIComponent(query)}`
-    ),
+    api.get<{ suppliers: Supplier[] }>(`/api/suppliers/search?q=${encodeURIComponent(query)}`),
 };

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import { Button } from "../../components/ui/button";
-import { PassengerForm } from "../../components/passengers/passenger-form.tsx";
+import { PassengerFormPage } from "../../components/passengers/passenger-form-page";
 import { PassengerFormData } from "../../types";
 import { passengersService } from "../../lib/services/passenger.service";
 
@@ -51,8 +51,10 @@ export function NewPassengerPage() {
         </div>
       )}
 
-      <PassengerForm
+      <PassengerFormPage
         onSubmit={handleSubmit}
+        loading={loading}
+        title="Crear Nuevo Pasajero"
         submitLabel={loading ? "Creando..." : "Crear Pasajero"}
       />
     </div>

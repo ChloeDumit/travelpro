@@ -1,14 +1,16 @@
 import { useState, useRef, useEffect } from "react";
 import { Passenger } from "../../types";
 import { Badge } from "../ui/badge";
-import { X, ChevronDown, Plus } from "lucide-react";
+import { X, ChevronDown, Plus, Check } from "lucide-react";
 import { Button } from "../ui/button";
-import { Modal } from "../ui/modal";
+import { Input } from "../ui/input";
+import { passengersService } from "../../lib/services/passenger.service";
 
 interface PassengerSelectProps {
   items: Passenger[];
   value: Passenger[];
   onSelect: (passengers: Passenger[]) => void;
+  onPassengersUpdate?: (passengers: Passenger[]) => void;
   error?: string;
   label: string;
   placeholder: string;
@@ -21,6 +23,7 @@ export default function PassengerSelect({
   items,
   value = [],
   onSelect,
+  onPassengersUpdate,
   error,
   label,
   placeholder,
@@ -31,7 +34,15 @@ export default function PassengerSelect({
   const [searchValue, setSearchValue] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
-  const [createPassengerModal, setCreatePassengerModal] = useState(false);
+  const [showCreateForm, setShowCreateForm] = useState(false);
+  const [isCreatingPassenger, setIsCreatingPassenger] = useState(false);
+  const [newPassenger, setNewPassenger] = useState({
+    name: "",
+    passengerId: "",
+    email: "",
+    dateOfBirth: "",
+  });
+  const [formErrors, setFormErrors] = useState<Record<string, string>>({});
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -69,6 +80,78 @@ export default function PassengerSelect({
     onSelect(newPassengers);
   };
 
+  const validateForm = () => {
+    const errors: Record<string, string> = {};
+
+    if (!newPassenger.name.trim()) {
+      errors.name = "El nombre es requerido";
+    }
+
+    if (!newPassenger.passengerId.trim()) {
+      errors.passengerId = "El ID del pasajero es requerido";
+    }
+
+    if (!newPassenger.dateOfBirth) {
+      errors.dateOfBirth = "La fecha de nacimiento es requerida";
+    }
+
+    if (
+      newPassenger.email &&
+      !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(newPassenger.email)
+    ) {
+      errors.email = "Email inválido";
+    }
+
+    setFormErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
+
+  const handleCreatePassenger = async (e?: React.MouseEvent) => {
+    e?.preventDefault();
+    e?.stopPropagation();
+
+    if (!validateForm()) {
+      return;
+    }
+
+    try {
+      setIsCreatingPassenger(true);
+      const response = await passengersService.create(newPassenger);
+
+      if (response?.data?.passenger) {
+        // Add the new passenger to the available items
+        if (onPassengersUpdate) {
+          onPassengersUpdate([...items, response.data.passenger]);
+        }
+
+        // Automatically select the new passenger
+        const newPassengers = [...value, response.data.passenger];
+        onSelect(newPassengers);
+
+        // Reset form and close
+        setNewPassenger({
+          name: "",
+          passengerId: "",
+          email: "",
+          dateOfBirth: "",
+        });
+        setShowCreateForm(false);
+        setIsOpen(false);
+        setFormErrors({});
+      }
+    } catch (error) {
+      console.error("Error creating passenger:", error);
+    } finally {
+      setIsCreatingPassenger(false);
+    }
+  };
+
+  const handleCancelCreate = () => {
+    setNewPassenger({ name: "", passengerId: "", email: "", dateOfBirth: "" });
+    setShowCreateForm(false);
+    setFormErrors({});
+  };
+
   // Simple filtering: show all items that match search and aren't selected
   const availablePassengers = items.filter((item) => {
     const isSelected = value.some(
@@ -88,12 +171,13 @@ export default function PassengerSelect({
         </label>
         <div className="flex items-center gap-2">
           <Button
+            type="button"
             variant="outline"
             size="sm"
-            onClick={() => setCreatePassengerModal(true)}
+            onClick={() => setShowCreateForm(!showCreateForm)}
           >
             <Plus className="h-4 w-4" />
-            Agregar nuevo pasajero
+            {showCreateForm ? "Cancelar" : "Agregar nuevo pasajero"}
           </Button>
         </div>
       </div>
@@ -117,6 +201,90 @@ export default function PassengerSelect({
               </button>
             </Badge>
           ))}
+        </div>
+      )}
+
+      {/* Inline passenger creation form */}
+      {showCreateForm && (
+        <div
+          className="p-4 border border-gray-200 rounded-lg bg-gray-50 space-y-3"
+          onClick={(e) => e.stopPropagation()}
+          data-passenger-creation-form
+        >
+          <h4 className="text-sm font-medium text-gray-700">
+            Crear Nuevo Pasajero
+          </h4>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <Input
+              label="Nombre Completo *"
+              value={newPassenger.name}
+              onChange={(e) =>
+                setNewPassenger({ ...newPassenger, name: e.target.value })
+              }
+              error={formErrors.name}
+              placeholder="Ingresa el nombre completo"
+            />
+            <Input
+              label="ID/RUT del Pasajero *"
+              value={newPassenger.passengerId}
+              onChange={(e) =>
+                setNewPassenger({
+                  ...newPassenger,
+                  passengerId: e.target.value,
+                })
+              }
+              error={formErrors.passengerId}
+              placeholder="Ingresa el ID o RUT"
+            />
+            <Input
+              type="email"
+              label="Email"
+              value={newPassenger.email}
+              onChange={(e) =>
+                setNewPassenger({ ...newPassenger, email: e.target.value })
+              }
+              error={formErrors.email}
+              placeholder="email@ejemplo.com"
+            />
+            <Input
+              type="date"
+              label="Fecha de Nacimiento *"
+              value={newPassenger.dateOfBirth}
+              onChange={(e) =>
+                setNewPassenger({
+                  ...newPassenger,
+                  dateOfBirth: e.target.value,
+                })
+              }
+              error={formErrors.dateOfBirth}
+            />
+          </div>
+          <div className="flex justify-end gap-2">
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              onClick={handleCancelCreate}
+              disabled={isCreatingPassenger}
+            >
+              Cancelar
+            </Button>
+            <Button
+              type="button"
+              size="sm"
+              onClick={handleCreatePassenger}
+              disabled={isCreatingPassenger}
+            >
+              {isCreatingPassenger ? (
+                "Creando..."
+              ) : (
+                <>
+                  <Check className="h-4 w-4 mr-1" />
+                  Crear Pasajero
+                </>
+              )}
+            </Button>
+          </div>
         </div>
       )}
 

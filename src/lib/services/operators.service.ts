@@ -1,39 +1,22 @@
 import { api } from "../api";
-import { Operator } from "../../types";
-
-export interface CreateOperatorData {
-  name: string;
-}
-
-export interface UpdateOperatorData {
-  name?: string;
-}
+import { Operator, OperatorFormData, CreateOperatorData, UpdateOperatorData } from "../../types";
 
 export const operatorsService = {
-  // Get all operators
-  getAll: () => api.get<{ operators: Operator[] }>("/api/operators"),
+  getAll: () => 
+    api.get<Operator[]>("/api/operators"),
 
-  // Get operator by ID
-  getById: (id: string) => api.get<Operator>(`/api/operators/${id}`),
+  getById: (id: string) => 
+    api.get<Operator>(`/api/operators/${id}`),
 
-  // Create new operator
-  create: (data: CreateOperatorData) =>
+  create: (data: OperatorFormData) =>
     api.post<{ message: string; operator: Operator }>("/api/operators", data),
 
-  // Update operator
   update: (id: string, data: UpdateOperatorData) =>
-    api.put<{ message: string; operator: Operator }>(
-      `/api/operators/${id}`,
-      data
-    ),
+    api.put<{ message: string; operator: Operator }>(`/api/operators/${id}`, data),
 
-  // Delete operator
-  delete: (id: string) =>
+  delete: (id: string) => 
     api.delete<{ message: string }>(`/api/operators/${id}`),
 
-  // Search operators
   search: (query: string) =>
-    api.get<{ operators: Operator[] }>(
-      `/api/operators/search?q=${encodeURIComponent(query)}`
-    ),
+    api.get<{ operators: Operator[] }>(`/api/operators/search?q=${encodeURIComponent(query)}`),
 };

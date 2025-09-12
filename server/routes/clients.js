@@ -1,77 +1,32 @@
 import express from "express";
-import prisma from "../db.js";
 import { authenticate, requireRole } from "../middleware/auth.js";
 import { ROLES } from "../constants/index.js";
+import {
+  getAllClients,
+  getClientById,
+  createClient,
+  updateClient,
+  deleteClient,
+} from "../controllers/clients.js";
 
 const router = express.Router();
 
-router.get(
-  "/",
-  authenticate,
-  requireRole([ROLES.ADMIN, ROLES.SALES]),
-  async (req, res) => {
-    const clients = await prisma.client.findMany({
-      where: {
-        companyId: req.user.companyId,
-      },
-    });
-    res.json(clients);
-  }
-);
+// All routes require authentication
+router.use(authenticate);
 
-router.get(
-  "/:id",
-  authenticate,
-  requireRole([ROLES.ADMIN, ROLES.SALES]),
-  async (req, res) => {
-    const client = await prisma.client.findUnique({
-      where: { id: parseInt(req.params.id), companyId: req.user.companyId },
-    });
-    res.json(client);
-  }
-);
+// Get all clients
+router.get("/", requireRole([ROLES.ADMIN, ROLES.SALES]), getAllClients);
 
-router.post(
-  "/",
-  authenticate,
-  requireRole([ROLES.ADMIN, ROLES.SALES]),
-  async (req, res) => {
-    const client = await prisma.client.create({
-      data: {
-        ...req.body,
-        companyId: req.user.companyId,
-      },
-      include: {
-        company: true,
-      },
-    });
-    res.json(client);
-  }
-);
+// Get client by ID
+router.get("/:id", requireRole([ROLES.ADMIN, ROLES.SALES]), getClientById);
 
-router.put(
-  "/:id",
-  authenticate,
-  requireRole([ROLES.ADMIN, ROLES.SALES]),
-  async (req, res) => {
-    const client = await prisma.client.update({
-      where: { id: parseInt(req.params.id), companyId: req.user.companyId },
-      data: req.body,
-    });
-    res.json(client);
-  }
-);
+// Create new client
+router.post("/", requireRole([ROLES.ADMIN, ROLES.SALES]), createClient);
 
-router.delete(
-  "/:id",
-  authenticate,
-  requireRole([ROLES.ADMIN, ROLES.SALES]),
-  async (req, res) => {
-    const client = await prisma.client.delete({
-      where: { id: parseInt(req.params.id), companyId: req.user.companyId },
-    });
-    res.json(client);
-  }
-);
+// Update client
+router.put("/:id", requireRole([ROLES.ADMIN, ROLES.SALES]), updateClient);
+
+// Delete client
+router.delete("/:id", requireRole([ROLES.ADMIN, ROLES.SALES]), deleteClient);
 
 export default router;

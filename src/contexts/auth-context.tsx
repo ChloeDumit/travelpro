@@ -1,20 +1,19 @@
-import React, {
-  createContext,
-  useContext,
-  useState,
-  useEffect,
-  useCallback,
-} from "react";
+import React, { createContext, useContext, useState, useEffect, useCallback } from "react";
 import { User } from "../types";
-import { authService } from "../lib/services/auth.service";
+import { authService, AuthUser } from "../lib/services/auth.service";
 
-interface AuthContextType {
-  user: User | null;
+interface AuthState {
+  user: AuthUser | null;
   isLoading: boolean;
   isAuthenticated: boolean;
+  error: string | null;
+}
+
+interface AuthContextType extends AuthState {
   login: (email: string, password: string) => Promise<void>;
   logout: () => Promise<void>;
   refreshUser: () => Promise<void>;
+  clearError: () => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -23,154 +22,152 @@ interface AuthProviderProps {
   children: React.ReactNode;
 }
 
-// Storage keys
 const TOKEN_KEY = "auth_token";
 const USER_KEY = "auth_user";
 
 export function AuthProvider({ children }: AuthProviderProps) {
-  const [user, setUser] = useState<User | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [state, setState] = useState<AuthState>({
+    user: null,
+    isLoading: true,
+    isAuthenticated: false,
+    error: null,
+  });
 
-  // Helper function to get stored token
   const getStoredToken = (): string | null => {
     return localStorage.getItem(TOKEN_KEY);
   };
 
-  // Helper function to get stored user
-  const getStoredUser = (): User | null => {
+  const getStoredUser = (): AuthUser | null => {
     const stored = localStorage.getItem(USER_KEY);
-    return stored ? JSON.parse(stored) : null;
+    try {
+      return stored ? JSON.parse(stored) : null;
+    } catch {
+      return null;
+    }
   };
 
-  // Helper function to store user data
-  const storeUserData = (userData: User, token: string) => {
+  const storeUserData = (userData: AuthUser, token: string) => {
     localStorage.setItem(TOKEN_KEY, token);
     localStorage.setItem(USER_KEY, JSON.stringify(userData));
-    setUser(userData);
-    setIsAuthenticated(true);
+    setState(prev => ({
+      ...prev,
+      user: userData,
+      isAuthenticated: true,
+      error: null,
+    }));
   };
 
-  // Helper function to clear stored data
   const clearStoredData = () => {
     localStorage.removeItem(TOKEN_KEY);
     localStorage.removeItem(USER_KEY);
-    setUser(null);
-    setIsAuthenticated(false);
+    setState(prev => ({
+      ...prev,
+      user: null,
+      isAuthenticated: false,
+      error: null,
+    }));
   };
 
-  // Fetch current user with token
-  const fetchCurrentUser = useCallback(
-    async (token: string): Promise<User | null> => {
-      try {
-        const response = await authService.getCurrentUser();
+  const fetchCurrentUser = useCallback(async (token: string): Promise<AuthUser | null> => {
+    try {
+      const response = await authService.getCurrentUser();
+      return response.data?.user || null;
+    } catch (error) {
+      console.error("Error fetching user:", error);
+      clearStoredData();
+      return null;
+    }
+  }, []);
 
-        if (response.data?.user) {
-          return response.data.user;
-        }
-        return null;
-      } catch (error) {
-        console.error("Error fetching user:", error);
-        clearStoredData();
-        return null;
-      }
-    },
-    []
-  );
-
-  // Refresh user data
   const refreshUser = useCallback(async () => {
     const token = getStoredToken();
     if (!token) {
-      setIsLoading(false);
+      setState(prev => ({ ...prev, isLoading: false }));
       return;
     }
 
     const userData = await fetchCurrentUser(token);
     if (userData) {
-      setUser(userData);
-      setIsAuthenticated(true);
+      setState(prev => ({
+        ...prev,
+        user: userData,
+        isAuthenticated: true,
+        isLoading: false,
+      }));
+    } else {
+      setState(prev => ({ ...prev, isLoading: false }));
     }
-    setIsLoading(false);
   }, [fetchCurrentUser]);
 
-  // Check authentication on mount
+  const login = async (email: string, password: string) => {
+    setState(prev => ({ ...prev, isLoading: true, error: null }));
+    
+    try {
+      const response = await authService.login({ email, password });
+      
+      if (response.data) {
+        const { user: userData, token } = response.data;
+        storeUserData(userData as AuthUser, token);
+      }
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : "Login failed";
+      setState(prev => ({
+        ...prev,
+        error: errorMessage,
+        isLoading: false,
+      }));
+      throw error;
+    } finally {
+      setState(prev => ({ ...prev, isLoading: false }));
+    }
+  };
+
+  const logout = async () => {
+    try {
+      await authService.logout();
+    } catch (error) {
+      console.error("Logout error:", error);
+    } finally {
+      clearStoredData();
+    }
+  };
+
+  const clearError = () => {
+    setState(prev => ({ ...prev, error: null }));
+  };
+
   useEffect(() => {
     const checkAuth = async () => {
       const token = getStoredToken();
       const storedUser = getStoredUser();
 
       if (token && storedUser) {
-        // Try to validate stored user with server
         const userData = await fetchCurrentUser(token);
         if (userData) {
-          setUser(userData);
-          setIsAuthenticated(true);
+          setState(prev => ({
+            ...prev,
+            user: userData,
+            isAuthenticated: true,
+            isLoading: false,
+          }));
         } else {
-          // Stored data is invalid, clear it
           clearStoredData();
+          setState(prev => ({ ...prev, isLoading: false }));
         }
+      } else {
+        setState(prev => ({ ...prev, isLoading: false }));
       }
-      setIsLoading(false);
     };
 
     checkAuth();
   }, [fetchCurrentUser]);
 
-  // Auto-refresh user data every 5 minutes
-  useEffect(() => {
-    if (!isAuthenticated) return;
-
-    const interval = setInterval(() => {
-      refreshUser();
-    }, 5 * 60 * 1000); // 5 minutes
-
-    return () => clearInterval(interval);
-  }, [isAuthenticated, refreshUser]);
-
-  const login = async (email: string, password: string) => {
-    setIsLoading(true);
-    try {
-      const response = await authService.login({ email, password });
-
-      if (response.data) {
-        const { user: userData, token } = response.data;
-        // Store user data and token
-        storeUserData(userData, token);
-      }
-    } catch (error) {
-      console.error("Login error:", error);
-      throw error;
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const logout = async () => {
-    const token = getStoredToken();
-
-    if (token) {
-      try {
-        // Call logout endpoint
-        await authService.logout();
-      } catch (error) {
-        console.error("Logout error:", error);
-        // Continue with logout even if server call fails
-      }
-    }
-
-    // Clear local data
-    clearStoredData();
-  };
-
-  // Create a value object to prevent unnecessary re-renders
-  const value = {
-    user,
-    isLoading,
-    isAuthenticated,
+  const value: AuthContextType = {
+    ...state,
     login,
     logout,
     refreshUser,
+    clearError,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
