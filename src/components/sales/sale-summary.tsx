@@ -4,9 +4,16 @@ import {
   getStatusColor,
   mapStatusToLabel,
 } from "../../lib/utils";
-import { Sale, SaleItemFormData } from "../../types";
+import { Sale, SaleItemFormData, CurrencyRate } from "../../types";
 import { Badge } from "../ui/badge";
 import { Card, CardHeader, CardTitle, CardContent } from "../ui/card";
+import {
+  convertToUSD,
+  formatCurrencyWithSymbol,
+} from "../../lib/currency-utils";
+import { companySettingsService } from "../../lib/services/company-settings.service";
+import { useAsyncOperation } from "../../hooks/useAsyncOperation";
+import { useEffect, useState } from "react";
 
 interface SaleSummaryProps {
   sale: Sale;
@@ -15,6 +22,40 @@ interface SaleSummaryProps {
 export function SaleSummary({ sale }: SaleSummaryProps) {
   const items = sale.items;
   const saleData = sale;
+  const [currencyRates, setCurrencyRates] = useState<CurrencyRate[]>([]);
+
+  const currencyRatesOp = useAsyncOperation(
+    companySettingsService.getCurrencyRates
+  );
+
+  useEffect(() => {
+    currencyRatesOp.execute();
+  }, []);
+
+  useEffect(() => {
+    if (currencyRatesOp.data?.data) {
+      setCurrencyRates(currencyRatesOp.data.data);
+    }
+  }, [currencyRatesOp.data]);
+
+  // Calculate totals in USD
+  const totalCostUSD = items.reduce((sum, item) => {
+    const usdAmount = convertToUSD(
+      item.costPrice,
+      saleData.currency,
+      currencyRates
+    );
+    return sum + usdAmount;
+  }, 0);
+
+  const totalSaleUSD = items.reduce((sum, item) => {
+    const usdAmount = convertToUSD(
+      item.salePrice,
+      saleData.currency,
+      currencyRates
+    );
+    return sum + usdAmount;
+  }, 0);
 
   return (
     <div className="space-y-6">
@@ -121,13 +162,80 @@ export function SaleSummary({ sale }: SaleSummaryProps) {
           <CardTitle>Resumen Financiero</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="space-y-2">
-            <div className="flex justify-between py-2 border-b">
-              <span className="font-medium">Costo Total:</span>
-              <span>
-                {formatCurrency(saleData.totalCost, saleData.currency)}
-              </span>
+          <div className="space-y-4">
+            {/* Original Currency */}
+            <div className="space-y-2">
+              <h4 className="font-medium text-gray-900">
+                En {saleData.currency}
+              </h4>
+              <div className="flex justify-between py-2 border-b">
+                <span className="font-medium">Costo Total:</span>
+                <span>
+                  {formatCurrency(saleData.totalCost, saleData.currency)}
+                </span>
+              </div>
+              <div className="flex justify-between py-2 border-b">
+                <span className="font-medium">Venta Total:</span>
+                <span>
+                  {formatCurrency(saleData.salePrice, saleData.currency)}
+                </span>
+              </div>
+              <div className="flex justify-between py-2 font-bold text-lg">
+                <span>Ganancia:</span>
+                <span
+                  className={
+                    saleData.salePrice - saleData.totalCost >= 0
+                      ? "text-green-600"
+                      : "text-red-600"
+                  }
+                >
+                  {formatCurrency(
+                    saleData.salePrice - saleData.totalCost,
+                    saleData.currency
+                  )}
+                </span>
+              </div>
             </div>
+
+            {/* USD Conversion */}
+            {saleData.currency !== "USD" && currencyRates.length > 0 && (
+              <div className="space-y-2 pt-4 border-t">
+                <h4 className="font-medium text-gray-900">Conversión a USD</h4>
+                <div className="flex justify-between py-2 border-b">
+                  <span className="font-medium">Costo Total:</span>
+                  <span>{formatCurrencyWithSymbol(totalCostUSD, "USD")}</span>
+                </div>
+                <div className="flex justify-between py-2 border-b">
+                  <span className="font-medium">Venta Total:</span>
+                  <span>{formatCurrencyWithSymbol(totalSaleUSD, "USD")}</span>
+                </div>
+                <div className="flex justify-between py-2 font-bold text-lg">
+                  <span>Ganancia:</span>
+                  <span
+                    className={
+                      totalSaleUSD - totalCostUSD >= 0
+                        ? "text-green-600"
+                        : "text-red-600"
+                    }
+                  >
+                    {formatCurrencyWithSymbol(
+                      totalSaleUSD - totalCostUSD,
+                      "USD"
+                    )}
+                  </span>
+                </div>
+              </div>
+            )}
+
+            {/* No rates warning */}
+            {saleData.currency !== "USD" && currencyRates.length === 0 && (
+              <div className="pt-4 border-t">
+                <p className="text-sm text-amber-600 bg-amber-50 p-3 rounded-md">
+                  ⚠️ No hay tasas de cambio configuradas. No se puede mostrar la
+                  conversión a USD.
+                </p>
+              </div>
+            )}
           </div>
         </CardContent>
       </Card>

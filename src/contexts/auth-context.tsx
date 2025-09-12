@@ -1,4 +1,10 @@
-import React, { createContext, useContext, useState, useEffect, useCallback } from "react";
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  useCallback,
+} from "react";
 import { User } from "../types";
 import { authService, AuthUser } from "../lib/services/auth.service";
 
@@ -49,7 +55,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const storeUserData = (userData: AuthUser, token: string) => {
     localStorage.setItem(TOKEN_KEY, token);
     localStorage.setItem(USER_KEY, JSON.stringify(userData));
-    setState(prev => ({
+    setState((prev) => ({
       ...prev,
       user: userData,
       isAuthenticated: true,
@@ -60,7 +66,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const clearStoredData = () => {
     localStorage.removeItem(TOKEN_KEY);
     localStorage.removeItem(USER_KEY);
-    setState(prev => ({
+    setState((prev) => ({
       ...prev,
       user: null,
       isAuthenticated: false,
@@ -68,57 +74,61 @@ export function AuthProvider({ children }: AuthProviderProps) {
     }));
   };
 
-  const fetchCurrentUser = useCallback(async (token: string): Promise<AuthUser | null> => {
-    try {
-      const response = await authService.getCurrentUser();
-      return response.data?.user || null;
-    } catch (error) {
-      console.error("Error fetching user:", error);
-      clearStoredData();
-      return null;
-    }
-  }, []);
+  const fetchCurrentUser = useCallback(
+    async (token: string): Promise<AuthUser | null> => {
+      try {
+        const response = await authService.getCurrentUser();
+        return response.data?.user || null;
+      } catch (error) {
+        console.error("Error fetching user:", error);
+        clearStoredData();
+        return null;
+      }
+    },
+    []
+  );
 
   const refreshUser = useCallback(async () => {
     const token = getStoredToken();
     if (!token) {
-      setState(prev => ({ ...prev, isLoading: false }));
+      setState((prev) => ({ ...prev, isLoading: false }));
       return;
     }
 
     const userData = await fetchCurrentUser(token);
     if (userData) {
-      setState(prev => ({
+      setState((prev) => ({
         ...prev,
         user: userData,
         isAuthenticated: true,
         isLoading: false,
       }));
     } else {
-      setState(prev => ({ ...prev, isLoading: false }));
+      setState((prev) => ({ ...prev, isLoading: false }));
     }
   }, [fetchCurrentUser]);
 
   const login = async (email: string, password: string) => {
-    setState(prev => ({ ...prev, isLoading: true, error: null }));
-    
+    setState((prev) => ({ ...prev, isLoading: true, error: null }));
+
     try {
       const response = await authService.login({ email, password });
-      
-      if (response.data) {
-        const { user: userData, token } = response.data;
+
+      if (response.data?.data) {
+        const { user: userData, token } = response.data.data;
         storeUserData(userData as AuthUser, token);
       }
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : "Login failed";
-      setState(prev => ({
+      const errorMessage =
+        error instanceof Error ? error.message : "Login failed";
+      setState((prev) => ({
         ...prev,
         error: errorMessage,
         isLoading: false,
       }));
       throw error;
     } finally {
-      setState(prev => ({ ...prev, isLoading: false }));
+      setState((prev) => ({ ...prev, isLoading: false }));
     }
   };
 
@@ -133,7 +143,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   };
 
   const clearError = () => {
-    setState(prev => ({ ...prev, error: null }));
+    setState((prev) => ({ ...prev, error: null }));
   };
 
   useEffect(() => {
@@ -144,7 +154,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
       if (token && storedUser) {
         const userData = await fetchCurrentUser(token);
         if (userData) {
-          setState(prev => ({
+          setState((prev) => ({
             ...prev,
             user: userData,
             isAuthenticated: true,
@@ -152,10 +162,10 @@ export function AuthProvider({ children }: AuthProviderProps) {
           }));
         } else {
           clearStoredData();
-          setState(prev => ({ ...prev, isLoading: false }));
+          setState((prev) => ({ ...prev, isLoading: false }));
         }
       } else {
-        setState(prev => ({ ...prev, isLoading: false }));
+        setState((prev) => ({ ...prev, isLoading: false }));
       }
     };
 

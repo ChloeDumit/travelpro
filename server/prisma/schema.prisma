@@ -17,6 +17,8 @@ model Company {
   suppliers        Supplier[]
   supplierPayments SupplierPayment[]
   users            User[]
+  settings         CompanySettings?
+  currencyRates    CurrencyRate[]
 }
 
 model User {
@@ -218,4 +220,27 @@ enum PaymentMethod {
   creditCard
   cash
   transfer
+}
+
+model CompanySettings {
+  id             Int      @id @default(autoincrement())
+  companyId      Int      @unique
+  defaultCurrency String  @default("USD")
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  company        Company  @relation(fields: [companyId], references: [id])
+}
+
+model CurrencyRate {
+  id          Int      @id @default(autoincrement())
+  companyId   Int
+  currency    String
+  rate        Float    // Rate to USD
+  isActive    Boolean  @default(true)
+  lastUpdated DateTime @default(now())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  company     Company  @relation(fields: [companyId], references: [id])
+
+  @@unique([companyId, currency])
 }

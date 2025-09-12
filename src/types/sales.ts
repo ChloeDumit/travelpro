@@ -7,7 +7,14 @@ import { Passenger } from "./passenger";
 
 export type SaleType = "individual" | "corporate" | "sports" | "group";
 export type Region = "national" | "international" | "regional";
-export type ServiceType = "flight" | "hotel" | "package" | "transfer" | "excursion" | "insurance" | "other";
+export type ServiceType =
+  | "flight"
+  | "hotel"
+  | "package"
+  | "transfer"
+  | "excursion"
+  | "insurance"
+  | "other";
 export type Currency = "USD" | "EUR" | "local";
 export type SaleStatus = "draft" | "confirmed" | "completed" | "cancelled";
 export type ItemStatus = "pending" | "confirmed" | "cancelled";
@@ -120,12 +127,6 @@ export const serviceTypeOptions = [
   { value: "excursion", label: "Excursión" },
   { value: "insurance", label: "Seguro" },
   { value: "other", label: "Otro" },
-] as const;
-
-export const currencyOptions = [
-  { value: "USD", label: "USD" },
-  { value: "EUR", label: "EUR" },
-  { value: "local", label: "Moneda Local" },
 ] as const;
 
 export const statusOptions = [

@@ -35,6 +35,7 @@ import {
 import { PassengersListPage } from "./pages/passengers/passengers-list";
 import { NewPassengerPage } from "./pages/passengers/new-passenger";
 import { EditPassengerPage } from "./pages/passengers/edit-passenger";
+import { CompanySettingsPage } from "./pages/company/company-settings";
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const { user, isLoading } = useAuth();
@@ -60,15 +61,6 @@ function App() {
       <Router>
         <Routes>
           <Route path="/login" element={<LoginPage />} />
-
-          <Route
-            path="/"
-            element={
-              <ProtectedRoute>
-                <Navigate to="/dashboard" replace />
-              </ProtectedRoute>
-            }
-          />
 
           <Route
             path="/"
@@ -121,6 +113,7 @@ function App() {
               path="/supplier-payments/supplier/:supplierId"
               element={<SupplierDetailPage />}
             />
+            <Route path="/company-settings" element={<CompanySettingsPage />} />
             <Route path="*" element={<Navigate to="/dashboard" replace />} />
           </Route>
         </Routes>

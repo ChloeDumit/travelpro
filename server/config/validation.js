@@ -195,3 +195,34 @@ export const validate = (schema) => {
     }
   };
 };
+
+// Company settings validation schemas
+export const companySettingsSchemas = {
+  updateSettings: z.object({
+    defaultCurrency: z.string().min(1, "Default currency is required"),
+  }),
+
+  addCurrencyRate: z.object({
+    currency: z.string().min(1, "Currency is required"),
+    rate: z.number().min(0.0001, "Rate must be greater than 0"),
+    isActive: z.boolean().optional().default(true),
+  }),
+
+  updateCurrencyRate: z.object({
+    currency: z.string().min(1, "Currency is required"),
+    rate: z.number().min(0.0001, "Rate must be greater than 0"),
+    isActive: z.boolean().optional(),
+  }),
+
+  updateCurrencyRates: z.object({
+    rates: z
+      .array(
+        z.object({
+          currency: z.string().min(1, "Currency is required"),
+          rate: z.number().min(0.0001, "Rate must be greater than 0"),
+          isActive: z.boolean().optional().default(true),
+        })
+      )
+      .min(1, "At least one currency rate is required"),
+  }),
+};

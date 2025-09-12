@@ -116,10 +116,18 @@ export function PaymentForm({
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
+  // Import currency options from company types
   const currencyOptions = [
-    { value: "USD", label: "USD" },
-    { value: "EUR", label: "EUR" },
-    { value: "local", label: "Local" },
+    { value: "USD", label: "USD - Dólar Americano" },
+    { value: "EUR", label: "EUR - Euro" },
+    { value: "CLP", label: "CLP - Peso Chileno" },
+    { value: "ARS", label: "ARS - Peso Argentino" },
+    { value: "BRL", label: "BRL - Real Brasileño" },
+    { value: "MXN", label: "MXN - Peso Mexicano" },
+    { value: "COP", label: "COP - Peso Colombiano" },
+    { value: "PEN", label: "PEN - Sol Peruano" },
+    { value: "UYU", label: "UYU - Peso Uruguayo" },
+    { value: "BOB", label: "BOB - Boliviano" },
   ];
 
   const methodOptions = [

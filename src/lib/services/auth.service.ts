@@ -7,9 +7,11 @@ export interface LoginCredentials {
 }
 
 export interface LoginResponse {
-  user: User;
-  token: string;
-  message: string;
+  data: {
+    user: User;
+    token: string;
+    message: string;
+  };
 }
 
 export interface RegisterData {
@@ -31,15 +33,13 @@ export const authService = {
   login: (credentials: LoginCredentials) =>
     api.post<LoginResponse>("/api/auth/login", credentials),
 
-  register: (data: RegisterData) => 
+  register: (data: RegisterData) =>
     api.post<{ message: string; user: User }>("/api/auth/register", data),
 
-  logout: () => 
-    api.post<{ message: string }>("/api/auth/logout"),
+  logout: () => api.post<{ message: string }>("/api/auth/logout"),
 
-  getCurrentUser: () => 
-    api.get<{ user: AuthUser }>("/api/users/me"),
+  getCurrentUser: () => api.get<{ user: AuthUser }>("/api/users/me"),
 
-  updateProfile: (data: Partial<AuthUser>) => 
+  updateProfile: (data: Partial<AuthUser>) =>
     api.put<{ message: string; user: AuthUser }>("/api/users/me", data),
 };

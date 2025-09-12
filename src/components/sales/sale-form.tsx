@@ -22,10 +22,10 @@ import {
   saleTypeOptions,
   regionOptions,
   serviceTypeOptions,
-  currencyOptions,
   ClientFormData,
   User,
 } from "../../types";
+import { currencyOptions } from "../../types/company";
 import { usersService } from "../../lib/services/users.service";
 import { clientsService } from "../../lib/services/clients.service";
 import { useAuth } from "../../contexts/auth-context";

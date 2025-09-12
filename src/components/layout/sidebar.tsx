@@ -13,6 +13,7 @@ import {
   Users2,
   ShoppingCart,
   Users,
+  Settings,
 } from "lucide-react";
 import { useAuthState } from "../../hooks/useAuthState";
 import { useAuth } from "../../contexts/auth-context";
@@ -127,6 +128,10 @@ export function Sidebar() {
             <SidebarLink to="/supplier-payments">
               <DollarSign size={20} />
               {!collapsed && <span>Pagos a Proveedores</span>}
+            </SidebarLink>
+            <SidebarLink to="/company-settings">
+              <Settings size={20} />
+              {!collapsed && <span>Configuraciones</span>}
             </SidebarLink>
           </>
         )}

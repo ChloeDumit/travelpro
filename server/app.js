@@ -18,6 +18,7 @@ import classificationsRoutes from "./routes/classifications.js";
 import supplierPaymentsRoutes from "./routes/supplier-payments.js";
 import paymentsRoutes from "./routes/payments.js";
 import passengerRoutes from "./routes/passenger.routes.js";
+import companySettingsRoutes from "./routes/company-settings.js";
 
 const app = express();
 
@@ -75,6 +76,7 @@ app.use("/api/classifications", classificationsRoutes);
 app.use("/api/supplier-payments", supplierPaymentsRoutes);
 app.use("/api/payments", paymentsRoutes);
 app.use("/api/passengers", passengerRoutes);
+app.use("/api/company", companySettingsRoutes);
 
 // 404 handler
 app.use("*", (req, res) => {
