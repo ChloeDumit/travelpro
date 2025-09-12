@@ -29,7 +29,7 @@ export function PassengersListPage() {
     try {
       setLoading(true);
       const response = await passengersService.getAll();
-      setPassengers(response.data?.passengers || []);
+      setPassengers(response.data?.data || []);
     } catch (err) {
       setError("Error loading passengers");
       console.error("Error loading passengers:", err);
