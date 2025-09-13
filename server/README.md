@@ -157,10 +157,13 @@ FRONTEND_URL=http://localhost:5173
 DATABASE_URL="postgresql://username:password@localhost:5432/travelpro_db"
 JWT_SECRET=your_super_secret_jwt_key_here
 JWT_EXPIRATION=1d
-CORS_ORIGIN=http://localhost:5173
 LOG_LEVEL=info
 BCRYPT_ROUNDS=12
 ```
+
+**Important for Production:**
+- Set `FRONTEND_URL` to your production frontend URL (e.g., `https://www.tripsoffice.com`)
+- The CORS configuration automatically includes common development URLs and the production URL
 
 ### Base de Datos
 - **Motor**: PostgreSQL
