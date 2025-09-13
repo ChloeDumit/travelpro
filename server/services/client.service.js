@@ -80,7 +80,7 @@ export class ClientService extends BaseService {
         companyId: parseInt(companyId, 10),
       };
 
-      return await this.create(data);
+      return await super.create(data);
     } catch (error) {
       if (error instanceof AppError) throw error;
 
@@ -95,7 +95,7 @@ export class ClientService extends BaseService {
   async update(id, clientData, companyId) {
     try {
       const where = this.addCompanyFilter({ id: parseInt(id, 10) }, companyId);
-      return await this.update(where, clientData);
+      return await super.update(where, clientData);
     } catch (error) {
       if (error instanceof AppError) throw error;
 
@@ -110,7 +110,20 @@ export class ClientService extends BaseService {
   async delete(id, companyId) {
     try {
       const where = this.addCompanyFilter({ id: parseInt(id, 10) }, companyId);
-      return await this.delete(where);
+
+      // Check if client has associated sales
+      const salesCount = await this.prisma.sale.count({
+        where: { clientId: parseInt(id, 10) },
+      });
+
+      if (salesCount > 0) {
+        throw new AppError(
+          `Cannot delete client. This client has ${salesCount} associated sale(s). Please delete or reassign the sales first.`,
+          HTTP_STATUS.CONFLICT
+        );
+      }
+
+      return await super.delete(where);
     } catch (error) {
       if (error instanceof AppError) throw error;
 

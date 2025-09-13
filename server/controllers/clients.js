@@ -14,12 +14,15 @@ export const getAllClients = async (req, res, next) => {
       orderBy: { createdAt: "desc" },
     });
 
-    const formattedClients = clients.map(client => ({
+    const formattedClients = clients.map((client) => ({
       ...client,
       id: client.id.toString(),
     }));
 
-    res.status(HTTP_STATUS.OK).json(formattedClients);
+    res.status(HTTP_STATUS.OK).json({
+      message: "Clients fetched successfully",
+      data: formattedClients,
+    });
   } catch (error) {
     next(error);
   }
@@ -46,7 +49,10 @@ export const getClientById = async (req, res, next) => {
       id: client.id.toString(),
     };
 
-    res.status(HTTP_STATUS.OK).json(formattedClient);
+    res.status(HTTP_STATUS.OK).json({
+      message: "Client fetched successfully",
+      data: formattedClient,
+    });
   } catch (error) {
     next(error);
   }

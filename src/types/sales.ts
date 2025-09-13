@@ -30,6 +30,10 @@ export interface SaleItem {
   costPrice: number;
   reservationCode?: string;
   paymentDate?: string;
+  // Names from backend
+  classificationName?: string;
+  supplierName?: string;
+  operatorName?: string;
   // Relations
   classification?: Classification[];
   supplier?: Supplier[];

@@ -147,10 +147,10 @@ interface SaleItemCardProps {
 }
 
 function SaleItemCard({ item }: SaleItemCardProps) {
-  const classificationName = item.classification?.at(0)?.name || "N/A";
-
-  const supplierName = item.supplier?.at(0)?.name || "N/A";
-  const operatorName = item.operator?.at(0)?.name || "N/A";
+  const classificationName =
+    item.classificationName || item.classification?.at(0)?.name || "N/A";
+  const supplierName = item.supplierName || item.supplier?.at(0)?.name || "N/A";
+  const operatorName = item.operatorName || item.operator?.at(0)?.name || "N/A";
 
   return (
     <div className="border rounded-md p-4 bg-white hover:shadow-md transition-shadow">

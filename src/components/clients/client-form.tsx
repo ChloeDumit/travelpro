@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import { useEffect } from "react";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Card, CardHeader, CardContent } from "../ui/card";
@@ -33,12 +34,24 @@ export function ClientForm({
   const form = useForm<ClientFormValues>({
     resolver: zodResolver(clientFormSchema),
     defaultValues: {
-      name: initialData?.name || "",
-      clientId: initialData?.clientId || "",
-      email: initialData?.email || "",
-      address: initialData?.address || "",
+      name: "",
+      clientId: "",
+      email: "",
+      address: "",
     },
   });
+
+  // Reset form when initialData changes
+  useEffect(() => {
+    if (initialData) {
+      form.reset({
+        name: initialData.name || "",
+        clientId: initialData.clientId || "",
+        email: initialData.email || "",
+        address: initialData.address || "",
+      });
+    }
+  }, [initialData, form]);
 
   return (
     <Card>

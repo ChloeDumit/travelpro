@@ -108,19 +108,6 @@ export function SupplierPaymentsPage() {
             className="pl-10"
           />
         </div>
-        <div className="flex items-center gap-2">
-          <Filter className="h-4 w-4 text-gray-500" />
-          <select
-            value={filterCurrency}
-            onChange={(e) => setFilterCurrency(e.target.value)}
-            className="border rounded-md px-3 py-2 text-sm"
-          >
-            <option value="all">Todas las monedas</option>
-            <option value="USD">USD</option>
-            <option value="EUR">EUR</option>
-            <option value="CLP">CLP</option>
-          </select>
-        </div>
       </div>
 
       {/* Summary Cards */}
@@ -215,14 +202,12 @@ export function SupplierPaymentsPage() {
                       <span className="text-sm text-gray-500">
                         {supplier.sales.length} ventas
                       </span>
-                      <span className="text-sm text-gray-500">
-                        Moneda: {supplier.currency}
-                      </span>
+                      <span className="text-sm text-gray-500">Moneda: USD</span>
                     </div>
                   </div>
                   <div className="text-right">
                     <div className="text-2xl font-bold text-gray-900">
-                      {formatCurrency(supplier.totalAmount, supplier.currency)}
+                      {formatCurrency(supplier.totalAmount, "USD")}
                     </div>
                     <p className="text-sm text-gray-500">Monto pendiente</p>
                   </div>
@@ -253,7 +238,7 @@ export function SupplierPaymentsPage() {
                             {sale.status}
                           </Badge>
                           <span className="text-gray-600">
-                            {formatCurrency(sale.totalCost, supplier.currency)}
+                            {formatCurrency(sale.totalCost, "USD")}
                           </span>
                           <span className="text-gray-500 text-xs">
                             {formatDate(sale.creationDate)}

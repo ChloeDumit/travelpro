@@ -305,7 +305,12 @@ const getSalesBySupplier = async (req, res) => {
             },
           },
           select: {
+            id: true,
             costPrice: true,
+            description: true,
+            passengerCount: true,
+            dateIn: true,
+            dateOut: true,
           },
         },
       },
@@ -313,13 +318,10 @@ const getSalesBySupplier = async (req, res) => {
     });
 
     // Calculate total amount for this supplier
+    // Items are already filtered by supplier in the Prisma query
     const totalAmount = sales.reduce((sum, sale) => {
-      const supplierItems = sale.items.filter((item) =>
-        item.supplier.some((s) => s.id === parseInt(supplierId))
-      );
       return (
-        sum +
-        supplierItems.reduce((itemSum, item) => itemSum + item.costPrice, 0)
+        sum + sale.items.reduce((itemSum, item) => itemSum + item.costPrice, 0)
       );
     }, 0);
 
@@ -327,14 +329,11 @@ const getSalesBySupplier = async (req, res) => {
     const currency = sales.length > 0 ? sales[0].currency : "USD";
 
     // Format sales data
+    // Items are already filtered by supplier in the Prisma query
     const formattedSales = sales.map((sale) => ({
       id: sale.id,
       passengerName: sale.passengerName,
-      totalCost: sale.items
-        .filter((item) =>
-          item.supplier.some((s) => s.id === parseInt(supplierId))
-        )
-        .reduce((sum, item) => sum + item.costPrice, 0),
+      totalCost: sale.items.reduce((sum, item) => sum + item.costPrice, 0),
       status: sale.status,
       creationDate: sale.creationDate,
     }));
@@ -369,7 +368,6 @@ const getSuppliersWithSales = async (req, res) => {
                 totalCost: true,
                 status: true,
                 creationDate: true,
-                currency: true,
               },
             },
           },

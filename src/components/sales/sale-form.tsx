@@ -112,13 +112,13 @@ export function SaleForm({
 
       form.reset({
         passengerName: initialData.passengerName,
-        clientId: initialData.client?.clientId || "",
+        clientId: initialData.client?.id?.toString() || "",
         travelDate: formattedDate,
         saleType: initialData.saleType,
         serviceType: initialData.serviceType,
         region: initialData.region,
         passengerCount: initialData.passengerCount,
-        sellerId: initialData.seller.id,
+        sellerId: initialData.seller.id.toString(),
         totalCost: initialData.totalCost,
         totalSale: initialData.salePrice,
       });
@@ -131,7 +131,7 @@ export function SaleForm({
         setItems(initialData.items as SaleItemFormData[]);
       }
     } else if (currentUser) {
-      form.setValue("sellerId", currentUser.id);
+      form.setValue("sellerId", currentUser.id.toString());
     }
   }, [initialData, form, currentUser]);
 
@@ -152,7 +152,7 @@ export function SaleForm({
         // Add to clients list and select it
         clientsOp.execute(1, 100); // Refresh clients list
         setSelectedClient(response.data.client);
-        form.setValue("clientId", response.data.client.id);
+        form.setValue("clientId", response.data.client.id.toString());
         form.setValue("passengerName", response.data.client.name);
         setShowClientModal(false);
       }
@@ -220,7 +220,7 @@ export function SaleForm({
               value={form.watch("clientId")}
               onSelect={(client) => {
                 setSelectedClient(client);
-                form.setValue("clientId", client.clientId);
+                form.setValue("clientId", client.id.toString());
                 form.setValue("passengerName", client.name);
               }}
               onCreateNew={() => setShowClientModal(true)}
@@ -275,7 +275,7 @@ export function SaleForm({
             <UserSelect
               users={usersOp.data?.users || []}
               value={form.watch("sellerId")}
-              onSelect={(user) => form.setValue("sellerId", user.id)}
+              onSelect={(user) => form.setValue("sellerId", user.id.toString())}
               error={form.formState.errors.sellerId?.message}
               currentUser={currentUser as User}
             />
@@ -300,7 +300,9 @@ export function SaleForm({
                   <div className="flex justify-between items-start">
                     <div className="flex-1">
                       <h3 className="font-medium">
-                        {item.classification?.[0]?.name || "Sin clasificación"}
+                        {item.classificationName ||
+                          item.classification?.[0]?.name ||
+                          "Sin clasificación"}
                       </h3>
                       <p className="text-sm text-gray-500 mt-1">
                         {item.description}
@@ -310,13 +312,17 @@ export function SaleForm({
                         <div>
                           <span className="text-gray-500">Proveedor:</span>
                           <p className="font-medium">
-                            {item.supplier?.[0]?.name || "N/A"}
+                            {item.supplierName ||
+                              item.supplier?.[0]?.name ||
+                              "N/A"}
                           </p>
                         </div>
                         <div>
                           <span className="text-gray-500">Operador:</span>
                           <p className="font-medium">
-                            {item.operator?.[0]?.name || "N/A"}
+                            {item.operatorName ||
+                              item.operator?.[0]?.name ||
+                              "N/A"}
                           </p>
                         </div>
                         <div>

@@ -20,9 +20,27 @@ import { passengersService } from "../../lib/services/passenger.service";
 import PassengerSelect from "./passenger-select";
 
 const saleItemFormSchema = z.object({
-  classificationId: z.number().min(1, "La clasificación es requerida"),
-  supplierId: z.number().min(1, "El proveedor es requerido"),
-  operatorId: z.number().min(1, "El operador es requerido"),
+  classificationId: z.union([z.string(), z.number()]).transform((val) => {
+    const num = typeof val === "string" ? parseInt(val, 10) : val;
+    if (isNaN(num) || num <= 0) {
+      throw new Error("La clasificación es requerida");
+    }
+    return num;
+  }),
+  supplierId: z.union([z.string(), z.number()]).transform((val) => {
+    const num = typeof val === "string" ? parseInt(val, 10) : val;
+    if (isNaN(num) || num <= 0) {
+      throw new Error("El proveedor es requerido");
+    }
+    return num;
+  }),
+  operatorId: z.union([z.string(), z.number()]).transform((val) => {
+    const num = typeof val === "string" ? parseInt(val, 10) : val;
+    if (isNaN(num) || num <= 0) {
+      throw new Error("El operador es requerido");
+    }
+    return num;
+  }),
   dateIn: z.string().or(z.literal("")).optional(),
   dateOut: z.string().or(z.literal("")).optional(),
   passengerCount: z.number().min(1, "Se requiere al menos 1 pasajero"),
@@ -70,9 +88,15 @@ export function SaleItemForm({
   } = useForm<SaleItemFormData>({
     resolver: zodResolver(saleItemFormSchema),
     defaultValues: {
-      classificationId: initialData?.classification?.at(0)?.id || 0,
-      supplierId: initialData?.supplier?.at(0)?.id || 0,
-      operatorId: initialData?.operator?.at(0)?.id || 0,
+      classificationId: initialData?.classification?.at(0)?.id
+        ? Number(initialData.classification[0].id)
+        : 0,
+      supplierId: initialData?.supplier?.at(0)?.id
+        ? Number(initialData.supplier[0].id)
+        : 0,
+      operatorId: initialData?.operator?.at(0)?.id
+        ? Number(initialData.operator[0].id)
+        : 0,
       dateIn: initialData?.dateIn || "",
       dateOut: initialData?.dateOut || "",
       passengerCount: initialData?.passengerCount || 1,
@@ -155,23 +179,23 @@ export function SaleItemForm({
   // Reset form when initialData changes (for editing)
   React.useEffect(() => {
     if (initialData) {
-      // Extract IDs from the arrays or use direct IDs
+      // Extract IDs from the arrays or use direct IDs, ensuring they are numbers
       const classificationId =
         initialData.classificationId ||
         (initialData.classification && initialData.classification.length > 0
-          ? initialData.classification[0].id
+          ? Number(initialData.classification[0].id)
           : 0);
 
       const supplierId =
         initialData.supplierId ||
         (initialData.supplier && initialData.supplier.length > 0
-          ? initialData.supplier[0].id
+          ? Number(initialData.supplier[0].id)
           : 0);
 
       const operatorId =
         initialData.operatorId ||
         (initialData.operator && initialData.operator.length > 0
-          ? initialData.operator[0].id
+          ? Number(initialData.operator[0].id)
           : 0);
 
       // Ensure we have the correct data structure

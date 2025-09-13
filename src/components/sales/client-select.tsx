@@ -44,7 +44,7 @@ export function ClientSelect({
   }, [clients, search]);
 
   const selected = Array.isArray(clients)
-    ? clients.find((c) => c.clientId === value)
+    ? clients.find((c) => c.id.toString() === value)
     : null;
 
   return (
@@ -87,7 +87,7 @@ export function ClientSelect({
                 <div
                   key={client.id}
                   className={`px-3 py-2 hover:bg-blue-100 cursor-pointer ${
-                    value === client.clientId ? "bg-blue-50" : ""
+                    value === client.id.toString() ? "bg-blue-50" : ""
                   }`}
                   onClick={() => {
                     onSelect(client);

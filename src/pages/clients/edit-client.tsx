@@ -25,7 +25,7 @@ export function EditClientPage() {
     try {
       setLoading(true);
       const response = await clientsService.getById(id);
-      setClient(response.data || null);
+      setClient(response.data?.data || null);
     } catch (err) {
       setError("Error loading client");
       console.error("Error loading client:", err);

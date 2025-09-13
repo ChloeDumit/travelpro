@@ -46,8 +46,14 @@ export function PassengerFormPage({
   });
 
   React.useEffect(() => {
-    if (initialData) {
-      reset(initialData);
+    if (initialData && Object.keys(initialData).length > 0) {
+      const formData = {
+        name: initialData.name || "",
+        passengerId: initialData.passengerId || "",
+        email: initialData.email || "",
+        dateOfBirth: initialData.dateOfBirth || "",
+      };
+      reset(formData);
     } else {
       reset({
         name: "",

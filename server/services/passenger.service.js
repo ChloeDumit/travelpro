@@ -80,7 +80,7 @@ export class PassengerService extends BaseService {
         companyId: parseInt(companyId, 10),
       };
 
-      return await this.create(data);
+      return await super.create(data);
     } catch (error) {
       if (error instanceof AppError) throw error;
 
@@ -95,7 +95,7 @@ export class PassengerService extends BaseService {
   async update(id, passengerData, companyId) {
     try {
       const where = this.addCompanyFilter({ id: parseInt(id, 10) }, companyId);
-      return await this.update(where, passengerData);
+      return await super.update(where, passengerData);
     } catch (error) {
       if (error instanceof AppError) throw error;
 
@@ -110,7 +110,7 @@ export class PassengerService extends BaseService {
   async delete(id, companyId) {
     try {
       const where = this.addCompanyFilter({ id: parseInt(id, 10) }, companyId);
-      return await this.delete(where);
+      return await super.delete(where);
     } catch (error) {
       if (error instanceof AppError) throw error;
 

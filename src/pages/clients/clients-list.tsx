@@ -1,12 +1,11 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Plus, Search, Trash2, Pencil } from "lucide-react";
+import { Plus, Search, Pencil } from "lucide-react";
 import { Button } from "../../components/ui/button";
 import { Card } from "../../components/ui/card";
 import { Input } from "../../components/ui/input";
 import { clientsService } from "../../lib/services/clients.service";
 import { Client } from "../../types/client";
-import { ConfirmModal } from "../../components/ui/confirm-modal";
 
 export function ClientsListPage() {
   const navigate = useNavigate();
@@ -14,8 +13,6 @@ export function ClientsListPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
-  const [clientToDelete, setClientToDelete] = useState<Client | null>(null);
-  const [isDeleting, setIsDeleting] = useState(false);
 
   useEffect(() => {
     loadClients();
@@ -34,26 +31,6 @@ export function ClientsListPage() {
       setClients([]); // Ensure clients is always an array
     } finally {
       setLoading(false);
-    }
-  };
-
-  const handleDelete = async () => {
-    if (!clientToDelete) return;
-
-    try {
-      setIsDeleting(true);
-      await clientsService.delete(clientToDelete.id);
-      setClients(
-        Array.isArray(clients)
-          ? clients.filter((c) => c.id !== clientToDelete.id)
-          : []
-      );
-      setClientToDelete(null);
-    } catch (err) {
-      setError("Error deleting client");
-      console.error("Error deleting client:", err);
-    } finally {
-      setIsDeleting(false);
     }
   };
 
@@ -131,33 +108,12 @@ export function ClientsListPage() {
                   >
                     <Pencil className="h-4 w-4" />
                   </Button>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setClientToDelete(client);
-                    }}
-                    className="hover:bg-red-500 hover:text-white"
-                  >
-                    <Trash2 className="h-4 w-4" />
-                  </Button>
                 </div>
               </div>
             </Card>
           ))}
         </div>
       )}
-
-      <ConfirmModal
-        isOpen={!!clientToDelete}
-        onClose={() => setClientToDelete(null)}
-        onConfirm={handleDelete}
-        title="Delete Client"
-        description={`Are you sure you want to delete ${clientToDelete?.name}? This action cannot be undone.`}
-        confirmLabel="Delete"
-        isLoading={isDeleting}
-      />
     </div>
   );
 }

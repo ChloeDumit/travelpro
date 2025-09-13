@@ -25,7 +25,35 @@ export function EditPassengerPage() {
     try {
       setLoading(true);
       const response = await passengersService.getById(id);
-      setPassenger(response.data as unknown as PassengerFormData);
+
+      // The response structure is { data: { data: {...}, message, status, timestamp } }
+      const passengerData = response.data?.data;
+
+      // Format the date for the HTML date input (YYYY-MM-DD)
+      let formattedDateOfBirth = passengerData.dateOfBirth;
+      if (formattedDateOfBirth) {
+        // If the date is in DD/MM/YYYY format, convert to YYYY-MM-DD
+        if (formattedDateOfBirth.includes("/")) {
+          const [day, month, year] = formattedDateOfBirth.split("/");
+          formattedDateOfBirth = `${year}-${month.padStart(
+            2,
+            "0"
+          )}-${day.padStart(2, "0")}`;
+        }
+        // If the date is already in ISO format, extract just the date part
+        else if (formattedDateOfBirth.includes("T")) {
+          formattedDateOfBirth = formattedDateOfBirth.split("T")[0];
+        }
+      }
+
+      const formattedPassenger: PassengerFormData = {
+        name: passengerData.name || "",
+        passengerId: passengerData.passengerId || "",
+        email: passengerData.email || "",
+        dateOfBirth: formattedDateOfBirth || "",
+      };
+
+      setPassenger(formattedPassenger);
     } catch (err) {
       setError("Error loading passenger");
       console.error("Error loading passenger:", err);

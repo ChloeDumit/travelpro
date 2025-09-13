@@ -47,7 +47,7 @@ export function UserSelect({
       user.email.toLowerCase().includes(search.toLowerCase())
   );
 
-  const selected = users.find((u) => u.id === value);
+  const selected = users.find((u) => u.id.toString() === value);
 
   // Si no es admin, mostrar solo el usuario actual
   const displayUsers = isAdmin ? filtered : currentUser ? [currentUser] : [];
@@ -90,7 +90,7 @@ export function UserSelect({
               <div
                 key={user.id}
                 className={`px-3 py-2 hover:bg-blue-100 cursor-pointer ${
-                  value === user.id ? "bg-blue-50" : ""
+                  value === user.id.toString() ? "bg-blue-50" : ""
                 }`}
                 onClick={() => {
                   onSelect(user);
